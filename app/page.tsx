@@ -78,10 +78,49 @@ export default function Home() {
           <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
             <div className="mb-4 h-20 flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-16 h-16">
-                <rect x="20" y="20" width="60" height="60" fill="#7dd3fc" opacity="0.3" rx="5"/>
-                <path d="M 30 40 Q 50 30 70 40" fill="none" stroke="#2d5016" strokeWidth="2" strokeDasharray="2,2"/>
-                <circle cx="40" cy="50" r="4" fill="#fb923c"/>
-                <circle cx="60" cy="50" r="4" fill="#fb923c"/>
+                {/* Map background - hand-drawn style */}
+                <rect x="15" y="15" width="70" height="70" fill="#faf8f5" stroke="#2d5016" strokeWidth="2.5" rx="3" opacity="0.9"/>
+                
+                {/* Streets/roads - imperfect, hand-drawn */}
+                <path d="M 20 35 Q 30 33 40 35 T 60 35 T 80 35" fill="none" stroke="#8b6f47" strokeWidth="3" opacity="0.6" strokeLinecap="round"/>
+                <path d="M 20 50 Q 30 48 40 50 T 60 50 T 80 50" fill="none" stroke="#8b6f47" strokeWidth="3" opacity="0.6" strokeLinecap="round"/>
+                <path d="M 20 65 Q 30 63 40 65 T 60 65 T 80 65" fill="none" stroke="#8b6f47" strokeWidth="3" opacity="0.6" strokeLinecap="round"/>
+                <path d="M 35 20 L 35 80" fill="none" stroke="#8b6f47" strokeWidth="2.5" opacity="0.5" strokeLinecap="round"/>
+                <path d="M 50 20 L 50 80" fill="none" stroke="#8b6f47" strokeWidth="2.5" opacity="0.5" strokeLinecap="round"/>
+                <path d="M 65 20 L 65 80" fill="none" stroke="#8b6f47" strokeWidth="2.5" opacity="0.5" strokeLinecap="round"/>
+                
+                {/* Location pins - hand-drawn style */}
+                <g>
+                  {/* Pin 1 */}
+                  <circle cx="35" cy="40" r="3.5" fill="#fb923c" opacity="0.9"/>
+                  <path d="M 35 40 L 35 28 M 35 40 L 28 36 M 35 40 L 42 36" 
+                        stroke="#fb923c" strokeWidth="2" opacity="0.9" strokeLinecap="round"/>
+                  
+                  {/* Pin 2 */}
+                  <circle cx="60" cy="55" r="3.5" fill="#fb923c" opacity="0.9"/>
+                  <path d="M 60 55 L 60 43 M 60 55 L 53 51 M 60 55 L 67 51" 
+                        stroke="#fb923c" strokeWidth="2" opacity="0.9" strokeLinecap="round"/>
+                  
+                  {/* Pin 3 - smaller */}
+                  <circle cx="50" cy="70" r="2.5" fill="#fb923c" opacity="0.7"/>
+                  <path d="M 50 70 L 50 62 M 50 70 L 45 67 M 50 70 L 55 67" 
+                        stroke="#fb923c" strokeWidth="1.5" opacity="0.7" strokeLinecap="round"/>
+                </g>
+                
+                {/* Compass in corner - hand-drawn */}
+                <g transform="translate(70, 20)">
+                  <circle cx="0" cy="0" r="8" fill="none" stroke="#2d5016" strokeWidth="2" opacity="0.6"/>
+                  <line x1="0" y1="-8" x2="0" y2="8" stroke="#2d5016" strokeWidth="1.5" opacity="0.6"/>
+                  <line x1="-8" y1="0" x2="8" y2="0" stroke="#2d5016" strokeWidth="1.5" opacity="0.6"/>
+                  <path d="M 0 -8 L -3 -3 L 0 0 Z" fill="#2d5016" opacity="0.6"/>
+                  <text x="0" y="12" fontSize="8" fill="#2d5016" opacity="0.6" textAnchor="middle" fontFamily="sans-serif" fontWeight="bold">N</text>
+                </g>
+                
+                {/* Magnifying glass / location finder - hand-drawn */}
+                <g transform="translate(25, 25)">
+                  <circle cx="0" cy="0" r="6" fill="none" stroke="#2d5016" strokeWidth="2.5" opacity="0.7" strokeLinecap="round"/>
+                  <line x1="4" y1="4" x2="8" y2="8" stroke="#2d5016" strokeWidth="2.5" opacity="0.7" strokeLinecap="round"/>
+                </g>
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Explore nearby</h3>
