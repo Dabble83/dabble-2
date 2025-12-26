@@ -325,8 +325,102 @@ export default function Home() {
           <div className="bg-white border-2 border-gray-300 rounded-lg p-6">
             <div className="mb-4 h-20 flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-16 h-16">
-                <line x1="30" y1="80" x2="30" y2="30" stroke="#2d5016" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M 30 30 Q 40 20 50 30" fill="none" stroke="#2d5016" strokeWidth="3" strokeLinecap="round"/>
+                {/* Chalkboard - hand-drawn, slightly imperfect */}
+                <rect 
+                  x="55" 
+                  y="20" 
+                  width="35" 
+                  height="45" 
+                  fill="#2d5016" 
+                  opacity="0.8"
+                  stroke="#2d5016" 
+                  strokeWidth="2.5"
+                  rx="2"
+                />
+                {/* Chalkboard frame */}
+                <rect 
+                  x="53" 
+                  y="18" 
+                  width="39" 
+                  height="49" 
+                  fill="none" 
+                  stroke="#8b6f47" 
+                  strokeWidth="2.8"
+                  rx="3"
+                />
+                
+                {/* Letters on chalkboard - "A B C" style */}
+                <text x="62" y="38" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">A</text>
+                <text x="72" y="38" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">B</text>
+                <text x="82" y="38" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">C</text>
+                <text x="62" y="50" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">1</text>
+                <text x="72" y="50" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">2</text>
+                <text x="82" y="50" fontSize="8" fill="#faf8f5" fontFamily="sans-serif" fontWeight="bold" opacity="0.9">3</text>
+                
+                {/* Pointer stick - extending from person to chalkboard */}
+                <line 
+                  x1="45" 
+                  y1="50" 
+                  x2="55" 
+                  y2="42" 
+                  stroke="#8b6f47" 
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  opacity="0.9"
+                />
+                
+                {/* Person - stick figure */}
+                <g transform="translate(40, 55)">
+                  {/* Head */}
+                  <circle cx="0" cy="0" r="3" fill="#2d5016" opacity="0.8"/>
+                  {/* Body */}
+                  <line x1="0" y1="3" x2="0" y2="12" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  {/* Arms - one pointing to chalkboard, one holding surfboard */}
+                  <line x1="0" y1="5" x2="5" y2="3" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="6" x2="-8" y2="4" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  {/* Legs */}
+                  <line x1="0" y1="12" x2="-3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="12" x2="3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                </g>
+                
+                {/* Surfboard - held in left hand */}
+                <g transform="translate(30, 58)">
+                  {/* Board shape - elongated oval */}
+                  <ellipse 
+                    cx="0" 
+                    cy="0" 
+                    rx="8" 
+                    ry="2.5" 
+                    fill="#fb923c" 
+                    opacity="0.7"
+                    stroke="#2d5016" 
+                    strokeWidth="2"
+                    transform="rotate(-20)"
+                  />
+                  {/* Surfboard design lines */}
+                  <line x1="-6" y1="-1" x2="6" y2="1" stroke="#2d5016" strokeWidth="1" opacity="0.4" transform="rotate(-20)"/>
+                </g>
+                
+                {/* Bike - next to person */}
+                <g transform="translate(20, 68)">
+                  {/* Frame - simple bike shape */}
+                  {/* Main triangle frame */}
+                  <line x1="0" y1="0" x2="8" y2="8" stroke="#2d5016" strokeWidth="2.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="8" y1="8" x2="12" y2="4" stroke="#2d5016" strokeWidth="2.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="0" x2="4" y2="4" stroke="#2d5016" strokeWidth="2.5" opacity="0.8" strokeLinecap="round"/>
+                  {/* Wheels */}
+                  <circle cx="0" cy="0" r="5" fill="none" stroke="#2d5016" strokeWidth="2.5" opacity="0.8"/>
+                  <circle cx="12" cy="4" r="5" fill="none" stroke="#2d5016" strokeWidth="2.5" opacity="0.8"/>
+                  {/* Wheel spokes */}
+                  <line x1="0" y1="-5" x2="0" y2="5" stroke="#2d5016" strokeWidth="1" opacity="0.5"/>
+                  <line x1="-5" y1="0" x2="5" y2="0" stroke="#2d5016" strokeWidth="1" opacity="0.5"/>
+                  <line x1="12" y1="-1" x2="12" y2="9" stroke="#2d5016" strokeWidth="1" opacity="0.5"/>
+                  <line x1="7" y1="4" x2="17" y2="4" stroke="#2d5016" strokeWidth="1" opacity="0.5"/>
+                  {/* Handlebars */}
+                  <line x1="4" y1="4" x2="4" y2="0" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="4" y1="0" x2="2" y2="-2" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="4" y1="0" x2="6" y2="-2" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                </g>
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Share what you know</h3>
