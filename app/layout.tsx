@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Dabble - Learn Anything, From Anyone',
-  description: 'Connect with local teachers and learn new skills, sports, and hobbies',
+  title: 'Dabble - Try something new, wherever you are',
+  description: 'Learn by dabbling with people nearby. Explore, try something new, meet people, and share what you know.',
 }
 
 export default function RootLayout({
