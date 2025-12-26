@@ -249,8 +249,72 @@ export default function Home() {
           <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
             <div className="mb-4 h-20 flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-16 h-16">
-                <circle cx="40" cy="50" r="20" fill="#7dd3fc" opacity="0.5"/>
-                <circle cx="60" cy="50" r="20" fill="#fb923c" opacity="0.5"/>
+                {/* Wooden sculpture base/stand - hand-drawn */}
+                <path 
+                  d="M 40 75 L 40 85 L 60 85 L 60 75" 
+                  fill="#8b6f47" 
+                  opacity="0.6"
+                  stroke="#2d5016" 
+                  strokeWidth="2.5"
+                  strokeLinejoin="round"
+                />
+                
+                {/* Wooden sculpture - abstract form being built */}
+                <path 
+                  d="M 42 55 Q 45 50 50 52 Q 55 50 58 55 L 58 75 L 42 75 Z" 
+                  fill="#a8d5a3" 
+                  opacity="0.3"
+                  stroke="#2d5016" 
+                  strokeWidth="2.8"
+                  strokeLinejoin="round"
+                />
+                {/* Wood grain lines */}
+                <line x1="45" y1="60" x2="55" y2="60" stroke="#8b6f47" strokeWidth="1" opacity="0.4" strokeLinecap="round"/>
+                <line x1="45" y1="65" x2="55" y2="65" stroke="#8b6f47" strokeWidth="1" opacity="0.4" strokeLinecap="round"/>
+                <line x1="45" y1="70" x2="55" y2="70" stroke="#8b6f47" strokeWidth="1" opacity="0.4" strokeLinecap="round"/>
+                
+                {/* Person 1 - on left, working on sculpture */}
+                <g transform="translate(30, 65)">
+                  {/* Head */}
+                  <circle cx="0" cy="0" r="3" fill="#2d5016" opacity="0.8"/>
+                  {/* Body */}
+                  <line x1="0" y1="3" x2="0" y2="12" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  {/* Arms - one reaching toward sculpture */}
+                  <line x1="0" y1="5" x2="-5" y2="7" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="5" x2="8" y2="4" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  {/* Legs */}
+                  <line x1="0" y1="12" x2="-3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="12" x2="3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  
+                  {/* Tool/chisel in hand */}
+                  <line x1="8" y1="4" x2="14" y2="2" stroke="#8b6f47" strokeWidth="2" opacity="0.9" strokeLinecap="round"/>
+                  <line x1="14" y1="2" x2="16" y2="0" stroke="#2d5016" strokeWidth="1.5" opacity="0.9" strokeLinecap="round"/>
+                </g>
+                
+                {/* Person 2 - on right, holding/sculpting */}
+                <g transform="translate(70, 65)">
+                  {/* Head */}
+                  <circle cx="0" cy="0" r="3" fill="#2d5016" opacity="0.8"/>
+                  {/* Body */}
+                  <line x1="0" y1="3" x2="0" y2="12" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  {/* Arms - both reaching toward sculpture */}
+                  <line x1="0" y1="5" x2="-8" y2="4" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="6" x2="-5" y2="8" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  {/* Legs */}
+                  <line x1="0" y1="12" x2="-3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="12" x2="3" y2="18" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  
+                  {/* Tool/mallet in hand */}
+                  <line x1="-8" y1="4" x2="-14" y2="6" stroke="#8b6f47" strokeWidth="2.5" opacity="0.9" strokeLinecap="round"/>
+                  <circle cx="-14" cy="6" r="2" fill="#8b6f47" opacity="0.9" stroke="#2d5016" strokeWidth="1"/>
+                </g>
+                
+                {/* Wood chips/shavings - scattered around */}
+                <g opacity="0.5">
+                  <path d="M 25 70 L 27 68 L 29 70 Z" fill="#8b6f47" opacity="0.6"/>
+                  <path d="M 65 72 L 67 70 L 69 72 Z" fill="#8b6f47" opacity="0.6"/>
+                  <path d="M 35 80 L 37 78 L 39 80 Z" fill="#8b6f47" opacity="0.6"/>
+                </g>
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Meet people</h3>
