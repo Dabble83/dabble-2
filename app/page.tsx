@@ -131,9 +131,114 @@ export default function Home() {
           <Link href="/explore" className="bg-white border-2 border-gray-300 rounded-lg p-6 relative hover:border-[#2d5016] transition cursor-pointer block">
             <div className="mb-4 h-20 flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-16 h-16">
-                <circle cx="50" cy="50" r="8" fill="#2d5016"/>
-                <path d="M 50 50 L 70 30" fill="none" stroke="#2d5016" strokeWidth="2" strokeDasharray="2,2"/>
-                <text x="70" y="30" fontSize="20" fill="#2d5016" fontWeight="bold">X</text>
+                {/* Ocean waves - hand-drawn, wavy */}
+                <g opacity="0.6">
+                  <path d="M 15 75 Q 25 72 35 75 T 55 75 T 75 75 T 85 72" 
+                        fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round"/>
+                  <path d="M 15 80 Q 25 77 35 80 T 55 80 T 75 80 T 85 77" 
+                        fill="none" stroke="#7dd3fc" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M 15 85 Q 25 82 35 85 T 55 85 T 75 85 T 85 82" 
+                        fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round"/>
+                </g>
+                
+                {/* Ocean watercolor fill */}
+                <rect x="15" y="70" width="70" height="20" fill="#7dd3fc" opacity="0.2"/>
+                
+                {/* Ship hull - hand-drawn, imperfect */}
+                <path 
+                  d="M 35 75 Q 40 70 45 72 Q 50 70 55 72 Q 60 70 65 75 L 65 82 Q 60 80 50 80 Q 40 80 35 82 Z" 
+                  fill="#8b6f47" 
+                  opacity="0.7"
+                  stroke="#2d5016" 
+                  strokeWidth="2.5"
+                  strokeLinejoin="round"
+                />
+                
+                {/* Sail - hand-drawn, billowing */}
+                <path 
+                  d="M 48 75 L 48 50 Q 50 45 55 50 Q 60 48 62 52 L 60 75 Z" 
+                  fill="#faf8f5" 
+                  opacity="0.9"
+                  stroke="#2d5016" 
+                  strokeWidth="2.5"
+                  strokeLinejoin="round"
+                />
+                
+                {/* Mast */}
+                <line 
+                  x1="48" 
+                  y1="75" 
+                  x2="48" 
+                  y2="50" 
+                  stroke="#2d5016" 
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  opacity="0.8"
+                />
+                
+                {/* Sail cross lines - rigging */}
+                <line 
+                  x1="48" 
+                  y1="60" 
+                  x2="58" 
+                  y2="65" 
+                  stroke="#2d5016" 
+                  strokeWidth="1.5"
+                  opacity="0.5"
+                  strokeLinecap="round"
+                />
+                <line 
+                  x1="50" 
+                  y1="52" 
+                  x2="60" 
+                  y2="58" 
+                  stroke="#2d5016" 
+                  strokeWidth="1.5"
+                  opacity="0.5"
+                  strokeLinecap="round"
+                />
+                
+                {/* Flag at top of mast */}
+                <path 
+                  d="M 48 50 L 48 45 L 52 47 L 48 50" 
+                  fill="#fb923c" 
+                  opacity="0.8"
+                  stroke="#2d5016" 
+                  strokeWidth="1.5"
+                />
+                
+                {/* Person with telescope - stick figure on deck */}
+                <g transform="translate(52, 72)">
+                  {/* Head */}
+                  <circle cx="0" cy="0" r="2.5" fill="#2d5016" opacity="0.8"/>
+                  {/* Body */}
+                  <line x1="0" y1="2.5" x2="0" y2="6" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  {/* Arms holding telescope */}
+                  <line x1="0" y1="4" x2="-4" y2="5" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="4" x2="6" y2="3" stroke="#2d5016" strokeWidth="2" opacity="0.8" strokeLinecap="round"/>
+                  {/* Legs */}
+                  <line x1="0" y1="6" x2="-2" y2="8" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  <line x1="0" y1="6" x2="2" y2="8" stroke="#2d5016" strokeWidth="1.5" opacity="0.8" strokeLinecap="round"/>
+                  
+                  {/* Telescope - extending from eye */}
+                  <line 
+                    x1="4" 
+                    y1="3" 
+                    x2="12" 
+                    y2="5" 
+                    stroke="#8b6f47" 
+                    strokeWidth="2.5"
+                    opacity="0.9"
+                    strokeLinecap="round"
+                  />
+                  {/* Telescope end piece */}
+                  <circle cx="12" cy="5" r="2" fill="#2d5016" opacity="0.7"/>
+                  {/* Telescope lens */}
+                  <circle cx="12" cy="5" r="1.2" fill="#7dd3fc" opacity="0.5"/>
+                </g>
+                
+                {/* Sun in sky - optional atmospheric element */}
+                <circle cx="80" cy="25" r="6" fill="#fb923c" opacity="0.4"/>
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Try something new</h3>
