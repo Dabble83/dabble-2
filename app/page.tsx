@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import HandDrawnMap from './components/HandDrawnMap'
 
 export default function Home() {
   return (
@@ -38,58 +39,9 @@ export default function Home() {
             </Link>
           </div>
           <div className="relative">
-            {/* Large D Logo with illustration */}
-            <div className="relative w-full max-w-md mx-auto">
-              <svg viewBox="0 0 300 300" className="w-full h-auto">
-                {/* Left half - Mountain sketch */}
-                <path 
-                  d="M 50 250 L 80 200 L 100 180 L 120 160 L 140 150 L 150 120 L 150 250 Z" 
-                  fill="none" 
-                  stroke="#2d5016" 
-                  strokeWidth="2"
-                  className="opacity-60"
-                />
-                {/* Mountain path */}
-                <path 
-                  d="M 80 200 Q 100 180 120 160 Q 140 150 150 120" 
-                  fill="none" 
-                  stroke="#2d5016" 
-                  strokeWidth="1.5"
-                  strokeDasharray="3,3"
-                  className="opacity-50"
-                />
-                {/* Flag at peak */}
-                <line x1="150" y1="120" x2="150" y2="100" stroke="#2d5016" strokeWidth="2" className="opacity-60"/>
-                <polygon points="150,100 150,110 165,105" fill="#2d5016" className="opacity-60"/>
-                {/* Pine trees */}
-                <path d="M 60 230 L 70 210 L 50 210 Z" fill="#2d5016" className="opacity-40"/>
-                <path d="M 90 220 L 100 200 L 80 200 Z" fill="#2d5016" className="opacity-40"/>
-                
-                {/* Right half - Colored landscape */}
-                <path 
-                  d="M 150 250 L 150 120 L 250 120 L 250 250 Z" 
-                  fill="#a8d5a3" 
-                  className="opacity-40"
-                />
-                {/* Lake */}
-                <ellipse cx="200" cy="200" rx="40" ry="20" fill="#7dd3fc" className="opacity-60"/>
-                {/* Hills */}
-                <path d="M 150 200 Q 180 180 200 190 Q 220 200 250 190 L 250 250 L 150 250 Z" fill="#95c590" className="opacity-50"/>
-                {/* Sun */}
-                <circle cx="220" cy="140" r="15" fill="#fb923c" className="opacity-70"/>
-                {/* Path continuation */}
-                <path 
-                  d="M 150 120 Q 180 140 200 150 Q 220 160 250 170" 
-                  fill="none" 
-                  stroke="#2d5016" 
-                  strokeWidth="2"
-                  strokeDasharray="4,4"
-                  className="opacity-40"
-                />
-                {/* Location pins */}
-                <circle cx="180" cy="160" r="6" fill="#fb923c"/>
-                <circle cx="230" cy="180" r="6" fill="#fb923c"/>
-              </svg>
+            {/* Hand-drawn map illustration with clickable destinations */}
+            <div className="relative w-full max-w-2xl mx-auto">
+              <HandDrawnMap />
             </div>
           </div>
         </div>
@@ -137,7 +89,7 @@ export default function Home() {
           </div>
 
           {/* Panel 2: Try something new */}
-          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
+          <Link href="/explore" className="bg-white border-2 border-gray-300 rounded-lg p-6 relative hover:border-[#2d5016] transition cursor-pointer block">
             <div className="mb-4 h-20 flex items-center justify-center">
               <svg viewBox="0 0 100 100" className="w-16 h-16">
                 <circle cx="50" cy="50" r="8" fill="#2d5016"/>
@@ -147,7 +99,7 @@ export default function Home() {
             </div>
             <h3 className="text-lg font-semibold mb-2 text-gray-900">Try something new</h3>
             <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl text-gray-400 hidden md:block">→</div>
-          </div>
+          </Link>
 
           {/* Panel 3: Meet people */}
           <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
