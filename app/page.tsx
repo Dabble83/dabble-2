@@ -18,6 +18,9 @@ export default function Home() {
           <Link href="/login" className="text-gray-700 hover:text-[#2d5016] transition text-lg">
             Sign In
           </Link>
+          <Link href="/signup" className="text-gray-700 hover:text-[#2d5016] transition text-lg">
+            Sign Up
+          </Link>
         </div>
       </nav>
 
@@ -75,9 +78,9 @@ export default function Home() {
         </h2>
         <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {/* Panel 1: Explore nearby */}
-          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
-            <div className="mb-4 h-20 flex items-center justify-center">
-              <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative aspect-square flex flex-col items-center justify-center">
+            <div className="mb-6 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" className="w-24 h-24">
                 {/* Map background - hand-drawn style */}
                 <rect x="15" y="15" width="70" height="70" fill="#faf8f5" stroke="#2d5016" strokeWidth="2.5" rx="3" opacity="0.9"/>
                 
@@ -123,14 +126,13 @@ export default function Home() {
                 </g>
               </svg>
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Explore nearby</h3>
-            <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl text-gray-400 hidden md:block">→</div>
+            <h3 className="text-lg font-semibold text-gray-900 text-center">Explore nearby</h3>
           </div>
 
           {/* Panel 2: Try something new */}
-          <Link href="/explore" className="bg-white border-2 border-gray-300 rounded-lg p-6 relative hover:border-[#2d5016] transition cursor-pointer block">
-            <div className="mb-4 h-20 flex items-center justify-center">
-              <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <Link href="/explore" className="bg-white border-2 border-gray-300 rounded-lg p-6 relative hover:border-[#2d5016] transition cursor-pointer block aspect-square flex flex-col items-center justify-center">
+            <div className="mb-6 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" className="w-24 h-24">
                 {/* Ocean waves - hand-drawn, wavy */}
                 <g opacity="0.6">
                   <path d="M 15 75 Q 25 72 35 75 T 55 75 T 75 75 T 85 72" 
@@ -241,14 +243,13 @@ export default function Home() {
                 <circle cx="80" cy="25" r="6" fill="#fb923c" opacity="0.4"/>
               </svg>
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Try something new</h3>
-            <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl text-gray-400 hidden md:block">→</div>
+            <h3 className="text-lg font-semibold text-gray-900 text-center">Try something new</h3>
           </Link>
 
           {/* Panel 3: Meet people */}
-          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative">
-            <div className="mb-4 h-20 flex items-center justify-center">
-              <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 relative aspect-square flex flex-col items-center justify-center">
+            <div className="mb-6 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" className="w-24 h-24">
                 {/* Wooden sculpture base/stand - hand-drawn */}
                 <path 
                   d="M 40 75 L 40 85 L 60 85 L 60 75" 
@@ -317,14 +318,13 @@ export default function Home() {
                 </g>
               </svg>
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Meet people</h3>
-            <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl text-gray-400 hidden md:block">→</div>
+            <h3 className="text-lg font-semibold text-gray-900 text-center">Meet people</h3>
           </div>
 
           {/* Panel 4: Share what you know */}
-          <div className="bg-white border-2 border-gray-300 rounded-lg p-6">
-            <div className="mb-4 h-20 flex items-center justify-center">
-              <svg viewBox="0 0 100 100" className="w-16 h-16">
+          <div className="bg-white border-2 border-gray-300 rounded-lg p-6 aspect-square flex flex-col items-center justify-center">
+            <div className="mb-6 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" className="w-24 h-24">
                 {/* Chalkboard - hand-drawn, slightly imperfect */}
                 <rect 
                   x="55" 
@@ -423,7 +423,7 @@ export default function Home() {
                 </g>
               </svg>
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-900">Share what you know</h3>
+            <h3 className="text-lg font-semibold text-gray-900 text-center">Share what you know</h3>
           </div>
         </div>
       </section>

@@ -86,6 +86,9 @@ export default function ExplorePage() {
           <Link href="/login" className="text-gray-700 hover:text-[#2d5016] transition text-lg">
             Sign In
           </Link>
+          <Link href="/signup" className="text-gray-700 hover:text-[#2d5016] transition text-lg">
+            Sign Up
+          </Link>
         </div>
       </nav>
 
