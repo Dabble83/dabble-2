@@ -3,11 +3,12 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
   provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 enum SkillCategory {
@@ -16,22 +17,14 @@ enum SkillCategory {
   Creative
 }
 
-enum SkillLevel {
-  Beginner
-  Intermediate
-  Advanced
-  Expert
+enum LocationPrecision {
+  neighborhood
+  approximate
 }
 
-enum SkillType {
-  INTEREST
-  GUIDE
-}
-
-enum UserRole {
-  Dabbler
-  Guide
-  Both
+enum ProfileSkillType {
+  offers
+  wants
 }
 
 model User {
@@ -43,53 +36,66 @@ model User {
   phone        String?
   createdAt    DateTime @default(now())
 
-  profile   Profile?
-  userSkills UserSkill[]
+  profile Profile?
 
   @@map("users")
 }
 
 model Profile {
-  id           String   @id @default(cuid())
-  userId       String   @unique
-  city         String
-  state        String
-  zip          String?
-  radiusMiles  Int      @default(10)
-  isDabbler    Boolean  @default(false)
-  isGuide      Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  username        String   @unique
+  displayName     String
+  profileImageUrl String?
+  interestsIntro  String?
+  skillsIntro     String?
+  interests       String   @default("[]") // JSON array stored as string in SQLite
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location        ProfileLocation?
+  profileSkills   ProfileSkill[]
 
   @@map("profiles")
 }
 
+model ProfileLocation {
+  id            String            @id @default(cuid())
+  profileId     String            @unique
+  isDiscoverable Boolean          @default(false)
+  addressLabel String
+  lat           Float?
+  lng           Float?
+  precision     LocationPrecision @default(neighborhood)
+  updatedAt     DateTime          @updatedAt
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("profile_locations")
+}
+
 model Skill {
-  id         String        @id @default(cuid())
-  category   SkillCategory
-  name       String
-  createdAt  DateTime      @default(now())
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  SkillCategory?
+  createdAt DateTime @default(now())
 
-  userSkills UserSkill[]
+  profileSkills ProfileSkill[]
 
-  @@unique([category, name])
   @@map("skills")
 }
 
-model UserSkill {
-  id       String     @id @default(cuid())
-  userId   String
-  skillId  String
-  type     SkillType
-  level    SkillLevel
+model ProfileSkill {
+  profileId String
+  skillId    String
+  type       ProfileSkillType
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  skill   Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, skillId, type])
-  @@map("user_skills")
-  @@index([userId])
+  @@id([profileId, skillId, type])
+  @@map("profile_skills")
+  @@index([profileId])
   @@index([skillId])
 }

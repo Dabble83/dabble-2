@@ -1,3 +1,5 @@
+// Follow STYLE_GUIDE.md for any UI changes.
+// Design: minimal, editorial, calm. No loud colors. No marketplace language.
 import { SkillLevel } from '@prisma/client'
 
 interface SkiLevelBadgeProps {

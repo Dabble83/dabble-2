@@ -1,6 +1,9 @@
+// Follow STYLE_GUIDE.md for any UI changes.
+// Design: minimal, editorial, calm. No loud colors. No marketplace language.
 'use client'
 
-import { SkillCategory } from '@prisma/client'
+// SkillCategory type: 'Adventure' | 'HomeImprovement' | 'Creative'
+type SkillCategory = 'Adventure' | 'HomeImprovement' | 'Creative'
 
 interface CategoryMultiSelectProps {
   categories: SkillCategory[]

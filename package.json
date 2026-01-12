@@ -4,22 +4,28 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:with-prisma": "prisma generate && next dev",
     "build": "next build",
+    "build:with-prisma": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate || true",
+    "prisma:generate": "prisma generate && node scripts/create-default-js.js",
+    "prisma:studio": "prisma studio",
+    "clean": "rm -rf .next node_modules/.prisma",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
-    "db:generate": "prisma generate"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "db:generate": "prisma generate && node scripts/create-default-js.js"
   },
   "dependencies": {
-    "@prisma/client": "^7.2.0",
+    "@prisma/client": "^6.19.1",
+    "@react-google-maps/api": "^2.20.8",
+    "@supabase/supabase-js": "^2.90.1",
     "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0",
-    "next": "^14.0.4",
-    "prisma": "^7.2.0",
+    "next": "^16.1.1",
+    "openai": "^6.15.0",
+    "prisma": "^6.19.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -29,7 +35,7 @@
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.0.4",
+    "eslint-config-next": "^14.2.18",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "tsx": "^4.21.0",

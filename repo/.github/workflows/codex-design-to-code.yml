@@ -1,0 +1,38 @@
+name: Codex - Design to Code
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  codex:
+    if: contains(github.event.comment.body, '/codex')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Codex
+        uses: openai/codex-action@v1
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          # This tells Codex what to do. Keep it VERY explicit.
+          prompt: |
+            You are working in this repository. Update the landing page to match the visual spec in:
+            design/landing_notes.md
+
+            The reference image is:
+            public/design/concepts/dabble-landing-concept.png
+
+            Rules:
+            - Implement the look with HTML/CSS/Tailwind and inline SVG icons; do not add heavy image assets as the background.
+            - Keep existing routing and structure; update the home page component and any needed CSS.
+            - Make the design responsive.
+            - After changes, ensure the site builds.
+
+            Output:
+            - Create a pull request with your changes and summarize what you changed.

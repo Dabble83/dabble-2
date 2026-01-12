@@ -1,92 +1,112 @@
-import { PrismaClient } from '../app/generated/prisma/client'
-import { SkillCategory } from '../app/generated/prisma/enums'
-import { PrismaSqlite } from '@prisma/adapter-sqlite'
-import Database from 'better-sqlite3'
+import { PrismaClient, SkillCategory } from '@prisma/client'
 
-const sqlite = new Database('./prisma/dev.db')
-const adapter = new PrismaSqlite(sqlite)
-const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient()
 
-const skills: { category: SkillCategory; name: string }[] = [
-  // Adventure
-  { category: SkillCategory.Adventure, name: 'Rock Climbing' },
-  { category: SkillCategory.Adventure, name: 'Hiking' },
-  { category: SkillCategory.Adventure, name: 'Mountain Biking' },
-  { category: SkillCategory.Adventure, name: 'Kayaking' },
-  { category: SkillCategory.Adventure, name: 'Whitewater Rafting' },
-  { category: SkillCategory.Adventure, name: 'Surfing' },
-  { category: SkillCategory.Adventure, name: 'Snowboarding' },
-  { category: SkillCategory.Adventure, name: 'Skiing' },
-  { category: SkillCategory.Adventure, name: 'Camping' },
-  { category: SkillCategory.Adventure, name: 'Backpacking' },
-  { category: SkillCategory.Adventure, name: 'Scuba Diving' },
-  { category: SkillCategory.Adventure, name: 'Sailing' },
-  { category: SkillCategory.Adventure, name: 'Skydiving' },
-  { category: SkillCategory.Adventure, name: 'Trail Running' },
-  { category: SkillCategory.Adventure, name: 'Archery' },
-  { category: SkillCategory.Adventure, name: 'Fishing' },
-  { category: SkillCategory.Adventure, name: 'Wilderness Survival' },
-  { category: SkillCategory.Adventure, name: 'Bouldering' },
-
-  // Home Improvement
-  { category: SkillCategory.HomeImprovement, name: 'Carpentry' },
-  { category: SkillCategory.HomeImprovement, name: 'Plumbing' },
-  { category: SkillCategory.HomeImprovement, name: 'Electrical Work' },
-  { category: SkillCategory.HomeImprovement, name: 'Painting' },
-  { category: SkillCategory.HomeImprovement, name: 'Drywall' },
-  { category: SkillCategory.HomeImprovement, name: 'Flooring Installation' },
-  { category: SkillCategory.HomeImprovement, name: 'Tile Work' },
-  { category: SkillCategory.HomeImprovement, name: 'Roofing' },
-  { category: SkillCategory.HomeImprovement, name: 'Landscaping' },
-  { category: SkillCategory.HomeImprovement, name: 'Gardening' },
-  { category: SkillCategory.HomeImprovement, name: 'HVAC Repair' },
-  { category: SkillCategory.HomeImprovement, name: 'Window Installation' },
-  { category: SkillCategory.HomeImprovement, name: 'Deck Building' },
-  { category: SkillCategory.HomeImprovement, name: 'Fence Installation' },
-  { category: SkillCategory.HomeImprovement, name: 'Cabinet Making' },
-  { category: SkillCategory.HomeImprovement, name: 'Concrete Work' },
-  { category: SkillCategory.HomeImprovement, name: 'Welding' },
-  { category: SkillCategory.HomeImprovement, name: 'Appliance Repair' },
-
-  // Creative / Hobbies
-  { category: SkillCategory.Creative, name: 'Drawing' },
-  { category: SkillCategory.Creative, name: 'Painting (Art)' },
-  { category: SkillCategory.Creative, name: 'Photography' },
-  { category: SkillCategory.Creative, name: 'Knitting' },
-  { category: SkillCategory.Creative, name: 'Crocheting' },
-  { category: SkillCategory.Creative, name: 'Sewing' },
-  { category: SkillCategory.Creative, name: 'Pottery' },
-  { category: SkillCategory.Creative, name: 'Ceramics' },
-  { category: SkillCategory.Creative, name: 'Woodworking' },
-  { category: SkillCategory.Creative, name: 'Jewelry Making' },
-  { category: SkillCategory.Creative, name: 'Calligraphy' },
-  { category: SkillCategory.Creative, name: 'Lettering' },
-  { category: SkillCategory.Creative, name: 'Digital Art' },
-  { category: SkillCategory.Creative, name: 'Music Production' },
-  { category: SkillCategory.Creative, name: 'Guitar' },
-  { category: SkillCategory.Creative, name: 'Piano' },
-  { category: SkillCategory.Creative, name: 'Cooking' },
-  { category: SkillCategory.Creative, name: 'Baking' },
+// Precise skills across categories - 25-60 skills as requested
+const skills: { category: SkillCategory | null; name: string }[] = [
+  // Cooking & Food
+  { category: null, name: 'Cooking' },
+  { category: null, name: 'Baking' },
+  { category: null, name: 'Fermentation' },
+  { category: null, name: 'Meal Planning' },
+  { category: null, name: 'Knife Skills' },
+  { category: null, name: 'Sourdough Baking' },
+  { category: null, name: 'Canning & Preserving' },
+  { category: null, name: 'Grilling' },
+  
+  // Repairs & Maintenance
+  { category: null, name: 'Bike Repair' },
+  { category: null, name: 'Appliance Repair' },
+  { category: null, name: 'Plumbing Basics' },
+  { category: null, name: 'Electrical Basics' },
+  { category: null, name: 'Furniture Repair' },
+  { category: null, name: 'Tool Maintenance' },
+  
+  // Gardening & Outdoor
+  { category: null, name: 'Gardening' },
+  { category: null, name: 'Composting' },
+  { category: null, name: 'Plant Propagation' },
+  { category: null, name: 'Urban Gardening' },
+  { category: null, name: 'Herb Growing' },
+  { category: null, name: 'Seed Starting' },
+  
+  // Language & Communication
+  { category: null, name: 'Spanish' },
+  { category: null, name: 'French' },
+  { category: null, name: 'Mandarin' },
+  { category: null, name: 'Sign Language' },
+  { category: null, name: 'Public Speaking' },
+  { category: null, name: 'Writing' },
+  
+  // Sewing & Textiles
+  { category: null, name: 'Sewing' },
+  { category: null, name: 'Knitting' },
+  { category: null, name: 'Crocheting' },
+  { category: null, name: 'Mending' },
+  { category: null, name: 'Pattern Making' },
+  { category: null, name: 'Embroidery' },
+  
+  // Carpentry & Woodworking
+  { category: null, name: 'Carpentry' },
+  { category: null, name: 'Woodworking' },
+  { category: null, name: 'Furniture Making' },
+  { category: null, name: 'Joinery' },
+  { category: null, name: 'Wood Finishing' },
+  
+  // Financial & Life Skills
+  { category: null, name: 'Budgeting' },
+  { category: null, name: 'Investing Basics' },
+  { category: null, name: 'Tax Preparation' },
+  { category: null, name: 'Negotiation' },
+  
+  // Tech & Digital
+  { category: null, name: 'Basic Coding' },
+  { category: null, name: 'Web Design' },
+  { category: null, name: 'Photo Editing' },
+  { category: null, name: 'Video Editing' },
+  { category: null, name: '3D Printing' },
+  
+  // Music & Arts
+  { category: null, name: 'Guitar' },
+  { category: null, name: 'Piano' },
+  { category: null, name: 'Drawing' },
+  { category: null, name: 'Painting' },
+  { category: null, name: 'Pottery' },
+  { category: null, name: 'Photography' },
+  
+  // Health & Wellness
+  { category: null, name: 'Yoga' },
+  { category: null, name: 'Meditation' },
+  { category: null, name: 'First Aid' },
+  { category: null, name: 'Nutrition Basics' },
 ]
 
 async function main() {
   console.log('Seeding database...')
 
-  // Clear existing skills
-  await prisma.userSkill.deleteMany()
-  await prisma.skill.deleteMany()
+  // Clear existing skills (ignore if tables don't exist yet)
+  try {
+    await prisma.profileSkill.deleteMany()
+  } catch (e) {
+    // Table might not exist yet
+  }
+  try {
+    await prisma.skill.deleteMany()
+  } catch (e) {
+    // Table might not exist yet
+  }
 
   // Create skills
   for (const skill of skills) {
     await prisma.skill.upsert({
       where: {
-        category_name: {
-          category: skill.category,
-          name: skill.name,
-        },
+        name: skill.name,
       },
       update: {},
-      create: skill,
+      create: {
+        name: skill.name,
+        category: skill.category,
+      },
     })
   }
 
@@ -100,5 +120,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect()
-    sqlite.close()
   })

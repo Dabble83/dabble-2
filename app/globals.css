@@ -2,29 +2,146 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+/* Follow STYLE_GUIDE.md for any UI changes. */
+/* Dabble Design System - Global Styles */
+/* Design: minimal, editorial, calm. No loud colors. No marketplace language. */
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 250, 248, 245;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+  body {
+    @apply bg-[#f6f1e8] text-[#1F2A37];
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 3rem; /* 48px */
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #1F2A37;
+  }
+
+  h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 2rem; /* 32px */
+    line-height: 1.2;
+    font-weight: 600;
+    color: #1F2A37;
+  }
+
+  h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1F2A37;
+  }
+
+  p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem; /* 16px */
+    line-height: 1.6;
+    color: #1F2A37;
+    max-width: 65ch; /* 65-75 characters max line length */
+  }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
+@layer components {
+  /* Primary Button */
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-semibold text-base;
+    background-color: #7A8F6A;
+    border: 2px solid #5F6B55;
+    color: #F7F6F2;
+    opacity: 0.8;
+    transition: background-color 200ms ease-in-out;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 600;
+  }
 
-/* Hand-drawn style for logo and headings */
-.hand-drawn {
-  font-family: 'Kalam', cursive;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
-}
+  .btn-primary:hover:not(:disabled) {
+    background-color: #6B7A5A;
+  }
 
-/* Watercolor effect utility */
-.watercolor {
-  background: linear-gradient(135deg, rgba(168, 213, 163, 0.3) 0%, rgba(125, 211, 252, 0.2) 100%);
-  backdrop-filter: blur(1px);
-}
+  .btn-primary:disabled {
+    background-color: #9CA3AF;
+    border-color: #6B7280;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-medium text-base;
+    background-color: #F3F4F6;
+    border: 1px solid #D1D5DB;
+    color: #374151;
+    transition: background-color 200ms ease-in-out;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #E5E7EB;
+  }
+
+  /* Link Styles */
+  .link-primary {
+    color: #374151;
+    text-decoration: none;
+    transition: color 200ms ease-in-out;
+  }
+
+  .link-primary:hover {
+    color: #111827;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl p-8;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply w-full px-4 py-3 rounded-lg border-2;
+    border-color: #D1D5DB;
+    background-color: #ffffff;
+    color: #374151;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px; /* Prevents zoom on iOS */
+    transition: border-color 200ms ease-in-out;
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: #7A8F6A;
+    box-shadow: 0 0 0 2px rgba(122, 143, 106, 0.2);
+  }
+
+  .input:disabled {
+    background-color: #F3F4F6;
+    color: #9CA3AF;
+    cursor: not-allowed;
+  }
+
+  .input::placeholder {
+    color: #9CA3AF;
+  }
+
+  /* Label Styles */
+  .label {
+    @apply block text-sm font-medium mb-2;
+    color: #374151;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
+  }
+
+  /* Textarea */
+  textarea.input {
+    min-height: 100px;
+    resize: vertical;
+  }
+}

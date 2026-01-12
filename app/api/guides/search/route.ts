@@ -1,32 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { SkillCategory } from '@prisma/client'
+import { prisma } from '../../../../lib/prisma'
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
-    const category = searchParams.get('category') as SkillCategory | null
+    const category = searchParams.get('category') as string | null
     const skillId = searchParams.get('skillId')
     const city = searchParams.get('city')
     const state = searchParams.get('state')
 
-    // Build where clause
+    // Build where clause - find profiles with "offers" skills (guides)
     const where: any = {
-      profile: {
-        isGuide: true,
-      },
-      userSkills: {
+      profileSkills: {
         some: {
-          type: 'GUIDE',
+          type: 'offers',
         },
       },
     }
 
     // Filter by category
     if (category) {
-      where.userSkills = {
+      where.profileSkills = {
         some: {
-          type: 'GUIDE',
+          type: 'offers',
           skill: {
             category,
           },
@@ -36,9 +32,9 @@ export async function GET(request: NextRequest) {
 
     // Filter by specific skill
     if (skillId) {
-      where.userSkills = {
+      where.profileSkills = {
         some: {
-          type: 'GUIDE',
+          type: 'offers',
           skillId,
         },
       }
@@ -46,20 +42,26 @@ export async function GET(request: NextRequest) {
 
     // Filter by location
     if (city || state) {
-      where.profile = {
-        ...where.profile,
-        ...(city && { city }),
-        ...(state && { state }),
+      where.location = {
+        ...(city && { addressLabel: { contains: city } }),
+        ...(state && { addressLabel: { contains: state } }),
       }
     }
 
-    const guides = await prisma.user.findMany({
+    const profiles = await prisma.profile.findMany({
       where,
       include: {
-        profile: true,
-        userSkills: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+          },
+        },
+        location: true,
+        profileSkills: {
           where: {
-            type: 'GUIDE',
+            type: 'offers',
           },
           include: {
             skill: true,
@@ -69,7 +71,7 @@ export async function GET(request: NextRequest) {
       take: 50, // Limit results
     })
 
-    return NextResponse.json(guides)
+    return NextResponse.json(profiles)
   } catch (error) {
     console.error('Search guides error:', error)
     return NextResponse.json(
@@ -78,4 +80,3 @@ export async function GET(request: NextRequest) {
     )
   }
 }
-
