@@ -56,9 +56,26 @@ export default function SigninPage() {
         return
       }
 
-      // Success - redirect to profile setup (will check if profile is complete there)
+      // Success - check onboarding status and redirect accordingly
       submittingRef.current = false
-      router.push('/profile/setup')
+      
+      // Check if user has completed onboarding
+      const client = getSupabaseClient()
+      const { data: profileData } = await client
+        .from('profiles')
+        .select('has_onboarded')
+        .eq('id', signInData.user.id)
+        .single()
+
+      const hasOnboarded = profileData?.has_onboarded ?? false
+
+      if (hasOnboarded) {
+        // User has completed onboarding - go to explore
+        router.push('/explore')
+      } else {
+        // User hasn't completed onboarding - go to onboarding profile
+        router.push('/onboarding/profile')
+      }
       router.refresh()
     } catch (err: any) {
       setError(err?.message || 'An error occurred. Please try again.')
@@ -143,7 +160,7 @@ export default function SigninPage() {
         }}>
           Don't have an account?{' '}
           <Link href="/dabble/signup" className="link-primary font-medium" style={{ fontWeight: '500' }}>
-            Sign up
+            Create account
           </Link>
         </p>
       </div>

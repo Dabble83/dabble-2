@@ -6,8 +6,8 @@ import Link from 'next/link'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Dabble - Connect through skills, not transactions',
-  description: 'A calm space for real-life learning and sharing. Find neighbors who want to teach and learn.',
+  title: 'Dabble - Try something new, wherever you are',
+  description: 'Learn by dabbling with people near you',
 }
 
 export default function RootLayout({

@@ -13,7 +13,7 @@ export default function Home() {
         textAlign: 'center'
       }}>
         <h1 style={{ marginBottom: '24px' }}>
-          Connect through skills, not transactions.
+          Try something new, wherever you are.
         </h1>
         <p className="text-lg mb-8" style={{ 
           fontSize: '18px',
@@ -24,7 +24,7 @@ export default function Home() {
           marginLeft: 'auto',
           marginRight: 'auto'
         }}>
-          Dabble is a calm space for real-life learning and sharing. Find neighbors who want to teach and learn. Build connections through in-person exchanges. No hustle, no marketplace—just people sharing what they know.
+          Learn by dabbling with people near you
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/dabble/signup" className="btn-primary">

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { supabaseServer } from '@/src/lib/supabaseServer'
 
 // Simple in-memory rate limiting (use Redis in production)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
@@ -37,8 +38,9 @@ export async function POST(request: NextRequest) {
     // Check API key
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) {
+      console.error('OPENAI_API_KEY not found in environment variables')
       return NextResponse.json(
-        { error: 'AI service not configured' },
+        { error: 'AI service not configured. Please check OPENAI_API_KEY in .env.local' },
         { status: 500 }
       )
     }
@@ -52,13 +54,32 @@ export async function POST(request: NextRequest) {
       existingInterests = [],
     } = body
 
-    // Basic validation
-    if (!curiosityText && !helpText) {
+    // Basic validation - allow either field or combined description
+    const userInput = (curiosityText || helpText || '').trim()
+    if (!userInput) {
       return NextResponse.json(
-        { error: 'At least one input field is required' },
+        { error: 'Please provide a description of yourself, your interests, or skills' },
         { status: 400 }
       )
     }
+
+    // Fetch actual skills from database
+    const { data: skillsData, error: skillsError } = await supabaseServer
+      .from('skills')
+      .select('id, name, category')
+      .order('name')
+
+    if (skillsError) {
+      console.error('Error fetching skills:', skillsError)
+    }
+
+    const allSkills = skillsData || []
+    const skillNames = allSkills.map(s => s.name).join(', ')
+
+    // Organize skills by category for better context
+    const adventureSkills = allSkills.filter(s => s.category === 'Adventure').map(s => s.name)
+    const creativeSkills = allSkills.filter(s => s.category === 'Creative').map(s => s.name)
+    const homeImprovementSkills = allSkills.filter(s => s.category === 'HomeImprovement').map(s => s.name)
 
     // Initialize OpenAI
     const openai = new OpenAI({
@@ -68,9 +89,8 @@ export async function POST(request: NextRequest) {
     // Build prompt
     const prompt = `You are helping someone create a profile for Dabble, a community platform for learning and sharing skills.
 
-User's input:
-${curiosityText ? `What they're curious about: ${curiosityText}` : ''}
-${helpText ? `What friends ask them for help with: ${helpText}` : ''}
+User's description:
+${userInput}
 
 ${existingOffers.length > 0 ? `Existing skills they offer: ${existingOffers.join(', ')}` : ''}
 ${existingWants.length > 0 ? `Existing skills they want to learn: ${existingWants.join(', ')}` : ''}
@@ -93,7 +113,12 @@ Rules:
 - For profilePicIdeas: Provide 3 creative, specific ideas for profile photo themes (e.g., "Photo of you cooking in your kitchen", "Outdoor shot with your bike").
 
 Available Dabble skills (use EXACT names only):
-Cooking, Baking, Fermentation, Meal Planning, Knife Skills, Sourdough Baking, Canning & Preserving, Grilling, Bike Repair, Appliance Repair, Plumbing Basics, Electrical Basics, Furniture Repair, Tool Maintenance, Gardening, Composting, Plant Propagation, Urban Gardening, Herb Growing, Seed Starting, Spanish, French, Mandarin, Sign Language, Public Speaking, Writing, Sewing, Knitting, Crocheting, Mending, Pattern Making, Embroidery, Carpentry, Woodworking, Furniture Making, Joinery, Wood Finishing, Budgeting, Investing Basics, Tax Preparation, Negotiation, Basic Coding, Web Design, Photo Editing, Video Editing, 3D Printing, Guitar, Piano, Drawing, Painting, Pottery, Photography, Yoga, Meditation, First Aid, Nutrition Basics
+${skillNames || 'Cooking, Baking, Fermentation, Meal Planning, Knife Skills, Sourdough Baking, Canning & Preserving, Grilling, Bike Repair, Appliance Repair, Plumbing Basics, Electrical Basics, Furniture Repair, Tool Maintenance, Gardening, Composting, Plant Propagation, Urban Gardening, Herb Growing, Seed Starting, Spanish, French, Mandarin, Sign Language, Public Speaking, Writing, Sewing, Knitting, Crocheting, Mending, Pattern Making, Embroidery, Carpentry, Woodworking, Furniture Making, Joinery, Wood Finishing, Budgeting, Investing Basics, Tax Preparation, Negotiation, Basic Coding, Web Design, Photo Editing, Video Editing, 3D Printing, Guitar, Piano, Drawing, Painting, Pottery, Photography, Yoga, Meditation, First Aid, Nutrition Basics'}
+
+Skills organized by category:
+- Adventure: ${adventureSkills.join(', ') || 'None'}
+- Creative/Hobbies: ${creativeSkills.join(', ') || 'None'}
+- Home Improvement: ${homeImprovementSkills.join(', ') || 'None'}
 
 Return ONLY valid JSON, no markdown, no code blocks, no explanations.`
 
@@ -128,12 +153,31 @@ Return ONLY valid JSON, no markdown, no code blocks, no explanations.`
       throw new Error('Invalid response format from AI')
     }
 
+    // Map suggested skill names to IDs and categories
+    const mapSkillNamesToIds = (skillNames: string[]) => {
+      return skillNames
+        .map(name => {
+          const skill = allSkills.find(s => s.name.toLowerCase() === name.toLowerCase())
+          return skill ? { id: skill.id, name: skill.name, category: skill.category } : null
+        })
+        .filter(Boolean) as Array<{ id: string; name: string; category: string | null }>
+    }
+
+    const suggestedOffersWithIds = mapSkillNamesToIds(
+      Array.isArray(suggestions.suggestedOffers) ? suggestions.suggestedOffers.slice(0, 10) : []
+    )
+    const suggestedWantsWithIds = mapSkillNamesToIds(
+      Array.isArray(suggestions.suggestedWants) ? suggestions.suggestedWants.slice(0, 10) : []
+    )
+
     // Validate and structure response
     return NextResponse.json({
       interestsIntro: suggestions.interestsIntro || '',
       skillsIntro: suggestions.skillsIntro || '',
       suggestedOffers: Array.isArray(suggestions.suggestedOffers) ? suggestions.suggestedOffers.slice(0, 10) : [],
       suggestedWants: Array.isArray(suggestions.suggestedWants) ? suggestions.suggestedWants.slice(0, 10) : [],
+      suggestedOffersWithIds, // Include IDs for easy application
+      suggestedWantsWithIds, // Include IDs for easy application
       suggestedInterests: Array.isArray(suggestions.suggestedInterests) ? suggestions.suggestedInterests : [],
       profilePicIdeas: Array.isArray(suggestions.profilePicIdeas) ? suggestions.profilePicIdeas : [],
     })

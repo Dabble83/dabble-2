@@ -4,78 +4,140 @@
 
 import { useState, useEffect } from 'react'
 import { getSupabaseClient } from '@/src/lib/supabaseClient'
+import type { Session, User } from '@supabase/supabase-js'
+
+interface Diagnostics {
+  origin: string | null
+  hasUrl: boolean
+  hasAnonKey: boolean
+  sessionData: {
+    hasSession: boolean
+    userId: string | null
+    userEmail: string | null
+    error: string | null
+  }
+  getUserData: {
+    userId: string | null
+    error: string | null
+  }
+}
 
 /**
- * Debug Supabase Page - Tests env vars and session
- * Never crashes, always renders
- * All Supabase calls happen on button click (client-side only)
+ * Debug Supabase Page - Robust session diagnostics
+ * Client component that displays comprehensive Supabase connectivity information
  */
 export default function DebugSupabasePage() {
-  const [envStatus, setEnvStatus] = useState<{
-    hasUrl: boolean
-    hasAnon: boolean
-  } | null>(null)
-  const [sessionStatus, setSessionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [sessionData, setSessionData] = useState<any>(null)
-  const [sessionError, setSessionError] = useState<string | null>(null)
-  const [serverEnvStatus, setServerEnvStatus] = useState<{
-    hasServiceRole: boolean | null
-  }>({ hasServiceRole: null })
+  const [loading, setLoading] = useState(true)
+  const [diagnostics, setDiagnostics] = useState<Diagnostics>({
+    origin: null,
+    hasUrl: false,
+    hasAnonKey: false,
+    sessionData: {
+      hasSession: false,
+      userId: null,
+      userEmail: null,
+      error: null,
+    },
+    getUserData: {
+      userId: null,
+      error: null,
+    },
+  })
 
-  // Check public env vars on mount (client-side only)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setEnvStatus({
-        hasUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-        hasAnon: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      })
-
-      // Fetch server-only env var status from API route
-      fetch('/api/debug/env-status')
-        .then(res => res.json())
-        .then(data => {
-          setServerEnvStatus({
-            hasServiceRole: data.server?.hasServiceRole ?? null,
-          })
-        })
-        .catch(err => {
-          console.warn('Failed to fetch server env status:', err)
-        })
+  const runDiagnostics = async () => {
+    setLoading(true)
+    
+    const newDiagnostics: Diagnostics = {
+      origin: typeof window !== 'undefined' ? window.location.origin : null,
+      hasUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      hasAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      sessionData: {
+        hasSession: false,
+        userId: null,
+        userEmail: null,
+        error: null,
+      },
+      getUserData: {
+        userId: null,
+        error: null,
+      },
     }
-  }, [])
-
-  const testSession = async () => {
-    setSessionStatus('loading')
-    setSessionError(null)
-    setSessionData(null)
 
     try {
-      // Get client only when button is clicked (client-side only)
       const client = getSupabaseClient()
-      const { data, error } = await client.auth.getSession()
       
-      if (error) {
-        setSessionError(error.message)
-        setSessionStatus('error')
-      } else {
-        setSessionData(data)
-        setSessionStatus('success')
+      // Check getSession()
+      try {
+        const { data: sessionData, error: sessionError } = await client.auth.getSession()
+        if (sessionError) {
+          newDiagnostics.sessionData.error = sessionError.message
+        } else if (sessionData.session) {
+          newDiagnostics.sessionData.hasSession = true
+          newDiagnostics.sessionData.userId = sessionData.session.user?.id || null
+          newDiagnostics.sessionData.userEmail = sessionData.session.user?.email || null
+        }
+      } catch (err: any) {
+        newDiagnostics.sessionData.error = err.message || 'Failed to get session'
+      }
+
+      // Check getUser()
+      try {
+        const { data: userData, error: userError } = await client.auth.getUser()
+        if (userError) {
+          newDiagnostics.getUserData.error = userError.message
+        } else if (userData.user) {
+          newDiagnostics.getUserData.userId = userData.user.id || null
+        }
+      } catch (err: any) {
+        newDiagnostics.getUserData.error = err.message || 'Failed to get user'
       }
     } catch (err: any) {
-      setSessionError(err.message || 'Unknown error')
-      setSessionStatus('error')
+      // Global error if client initialization fails
+      newDiagnostics.sessionData.error = err.message || 'Failed to initialize Supabase client'
+    }
+
+    setDiagnostics(newDiagnostics)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    runDiagnostics()
+  }, [])
+
+  const handleSignOut = async () => {
+    try {
+      const client = getSupabaseClient()
+      await client.auth.signOut()
+      // Refresh diagnostics after sign out
+      await runDiagnostics()
+    } catch (err: any) {
+      // Update diagnostics with sign out error
+      setDiagnostics(prev => ({
+        ...prev,
+        sessionData: {
+          ...prev.sessionData,
+          error: err.message || 'Failed to sign out',
+        },
+      }))
     }
   }
 
   // Only show in development
   if (process.env.NODE_ENV !== 'development') {
     return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4" style={{ color: '#1F2A37' }}>
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f6f1e8',
+        fontFamily: 'Georgia, serif'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '32px', marginBottom: '16px', color: '#1F2A37', fontWeight: 700 }}>
             Not Available
           </h1>
-          <p style={{ color: '#4B5563' }}>
+          <p style={{ color: '#4B5563', fontSize: '18px' }}>
             This page is only available in development mode.
           </p>
         </div>
@@ -85,152 +147,229 @@ export default function DebugSupabasePage() {
 
   return (
     <div style={{
-      padding: '40px',
-      fontFamily: 'system-ui, sans-serif',
+      padding: '48px 24px',
       backgroundColor: '#f6f1e8',
-      minHeight: '100vh'
+      minHeight: '100vh',
+      fontFamily: 'Georgia, serif'
     }}>
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '32px', marginBottom: '8px', color: '#1F2A37' }}>
+        <h1 style={{
+          fontSize: '32px',
+          marginBottom: '8px',
+          color: '#1F2A37',
+          fontWeight: 700
+        }}>
           Debug: Supabase
         </h1>
-        <p style={{ color: '#6B7280', marginBottom: '32px' }}>
-          Check Supabase environment variables and test session connectivity.
+        <p style={{
+          color: '#6B7280',
+          marginBottom: '32px',
+          fontSize: '16px'
+        }}>
+          Supabase session diagnostics
         </p>
 
-        {/* Environment Variables Section */}
         <div style={{
-          backgroundColor: 'white',
-          padding: '24px',
-          borderRadius: '8px',
-          border: '1px solid #e5e7eb',
-          marginBottom: '24px'
-        }}>
-          <h2 style={{ fontSize: '20px', marginBottom: '16px', color: '#1F2A37' }}>
-            Environment Variables
-          </h2>
-          {envStatus ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ 
-                  width: '12px', 
-                  height: '12px', 
-                  borderRadius: '50%',
-                  backgroundColor: envStatus.hasUrl ? '#10B981' : '#EF4444'
-                }} />
-                <span style={{ fontFamily: 'monospace', fontSize: '14px', color: '#374151' }}>
-                  NEXT_PUBLIC_SUPABASE_URL: {envStatus.hasUrl ? '✅ Present' : '❌ Missing'}
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ 
-                  width: '12px', 
-                  height: '12px', 
-                  borderRadius: '50%',
-                  backgroundColor: envStatus.hasAnon ? '#10B981' : '#EF4444'
-                }} />
-                <span style={{ fontFamily: 'monospace', fontSize: '14px', color: '#374151' }}>
-                  NEXT_PUBLIC_SUPABASE_ANON_KEY: {envStatus.hasAnon ? '✅ Present' : '❌ Missing'}
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ 
-                  width: '12px', 
-                  height: '12px', 
-                  borderRadius: '50%',
-                  backgroundColor: serverEnvStatus.hasServiceRole === null 
-                    ? '#FBBF24' 
-                    : serverEnvStatus.hasServiceRole 
-                      ? '#10B981' 
-                      : '#EF4444'
-                }} />
-                <span style={{ fontFamily: 'monospace', fontSize: '14px', color: '#374151' }}>
-                  SUPABASE_SERVICE_ROLE_KEY (server-only): {
-                    serverEnvStatus.hasServiceRole === null 
-                      ? '⏳ Checking via API...' 
-                      : serverEnvStatus.hasServiceRole 
-                        ? '✅ Present (server-side)' 
-                        : '❌ Missing (expected - client cannot access this)'
-                  }
-                </span>
-              </div>
-            </div>
-          ) : (
-            <p style={{ color: '#6B7280' }}>Checking...</p>
-          )}
-        </div>
-
-        {/* Session Test Section */}
-        <div style={{
-          backgroundColor: 'white',
-          padding: '24px',
-          borderRadius: '8px',
+          backgroundColor: '#ffffff',
+          padding: '32px',
+          borderRadius: '12px',
           border: '1px solid #e5e7eb'
         }}>
-          <h2 style={{ fontSize: '20px', marginBottom: '16px', color: '#1F2A37' }}>
-            Session Test
-          </h2>
-          <p style={{ color: '#6B7280', marginBottom: '16px', fontSize: '14px' }}>
-            Click the button below to test Supabase session. This will not run automatically on page load.
-          </p>
-
-          <button
-            onClick={testSession}
-            disabled={sessionStatus === 'loading'}
-            className="btn-primary"
-            style={{
-              padding: '10px 20px',
-              marginBottom: '16px'
-            }}
-          >
-            {sessionStatus === 'loading' ? 'Testing...' : 'Test Supabase Session'}
-          </button>
-
-          {sessionStatus === 'success' && sessionData && (
-            <div style={{
-              padding: '12px',
-              backgroundColor: '#D1FAE5',
-              borderRadius: '6px',
-              border: '1px solid #10B981',
-              marginTop: '16px'
-            }}>
-              <p style={{ color: '#065F46', fontWeight: '600', margin: '0 0 8px 0' }}>
-                ✅ Session test successful
-              </p>
-              <details style={{ marginTop: '8px' }}>
-                <summary style={{ cursor: 'pointer', color: '#065F46', fontSize: '14px' }}>
-                  View session data
-                </summary>
-                <pre style={{
-                  fontSize: '12px',
-                  backgroundColor: '#f9fafb',
-                  padding: '12px',
-                  borderRadius: '4px',
-                  overflow: 'auto',
-                  marginTop: '8px',
-                  maxHeight: '300px',
-                  color: '#374151'
+          {loading ? (
+            <p style={{ color: '#6B7280' }}>Checking...</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+              {/* Origin */}
+              <div>
+                <p style={{
+                  color: '#4B5563',
+                  fontSize: '14px',
+                  marginBottom: '8px',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  fontWeight: 500
                 }}>
-                  {JSON.stringify(sessionData, null, 2)}
-                </pre>
-              </details>
-            </div>
-          )}
+                  Current origin
+                </p>
+                <p style={{
+                  color: '#1F2A37',
+                  fontSize: '14px',
+                  fontFamily: 'monospace',
+                  wordBreak: 'break-all'
+                }}>
+                  {diagnostics.origin || 'N/A'}
+                </p>
+              </div>
 
-          {sessionStatus === 'error' && sessionError && (
-            <div style={{
-              padding: '12px',
-              backgroundColor: '#FEE2E2',
-              borderRadius: '6px',
-              border: '1px solid #EF4444',
-              marginTop: '16px'
-            }}>
-              <p style={{ color: '#991B1B', fontWeight: '600', margin: '0 0 8px 0' }}>
-                ❌ Session test failed
-              </p>
-              <p style={{ color: '#991B1B', fontSize: '14px', margin: 0 }}>
-                {sessionError}
-              </p>
+              {/* Environment Variables */}
+              <div>
+                <p style={{
+                  color: '#4B5563',
+                  fontSize: '14px',
+                  marginBottom: '12px',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  fontWeight: 500
+                }}>
+                  Environment variables
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <p style={{
+                    color: '#1F2A37',
+                    fontSize: '14px',
+                    fontFamily: 'monospace'
+                  }}>
+                    NEXT_PUBLIC_SUPABASE_URL: {diagnostics.hasUrl ? 'yes' : 'no'}
+                  </p>
+                  <p style={{
+                    color: '#1F2A37',
+                    fontSize: '14px',
+                    fontFamily: 'monospace'
+                  }}>
+                    NEXT_PUBLIC_SUPABASE_ANON_KEY: {diagnostics.hasAnonKey ? 'yes' : 'no'}
+                  </p>
+                </div>
+              </div>
+
+              {/* getSession() Result */}
+              <div>
+                <p style={{
+                  color: '#4B5563',
+                  fontSize: '14px',
+                  marginBottom: '12px',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  fontWeight: 500
+                }}>
+                  getSession() result
+                </p>
+                {diagnostics.sessionData.error ? (
+                  <div style={{
+                    padding: '12px',
+                    backgroundColor: '#FEE2E2',
+                    borderRadius: '6px',
+                    border: '1px solid #EF4444'
+                  }}>
+                    <p style={{
+                      color: '#991B1B',
+                      fontSize: '14px',
+                      margin: 0
+                    }}>
+                      Error: {diagnostics.sessionData.error}
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <p style={{
+                      color: '#1F2A37',
+                      fontSize: '14px',
+                      fontFamily: 'monospace'
+                    }}>
+                      hasSession: {diagnostics.sessionData.hasSession ? 'yes' : 'no'}
+                    </p>
+                    {diagnostics.sessionData.userId && (
+                      <p style={{
+                        color: '#1F2A37',
+                        fontSize: '14px',
+                        fontFamily: 'monospace',
+                        wordBreak: 'break-all'
+                      }}>
+                        user.id: {diagnostics.sessionData.userId}
+                      </p>
+                    )}
+                    {diagnostics.sessionData.userEmail && (
+                      <p style={{
+                        color: '#1F2A37',
+                        fontSize: '14px',
+                        fontFamily: 'monospace',
+                        wordBreak: 'break-all'
+                      }}>
+                        user.email: {diagnostics.sessionData.userEmail}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* getUser() Result */}
+              <div>
+                <p style={{
+                  color: '#4B5563',
+                  fontSize: '14px',
+                  marginBottom: '12px',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  fontWeight: 500
+                }}>
+                  getUser() result
+                </p>
+                {diagnostics.getUserData.error ? (
+                  <div style={{
+                    padding: '12px',
+                    backgroundColor: '#FEE2E2',
+                    borderRadius: '6px',
+                    border: '1px solid #EF4444'
+                  }}>
+                    <p style={{
+                      color: '#991B1B',
+                      fontSize: '14px',
+                      margin: 0
+                    }}>
+                      Error: {diagnostics.getUserData.error}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    {diagnostics.getUserData.userId ? (
+                      <p style={{
+                        color: '#1F2A37',
+                        fontSize: '14px',
+                        fontFamily: 'monospace',
+                        wordBreak: 'break-all'
+                      }}>
+                        user.id: {diagnostics.getUserData.userId}
+                      </p>
+                    ) : (
+                      <p style={{
+                        color: '#6B7280',
+                        fontSize: '14px'
+                      }}>
+                        No user data
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div style={{
+                display: 'flex',
+                gap: '12px',
+                paddingTop: '16px',
+                borderTop: '1px solid #e5e7eb'
+              }}>
+                <button
+                  onClick={runDiagnostics}
+                  disabled={loading}
+                  className="btn-primary"
+                  style={{
+                    padding: '10px 20px',
+                    fontSize: '14px',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+                  }}
+                >
+                  {loading ? 'Refreshing...' : 'Refresh session'}
+                </button>
+                {diagnostics.sessionData.hasSession && (
+                  <button
+                    onClick={handleSignOut}
+                    className="btn-secondary"
+                    style={{
+                      padding: '10px 20px',
+                      fontSize: '14px',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+                    }}
+                  >
+                    Sign out
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -93,13 +93,13 @@ export default function SignupPage() {
         setLoading(false)
         submittingRef.current = false
       } else {
-        // Session created immediately - redirect to profile setup
+        // Session created immediately - redirect to onboarding
         setEmailConfirmationMessage(false)
         setError(null)
         submittingRef.current = false
         
-        // Redirect to profile setup
-        router.push('/profile/setup')
+        // Redirect to onboarding profile builder
+        router.push('/onboarding/profile')
         router.refresh()
       }
     } catch (err: any) {
