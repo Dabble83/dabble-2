@@ -23,12 +23,12 @@
 
 **Main Headline** (H1)
 ```
-Connect through skills, not transactions.
+Try something new, wherever you are.
 ```
 
 **Subheadline** (Body Large)
 ```
-Dabble is a calm space for real-life learning and sharing. Find neighbors who want to teach and learn. Build connections through in-person exchanges. No hustle, no marketplace—just people sharing what they know.
+Learn by dabbling with people near you
 ```
 
 **Primary CTA Button**
