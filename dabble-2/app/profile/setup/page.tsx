@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, Input, Tag, Textarea } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
@@ -25,8 +25,10 @@ export default function ProfileSetupPage() {
   const [isDiscoverable, setIsDiscoverable] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
-  useEffect(() => {
-    async function loadInitial() {
+  const loadInitial = useCallback(async () => {
+    setMessage(null);
+    setLoading(true);
+    try {
       const supabase = getSupabaseClient();
       if (!supabase) {
         setMessage("Supabase public env vars are missing.");
@@ -49,6 +51,11 @@ export default function ProfileSetupPage() {
         cache: "no-store",
       });
       const body = await response.json();
+      if (!response.ok) {
+        setMessage(body.error || "Unable to load your existing profile.");
+        setLoading(false);
+        return;
+      }
       const profile = body.profile as ProfileRecord | null;
 
       if (profile) {
@@ -63,10 +70,18 @@ export default function ProfileSetupPage() {
       }
 
       setLoading(false);
+    } catch {
+      setMessage("Network error while loading profile data.");
+      setLoading(false);
     }
-
-    loadInitial();
   }, [router]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      void loadInitial();
+    }, 0);
+    return () => clearTimeout(timeout);
+  }, [loadInitial]);
 
   const onSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -95,38 +110,43 @@ export default function ProfileSetupPage() {
     setSaving(true);
     setMessage(null);
 
-    const response = await fetch("/api/profile/update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        displayName,
-        username,
-        locationLabel,
-        interestsIntro,
-        skillsIntro,
-        isDiscoverable,
-        skills: localProfile.skills,
-        interests: localProfile.interests,
-      }),
-    });
+    try {
+      const response = await fetch("/api/profile/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          displayName,
+          username,
+          locationLabel,
+          interestsIntro,
+          skillsIntro,
+          isDiscoverable,
+          skills: localProfile.skills,
+          interests: localProfile.interests,
+        }),
+      });
 
-    const body = await response.json();
-    setSaving(false);
+      const body = await response.json();
+      setSaving(false);
 
-    if (!response.ok) {
-      setMessage(body.error || "Unable to save profile.");
-      return;
+      if (!response.ok) {
+        setMessage(body.error || "Unable to save profile.");
+        return;
+      }
+
+      const nextUsername = body.profile?.username || username.trim();
+      if (isProfileComplete(localProfile) && nextUsername) {
+        router.push(`/profile/${nextUsername}`);
+        return;
+      }
+      setMessage(
+        `Saved. To complete your profile, add: ${missing.join(", ")}.`,
+      );
+    } catch {
+      setSaving(false);
+      setMessage("Network error while saving profile.");
     }
-
-    const nextUsername = body.profile?.username || username.trim();
-    if (isProfileComplete(localProfile) && nextUsername) {
-      router.push(`/profile/${nextUsername}`);
-      return;
-    }
-    setMessage(
-      `Saved. To complete your profile, add: ${missing.join(", ")}.`,
-    );
   };
 
   if (loading) {
@@ -137,6 +157,16 @@ export default function ProfileSetupPage() {
             <p className="font-sans text-sm text-[var(--text-secondary)]">
               Loading your profile...
             </p>
+            {message ? (
+              <div className="mt-3">
+                <p className="font-sans text-sm text-red-600">{message}</p>
+                <div className="mt-2">
+                  <Button variant="secondary" onClick={loadInitial}>
+                    Retry
+                  </Button>
+                </div>
+              </div>
+            ) : null}
           </Card>
         </section>
       </div>

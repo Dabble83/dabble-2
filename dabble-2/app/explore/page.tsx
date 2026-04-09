@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Card, Tag } from "@/app/components/ui";
+import { useCallback, useEffect, useState } from "react";
+import { Button, Card, Tag } from "@/app/components/ui";
 import { MapAdapterShell } from "@/app/explore/MapAdapterShell";
 import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
 
@@ -14,8 +14,10 @@ export default function ExplorePage() {
   const [query, setQuery] = useState("");
   const [neighborhood, setNeighborhood] = useState("all");
 
-  useEffect(() => {
-    async function loadDiscoverable() {
+  const loadDiscoverable = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
       const response = await fetch("/api/explore/discoverable", { cache: "no-store" });
       const body = await response.json();
 
@@ -27,10 +29,18 @@ export default function ExplorePage() {
 
       setProfiles(body.profiles || []);
       setLoading(false);
+    } catch {
+      setError("Network error while loading discoverable profiles.");
+      setLoading(false);
     }
-
-    loadDiscoverable();
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      void loadDiscoverable();
+    }, 0);
+    return () => clearTimeout(timeout);
+  }, [loadDiscoverable]);
 
   const neighborhoods = Array.from(
     new Set(
@@ -112,7 +122,14 @@ export default function ExplorePage() {
         ) : null}
 
         {error ? (
-          <div className="ui-card p-6 font-sans text-sm text-red-600">{error}</div>
+          <div className="ui-card p-6 font-sans text-sm text-red-600">
+            <p>{error}</p>
+            <div className="mt-3">
+              <Button variant="secondary" onClick={loadDiscoverable}>
+                Retry
+              </Button>
+            </div>
+          </div>
         ) : null}
 
         {!loading && !error && profiles.length === 0 ? (
