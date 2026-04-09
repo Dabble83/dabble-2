@@ -42,7 +42,7 @@ export default function SignUpPage() {
     }
 
     if (data.user?.id) {
-      await fetch("/api/profile/update", {
+      const profileResponse = await fetch("/api/profile/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -50,11 +50,24 @@ export default function SignUpPage() {
           displayName,
         }),
       });
+
+      if (!profileResponse.ok) {
+        const profileBody = await profileResponse.json();
+        setSubmitting(false);
+        setMessage(profileBody.error || "Account created, but profile setup failed. Please sign in.");
+        return;
+      }
     }
 
     setSubmitting(false);
-    setMessage("Account created. If email confirmation is required, confirm and sign in.");
-    router.push("/profile/setup");
+    const hasSession = Boolean(data.session);
+    if (hasSession) {
+      router.push("/profile/setup");
+      return;
+    }
+
+    setMessage("Account created. Check your email to confirm, then sign in.");
+    router.push("/dabble/signin");
   };
 
   return (

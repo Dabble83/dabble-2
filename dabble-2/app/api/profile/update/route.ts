@@ -10,6 +10,11 @@ function toUsernameSeed(input: string) {
     .slice(0, 32);
 }
 
+function isMissingColumnError(message: string) {
+  const normalized = message.toLowerCase();
+  return normalized.includes("column") && normalized.includes("does not exist");
+}
+
 export async function POST(request: NextRequest) {
   const supabase = getSupabaseServerClient();
   if (!supabase) {
@@ -36,9 +41,27 @@ export async function POST(request: NextRequest) {
   }
 
   const displayName = body.displayName?.trim() || null;
-  const username =
-    body.username?.trim() ||
-    (displayName ? toUsernameSeed(displayName) : `dabbler-${body.userId.slice(0, 8)}`);
+  const usernameInput = body.username?.trim();
+  const candidateUsername = usernameInput
+    ? toUsernameSeed(usernameInput)
+    : displayName
+      ? toUsernameSeed(displayName)
+      : `dabbler-${body.userId.slice(0, 8)}`;
+  const username = candidateUsername || `dabbler-${body.userId.slice(0, 8)}`;
+
+  // Friendly guard before upsert to avoid opaque DB unique violation messages.
+  const { data: existingUsername } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("username", username)
+    .neq("id", body.userId)
+    .maybeSingle();
+  if (existingUsername?.id) {
+    return NextResponse.json(
+      { error: "That username is already in use. Please choose another." },
+      { status: 409 },
+    );
+  }
 
   const payload = {
     id: body.userId,
@@ -59,6 +82,27 @@ export async function POST(request: NextRequest) {
     .single();
 
   if (error) {
+    // Some schemas may not include optional fields yet; retry with core columns.
+    if (isMissingColumnError(error.message)) {
+      const corePayload = {
+        id: body.userId,
+        username,
+        display_name: displayName,
+        interests: Array.isArray(body.interests) ? body.interests : [],
+        skills: Array.isArray(body.skills) ? body.skills : [],
+      };
+
+      const { data: fallbackData, error: fallbackError } = await supabase
+        .from("profiles")
+        .upsert(corePayload, { onConflict: "id" })
+        .select("id, username, display_name")
+        .single();
+
+      if (!fallbackError) {
+        return NextResponse.json({ profile: fallbackData });
+      }
+    }
+
     return NextResponse.json(
       { error: "Failed to update profile", details: error.message },
       { status: 500 },
