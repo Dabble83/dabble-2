@@ -31,6 +31,12 @@ Copy `.env.example` to `.env.local` when you start integrating services. **Phase
 | `npm run check-env` | Print status of documented env vars   |
 | `npm run preflight` | `check-env` + `lint` before wider changes |
 
+## Agent workflow
+
+- Operating guide: `AGENTS.md`
+- Runbook: `docs/AGENT_RUNBOOK.md`
+- Prompt templates: `docs/AGENT_PROMPTS.md`
+
 ## Product specs (v1 repo)
 
 Canonical copy and product notes live in the parent repo under `spec/` (e.g. `DABBLE_COPY.md`, `DABBLE_PRODUCT.md`).

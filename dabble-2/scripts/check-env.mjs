@@ -97,6 +97,7 @@ function main() {
   console.log("[check-env] dabble-2 — documented variables\n");
 
   const warnings = [];
+  const securityWarnings = [];
 
   for (const row of DOCUMENTED) {
     const set = isSet(row.key);
@@ -114,6 +115,20 @@ function main() {
       "\n[check-env] Warning: optional integration vars missing:",
       warnings.join(", "),
     );
+  }
+
+  // Security hygiene checks for local app env files.
+  if (isSet("GITHUB_TOKEN")) {
+    securityWarnings.push(
+      "GITHUB_TOKEN is present in .env.local. Keep GitHub auth outside app env files.",
+    );
+  }
+
+  if (securityWarnings.length) {
+    console.warn("\n[check-env] Security warning(s):");
+    for (const warning of securityWarnings) {
+      console.warn(`  - ${warning}`);
+    }
   }
 
   if (isCI) {
