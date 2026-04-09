@@ -7,12 +7,14 @@ Use this checklist before marking the branch ready for non-draft review.
 - [ ] `npm run check-env` runs cleanly (or only expected warnings)
 - [ ] `.env.local` exists and Supabase keys are set
 - [ ] `NEXT_PUBLIC_ENABLE_MAPS` behavior matches expectation (on/off)
+- [ ] No server-only secrets are placed in `NEXT_PUBLIC_*` variables
 
 ## Build Health
 
 - [ ] `npm run lint`
 - [ ] `npm run build`
 - [ ] `npm run dev` starts without runtime errors
+- [ ] `npm run ready`
 
 ## Core Flow
 

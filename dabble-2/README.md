@@ -2,11 +2,12 @@
 
 Greenfield prototype for [Dabble](../README.md) — built in phases so maps, AI, and auth stay isolated behind flags and adapters.
 
-## Phase 0 (current)
+## Current state
 
 - Next.js App Router, TypeScript, Tailwind CSS v4, ESLint
-- `GET /api/health` — no database or third-party APIs
-- `npm run check-env` — lists documented env vars (exits 0; safe in CI)
+- Supabase-authenticated profile flow and API routes
+- Explore list with filters + map adapter shell
+- `npm run ready` gate (`check-env`, `lint`, `build`)
 
 ### Run locally
 
@@ -41,6 +42,7 @@ Copy `.env.example` to `.env.local` when you start integrating services. **Phase
 - Task queue: `docs/AGENT_TASK_QUEUE.md`
 - Handoff template: `docs/AGENT_HANDOFF_TEMPLATE.md`
 - QA checklist: `docs/QA_CHECKLIST.md`
+- Phase status: `docs/PHASE_STATUS.md`
 
 ## Product specs (v1 repo)
 

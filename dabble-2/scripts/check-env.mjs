@@ -91,6 +91,13 @@ function isSet(key) {
   return typeof v === "string" && v.length > 0;
 }
 
+function isTruthyEnv(key) {
+  const raw = process.env[key];
+  if (!raw) return false;
+  const normalized = raw.trim().toLowerCase();
+  return normalized === "true" || normalized === "1" || normalized === "yes";
+}
+
 function main() {
   loadEnvLocal();
 
@@ -110,17 +117,28 @@ function main() {
     }
   }
 
-  if (warnings.length && !isCI) {
-    console.warn(
-      "\n[check-env] Warning: optional integration vars missing:",
-      warnings.join(", "),
-    );
-  }
-
   // Security hygiene checks for local app env files.
   if (isSet("GITHUB_TOKEN")) {
     securityWarnings.push(
       "GITHUB_TOKEN is present in .env.local. Keep GitHub auth outside app env files.",
+    );
+  }
+
+  if (isSet("NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY")) {
+    securityWarnings.push(
+      "NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY should never be set. Service role keys must stay server-only.",
+    );
+  }
+
+  // Conditional configuration warnings.
+  if (isTruthyEnv("NEXT_PUBLIC_ENABLE_MAPS") && !isSet("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")) {
+    warnings.push("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY (required when maps are enabled)");
+  }
+
+  if (warnings.length && !isCI) {
+    console.warn(
+      "\n[check-env] Warning: optional integration vars missing:",
+      warnings.join(", "),
     );
   }
 
