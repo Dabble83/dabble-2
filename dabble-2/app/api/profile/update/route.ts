@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { fail, ok } from "@/src/lib/apiResponses";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 function toUsernameSeed(input: string) {
@@ -18,10 +19,7 @@ function isMissingColumnError(message: string) {
 export async function POST(request: NextRequest) {
   const supabase = getSupabaseServerClient();
   if (!supabase) {
-    return NextResponse.json(
-      { error: "Supabase server configuration missing" },
-      { status: 500 },
-    );
+    return fail("Supabase server configuration missing", 500);
   }
 
   const body = (await request.json()) as {
@@ -37,7 +35,7 @@ export async function POST(request: NextRequest) {
   };
 
   if (!body.userId) {
-    return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+    return fail("Missing userId", 400);
   }
 
   const displayName = body.displayName?.trim() || null;
@@ -57,10 +55,7 @@ export async function POST(request: NextRequest) {
     .neq("id", body.userId)
     .maybeSingle();
   if (existingUsername?.id) {
-    return NextResponse.json(
-      { error: "That username is already in use. Please choose another." },
-      { status: 409 },
-    );
+    return fail("That username is already in use. Please choose another.", 409);
   }
 
   const payload = {
@@ -99,15 +94,12 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (!fallbackError) {
-        return NextResponse.json({ profile: fallbackData });
+        return ok({ profile: fallbackData });
       }
     }
 
-    return NextResponse.json(
-      { error: "Failed to update profile", details: error.message },
-      { status: 500 },
-    );
+    return fail("Failed to update profile", 500, error.message);
   }
 
-  return NextResponse.json({ profile: data });
+  return ok({ profile: data });
 }

@@ -40,6 +40,7 @@ Copy `.env.example` to `.env.local` when you start integrating services. **Phase
 - Phase 1 scope contract: `docs/PHASE_1_SCOPE.md`
 - Task queue: `docs/AGENT_TASK_QUEUE.md`
 - Handoff template: `docs/AGENT_HANDOFF_TEMPLATE.md`
+- QA checklist: `docs/QA_CHECKLIST.md`
 
 ## Product specs (v1 repo)
 

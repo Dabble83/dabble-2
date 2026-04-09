@@ -1,13 +1,10 @@
-import { NextResponse } from "next/server";
+import { fail, ok } from "@/src/lib/apiResponses";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 export async function GET() {
   const supabase = getSupabaseServerClient();
   if (!supabase) {
-    return NextResponse.json(
-      { error: "Supabase server configuration missing" },
-      { status: 500 },
-    );
+    return fail("Supabase server configuration missing", 500);
   }
 
   const primaryQuery = await supabase
@@ -51,11 +48,8 @@ export async function GET() {
   }
 
   if (error) {
-    return NextResponse.json(
-      { error: "Failed to load discoverable profiles", details: error.message },
-      { status: 500 },
-    );
+    return fail("Failed to load discoverable profiles", 500, error.message);
   }
 
-  return NextResponse.json({ profiles: data ?? [] });
+  return ok({ profiles: data ?? [] });
 }

@@ -1,18 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { fail, ok } from "@/src/lib/apiResponses";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 export async function GET(request: NextRequest) {
   const username = request.nextUrl.searchParams.get("username");
   if (!username) {
-    return NextResponse.json({ error: "Missing username" }, { status: 400 });
+    return fail("Missing username", 400);
   }
 
   const supabase = getSupabaseServerClient();
   if (!supabase) {
-    return NextResponse.json(
-      { error: "Supabase server configuration missing" },
-      { status: 500 },
-    );
+    return fail("Supabase server configuration missing", 500);
   }
 
   const { data, error } = await supabase
@@ -24,11 +22,8 @@ export async function GET(request: NextRequest) {
     .maybeSingle();
 
   if (error) {
-    return NextResponse.json(
-      { error: "Failed to load profile", details: error.message },
-      { status: 500 },
-    );
+    return fail("Failed to load profile", 500, error.message);
   }
 
-  return NextResponse.json({ profile: data ?? null });
+  return ok({ profile: data ?? null });
 }
