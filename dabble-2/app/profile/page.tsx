@@ -27,7 +27,7 @@ export default function ProfilePage() {
       }
 
       setStatus("Loading profile...");
-      const response = await fetch(`/api/profile/me?userId=${encodeURIComponent(user.id)}`, {
+      const response = await fetch(`/api/profile/check?userId=${encodeURIComponent(user.id)}`, {
         cache: "no-store",
       });
       const body = await response.json();
@@ -37,8 +37,8 @@ export default function ProfilePage() {
         return;
       }
 
-      if (body.profile?.username) {
-        router.replace(`/profile/${body.profile.username}`);
+      if (body.complete && body.username) {
+        router.replace(`/profile/${body.username}`);
         return;
       }
 

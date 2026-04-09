@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-function getServerClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!url || !serviceRoleKey) return null;
-  return createClient(url, serviceRoleKey);
-}
+import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 function toUsernameSeed(input: string) {
   return input
@@ -19,7 +11,7 @@ function toUsernameSeed(input: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = getServerClient();
+  const supabase = getSupabaseServerClient();
   if (!supabase) {
     return NextResponse.json(
       { error: "Supabase server configuration missing" },

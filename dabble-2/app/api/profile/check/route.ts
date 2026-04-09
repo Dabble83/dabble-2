@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { ProfileRecord } from "@/src/lib/profileTypes";
+import { isProfileComplete } from "@/src/lib/profileCompletion";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 export async function GET(request: NextRequest) {
@@ -25,10 +27,14 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     return NextResponse.json(
-      { error: "Failed to load profile", details: error.message },
+      { error: "Failed to check profile", details: error.message },
       { status: 500 },
     );
   }
 
-  return NextResponse.json({ profile: data ?? null });
+  const profile = (data ?? null) as ProfileRecord | null;
+  return NextResponse.json({
+    complete: isProfileComplete(profile),
+    username: profile?.username ?? null,
+  });
 }
