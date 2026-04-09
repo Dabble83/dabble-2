@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 
 type ButtonProps = {
   children: ReactNode;
@@ -40,10 +40,21 @@ export function Card({
 }
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
+  const { className = "", ...rest } = props;
   return (
     <input
-      {...props}
-      className="w-full rounded-lg border-2 border-zinc-300 bg-white px-4 py-3 font-sans text-base text-[var(--text-primary)] outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:rgba(122,143,106,0.2)]"
+      {...rest}
+      className={`w-full rounded-lg border-2 border-zinc-300 bg-white px-4 py-3 font-sans text-base text-[var(--text-primary)] outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:rgba(122,143,106,0.2)] ${className}`}
+    />
+  );
+}
+
+export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const { className = "", ...rest } = props;
+  return (
+    <textarea
+      {...rest}
+      className={`w-full rounded-lg border-2 border-zinc-300 bg-white px-4 py-3 font-sans text-base text-[var(--text-primary)] outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:rgba(122,143,106,0.2)] ${className}`}
     />
   );
 }

@@ -52,6 +52,17 @@ export default function PublicProfilePage() {
             @{username} {profile?.location_label ? `- ${profile.location_label}` : ""}
           </p>
 
+          {profile?.interests_intro ? (
+            <p className="mt-4 text-base leading-7 text-[var(--text-secondary)]">
+              {profile.interests_intro}
+            </p>
+          ) : null}
+          {profile?.skills_intro ? (
+            <p className="mt-3 text-base leading-7 text-[var(--text-secondary)]">
+              {profile.skills_intro}
+            </p>
+          ) : null}
+
           <div className="mt-5 space-y-4">
             <div>
               <p className="ui-label mb-2">Offers</p>

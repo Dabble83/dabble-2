@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Card, Input, Tag } from "@/app/components/ui";
+import { Button, Card, Input, Tag, Textarea } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 import type { ProfileRecord } from "@/src/lib/profileTypes";
 
@@ -19,6 +19,9 @@ export default function ProfileSetupPage() {
   const [locationLabel, setLocationLabel] = useState("");
   const [offers, setOffers] = useState("");
   const [wants, setWants] = useState("");
+  const [interestsIntro, setInterestsIntro] = useState("");
+  const [skillsIntro, setSkillsIntro] = useState("");
+  const [isDiscoverable, setIsDiscoverable] = useState(false);
 
   useEffect(() => {
     async function loadInitial() {
@@ -52,6 +55,9 @@ export default function ProfileSetupPage() {
         setLocationLabel(profile.location_label || "");
         setOffers((profile.skills || []).join(", "));
         setWants((profile.interests || []).join(", "));
+        setInterestsIntro(profile.interests_intro || "");
+        setSkillsIntro(profile.skills_intro || "");
+        setIsDiscoverable(Boolean(profile.is_discoverable));
       }
 
       setLoading(false);
@@ -75,6 +81,9 @@ export default function ProfileSetupPage() {
         displayName,
         username,
         locationLabel,
+        interestsIntro,
+        skillsIntro,
+        isDiscoverable,
         skills: offers
           .split(",")
           .map((v) => v.trim())
@@ -146,6 +155,25 @@ export default function ProfileSetupPage() {
                   placeholder="Park Slope, Brooklyn"
                   value={locationLabel}
                   onChange={(e) => setLocationLabel(e.target.value)}
+                  required
+                />
+              </label>
+              <label className="block space-y-2 md:col-span-2">
+                <span className="ui-label">Interests intro</span>
+                <Textarea
+                  placeholder="What are you curious about lately?"
+                  value={interestsIntro}
+                  onChange={(e) => setInterestsIntro(e.target.value)}
+                  rows={3}
+                />
+              </label>
+              <label className="block space-y-2 md:col-span-2">
+                <span className="ui-label">Skills intro</span>
+                <Textarea
+                  placeholder="What do you enjoy helping neighbors with?"
+                  value={skillsIntro}
+                  onChange={(e) => setSkillsIntro(e.target.value)}
+                  rows={3}
                 />
               </label>
             </div>
@@ -179,6 +207,21 @@ export default function ProfileSetupPage() {
                 />
               </label>
             </div>
+          </Card>
+
+          <Card title="Discoverability">
+            <label className="flex items-start gap-3 font-sans text-sm text-[var(--text-secondary)]">
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4 accent-[var(--brand)]"
+                checked={isDiscoverable}
+                onChange={(e) => setIsDiscoverable(e.target.checked)}
+              />
+              <span>
+                Show my profile in Explore so nearby dabblers can find me.
+                You can turn this off anytime.
+              </span>
+            </label>
           </Card>
 
           <div className="flex items-center justify-between gap-4">
