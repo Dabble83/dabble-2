@@ -1,23 +1,59 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/app/components/ui";
+import { getSupabaseClient } from "@/src/lib/supabaseClient";
 
 export default function ProfilePage() {
+  const router = useRouter();
+  const [status, setStatus] = useState("Checking session...");
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function routeProfile() {
+      const supabase = getSupabaseClient();
+      if (!supabase) {
+        setError("Supabase public env vars are missing.");
+        return;
+      }
+
+      const { data: sessionData } = await supabase.auth.getSession();
+      const user = sessionData.session?.user;
+
+      if (!user) {
+        router.replace("/dabble/signin");
+        return;
+      }
+
+      setStatus("Loading profile...");
+      const response = await fetch(`/api/profile/me?userId=${encodeURIComponent(user.id)}`, {
+        cache: "no-store",
+      });
+      const body = await response.json();
+
+      if (!response.ok) {
+        setError(body.error || "Unable to load your profile.");
+        return;
+      }
+
+      if (body.profile?.username) {
+        router.replace(`/profile/${body.profile.username}`);
+        return;
+      }
+
+      router.replace("/profile/setup");
+    }
+
+    routeProfile();
+  }, [router]);
+
   return (
     <div className="py-16">
       <section className="ui-container max-w-2xl">
         <Card title="Profile">
-          <p className="text-base leading-7 text-[var(--text-secondary)]">
-            Profile routing is in place. Auth-aware redirect behavior will be
-            wired when Supabase session handling lands in the next phase.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-4 font-sans text-sm">
-            <Link href="/profile/setup" className="underline-offset-4 hover:underline">
-              Go to profile setup
-            </Link>
-            <Link href="/profile/demo-user" className="underline-offset-4 hover:underline">
-              View a sample public profile
-            </Link>
-          </div>
+          <p className="font-sans text-sm text-[var(--text-secondary)]">{status}</p>
+          {error ? <p className="mt-3 font-sans text-sm text-red-600">{error}</p> : null}
         </Card>
       </section>
     </div>

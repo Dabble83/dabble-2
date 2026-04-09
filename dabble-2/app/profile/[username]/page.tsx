@@ -1,7 +1,11 @@
-import { notFound } from "next/navigation";
-import { Card, Tag } from "@/app/components/ui";
+"use client";
 
-const demoProfiles: Record<
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Card, Tag } from "@/app/components/ui";
+import type { ProfileRecord } from "@/src/lib/profileTypes";
+
+const fallbackProfiles: Record<
   string,
   { name: string; neighborhood: string; offers: string[]; wants: string[] }
 > = {
@@ -11,39 +15,48 @@ const demoProfiles: Record<
     offers: ["Sourdough", "Knitting"],
     wants: ["Bike repair", "Woodworking"],
   },
-  "alex-fixes": {
-    name: "Alex",
-    neighborhood: "Prospect Heights",
-    offers: ["Bike repair", "Home tools"],
-    wants: ["Urban gardening"],
-  },
 };
 
-export default async function PublicProfilePage({
-  params,
-}: {
-  params: Promise<{ username: string }>;
-}) {
-  const { username } = await params;
-  const profile = demoProfiles[username];
+export default function PublicProfilePage() {
+  const params = useParams<{ username: string }>();
+  const username = params.username;
+  const [profile, setProfile] = useState<ProfileRecord | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!profile) {
-    notFound();
-  }
+  useEffect(() => {
+    async function loadProfile() {
+      const response = await fetch(
+        `/api/profile/by-username?username=${encodeURIComponent(username)}`,
+        { cache: "no-store" },
+      );
+      const body = await response.json();
+
+      if (!response.ok) {
+        setError(body.error || "Unable to load this profile.");
+        return;
+      }
+
+      setProfile(body.profile);
+    }
+
+    loadProfile();
+  }, [username]);
+
+  const fallback = fallbackProfiles[username];
 
   return (
     <div className="py-16">
       <section className="ui-container max-w-2xl">
-        <Card title={profile.name}>
+        <Card title={profile?.display_name || fallback?.name || "Dabbler"}>
           <p className="font-sans text-sm text-[var(--text-tertiary)]">
-            @{username} - {profile.neighborhood}
+            @{username} {profile?.location_label ? `- ${profile.location_label}` : ""}
           </p>
 
           <div className="mt-5 space-y-4">
             <div>
               <p className="ui-label mb-2">Offers</p>
               <div className="flex flex-wrap gap-2">
-                {profile.offers.map((offer) => (
+                {(profile?.skills || fallback?.offers || []).map((offer) => (
                   <Tag key={offer}>{offer}</Tag>
                 ))}
               </div>
@@ -51,12 +64,14 @@ export default async function PublicProfilePage({
             <div>
               <p className="ui-label mb-2">Wants</p>
               <div className="flex flex-wrap gap-2">
-                {profile.wants.map((want) => (
+                {(profile?.interests || fallback?.wants || []).map((want) => (
                   <Tag key={want}>{want}</Tag>
                 ))}
               </div>
             </div>
           </div>
+
+          {error ? <p className="mt-4 font-sans text-sm text-red-600">{error}</p> : null}
         </Card>
       </section>
     </div>
