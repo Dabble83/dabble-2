@@ -30,12 +30,16 @@ Copy `.env.example` to `.env.local` when you start integrating services. **Phase
 | `npm run build` | Production build                           |
 | `npm run check-env` | Print status of documented env vars   |
 | `npm run preflight` | `check-env` + `lint` before wider changes |
+| `npm run ready` | `check-env` + `lint` + `build` gate check |
 
 ## Agent workflow
 
 - Operating guide: `AGENTS.md`
 - Runbook: `docs/AGENT_RUNBOOK.md`
 - Prompt templates: `docs/AGENT_PROMPTS.md`
+- Phase 1 scope contract: `docs/PHASE_1_SCOPE.md`
+- Task queue: `docs/AGENT_TASK_QUEUE.md`
+- Handoff template: `docs/AGENT_HANDOFF_TEMPLATE.md`
 
 ## Product specs (v1 repo)
 

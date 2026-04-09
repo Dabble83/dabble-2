@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "check-env": "node scripts/check-env.mjs",
-    "preflight": "npm run check-env && npm run lint"
+    "preflight": "npm run check-env && npm run lint",
+    "ready": "npm run check-env && npm run lint && npm run build"
   },
   "dependencies": {
     "next": "16.2.2",
