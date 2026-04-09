@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +28,34 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full bg-[var(--background)] text-[var(--text-primary)]">
+        <div className="flex min-h-full flex-col">
+          <header className="border-b border-[var(--border)]">
+            <div className="ui-container flex items-center justify-between py-6">
+              <Link href="/" className="ui-heading text-3xl text-[var(--brand-text)]">
+                Dabble
+              </Link>
+              <nav className="flex items-center gap-6 font-sans text-sm font-medium text-[var(--text-secondary)]">
+                <Link href="/explore" className="hover:text-[var(--text-primary)]">
+                  Explore
+                </Link>
+                <Link href="/about" className="hover:text-[var(--text-primary)]">
+                  About
+                </Link>
+                <Link href="/dabble/signin" className="hover:text-[var(--text-primary)]">
+                  Sign in
+                </Link>
+              </nav>
+            </div>
+          </header>
+          <main className="flex-1">{children}</main>
+          <footer className="border-t border-[var(--border)]">
+            <div className="ui-container py-6 font-sans text-sm text-[var(--text-tertiary)]">
+              Dabble 2.0 prototype - calm local skill exchange.
+            </div>
+          </footer>
+        </div>
+      </body>
     </html>
   );
 }
