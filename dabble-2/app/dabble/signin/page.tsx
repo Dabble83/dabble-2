@@ -2,16 +2,24 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Input } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
+import { useAuthSession } from "@/src/hooks/useAuthSession";
 
 export default function SignInPage() {
   const router = useRouter();
+  const { session, loading } = useAuthSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!loading && session) {
+      router.replace("/profile");
+    }
+  }, [loading, router, session]);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +47,11 @@ export default function SignInPage() {
     <div className="py-16">
       <section className="ui-container max-w-xl">
         <Card title="Sign in">
+          {loading ? (
+            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">
+              Checking session...
+            </p>
+          ) : null}
           <form className="space-y-4" onSubmit={onSubmit}>
             <label className="block space-y-2">
               <span className="ui-label">Email</span>

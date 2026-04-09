@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { AuthNav } from "@/app/components/AuthNav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,9 +43,7 @@ export default function RootLayout({
                 <Link href="/about" className="hover:text-[var(--text-primary)]">
                   About
                 </Link>
-                <Link href="/dabble/signin" className="hover:text-[var(--text-primary)]">
-                  Sign in
-                </Link>
+                <AuthNav />
               </nav>
             </div>
           </header>
