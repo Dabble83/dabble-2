@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, Input, Tag, Textarea } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 import type { ProfileRecord } from "@/src/lib/profileTypes";
+import { isProfileComplete, missingProfileFields } from "@/src/lib/profileCompletion";
 
 const starterInterests = ["Cooking", "Home repair", "Cycling", "Gardening"];
 
@@ -22,6 +23,7 @@ export default function ProfileSetupPage() {
   const [interestsIntro, setInterestsIntro] = useState("");
   const [skillsIntro, setSkillsIntro] = useState("");
   const [isDiscoverable, setIsDiscoverable] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   useEffect(() => {
     async function loadInitial() {
@@ -70,6 +72,26 @@ export default function ProfileSetupPage() {
     event.preventDefault();
     if (!userId) return;
 
+    const localProfile: ProfileRecord = {
+      id: userId,
+      username: username.trim(),
+      display_name: displayName.trim() || null,
+      interests_intro: interestsIntro.trim() || null,
+      skills_intro: skillsIntro.trim() || null,
+      interests: wants
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean),
+      skills: offers
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean),
+      location_label: locationLabel.trim() || null,
+      is_discoverable: isDiscoverable,
+    };
+    const missing = missingProfileFields(localProfile);
+    setValidationErrors(missing);
+
     setSaving(true);
     setMessage(null);
 
@@ -84,14 +106,8 @@ export default function ProfileSetupPage() {
         interestsIntro,
         skillsIntro,
         isDiscoverable,
-        skills: offers
-          .split(",")
-          .map((v) => v.trim())
-          .filter(Boolean),
-        interests: wants
-          .split(",")
-          .map((v) => v.trim())
-          .filter(Boolean),
+        skills: localProfile.skills,
+        interests: localProfile.interests,
       }),
     });
 
@@ -103,8 +119,14 @@ export default function ProfileSetupPage() {
       return;
     }
 
-    const nextUsername = body.profile?.username || username;
-    router.push(`/profile/${nextUsername}`);
+    const nextUsername = body.profile?.username || username.trim();
+    if (isProfileComplete(localProfile) && nextUsername) {
+      router.push(`/profile/${nextUsername}`);
+      return;
+    }
+    setMessage(
+      `Saved. To complete your profile, add: ${missing.join(", ")}.`,
+    );
   };
 
   if (loading) {
@@ -127,6 +149,9 @@ export default function ProfileSetupPage() {
         <header className="space-y-2">
           <p className="ui-label">Profile setup</p>
           <h1 className="ui-heading text-4xl">Tell your neighbors about you</h1>
+          <p className="font-sans text-sm text-[var(--text-secondary)]">
+            Required to complete profile: display name, username, neighborhood, offers, wants.
+          </p>
         </header>
 
         <form className="space-y-6" onSubmit={onSave}>
@@ -225,11 +250,16 @@ export default function ProfileSetupPage() {
           </Card>
 
           <div className="flex items-center justify-between gap-4">
-            {message ? (
-              <p className="font-sans text-sm text-red-600">{message}</p>
-            ) : (
-              <span />
-            )}
+            <div className="space-y-1">
+              {validationErrors.length > 0 ? (
+                <p className="font-sans text-sm text-red-600">
+                  Missing: {validationErrors.join(", ")}
+                </p>
+              ) : null}
+              {message ? (
+                <p className="font-sans text-sm text-[var(--text-secondary)]">{message}</p>
+              ) : null}
+            </div>
             <Button type="submit" disabled={saving}>
               {saving ? "Saving..." : "Save profile"}
             </Button>
