@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd dabble-2 && npm ci",
+  "buildCommand": "cd dabble-2 && npm run build"
+}
+
