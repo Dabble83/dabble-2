@@ -23,6 +23,10 @@ Open [http://localhost:3000](http://localhost:3000). Health check: [http://local
 
 Copy `.env.example` to `.env.local` when you start integrating services. **Phase 0 does not require any variables** — `npm run build` should pass with an empty `.env.local` or none at all.
 
+### Optional: standalone GitHub repo
+
+If you want Dabble 2.0 as its own repository (instead of deploying from the monorepo with Root Directory `dabble-2`), see `docs/STANDALONE_REPO_EXPORT.md`.
+
 ### Scripts
 
 | Script        | Purpose                                      |
