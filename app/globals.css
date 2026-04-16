@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f1e8;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --text-primary: #1f2a37;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
+  --brand: #7a8f6a;
+  --brand-hover: #6b7a5a;
+  --brand-border: #5f6b55;
+  --brand-text: #2d5016;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: var(--brand-text);
+}
+
+.ui-container {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.ui-heading {
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.ui-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
