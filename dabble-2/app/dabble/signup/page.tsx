@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AuthShell } from "@/app/components/AuthShell";
 import { Button, Card, Input } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 import { useAuthSession } from "@/src/hooks/useAuthSession";
@@ -81,15 +82,22 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="py-16">
-      <section className="ui-container max-w-xl">
-        <Card title="Create your Dabble profile">
-          {loading ? (
-            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">
-              Checking session...
+    <AuthShell>
+      <div className="w-full max-w-md">
+        <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
+          Join as a neighbor, not a user ID.
+        </p>
+        <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
+          <div className="mb-6 border-b border-[var(--border)] pb-6">
+            <h1 className="ui-heading text-3xl">Create your space</h1>
+            <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
+              One calm card — we will ask for the rest once you are inside.
             </p>
+          </div>
+          {loading ? (
+            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">Checking session...</p>
           ) : null}
-          <form className="space-y-4" onSubmit={onSubmit}>
+          <form className="space-y-5" onSubmit={onSubmit}>
             <label className="block space-y-2">
               <span className="ui-label">Display name</span>
               <Input
@@ -119,21 +127,21 @@ export default function SignUpPage() {
                 required
               />
             </label>
-            <Button type="submit" className="w-full" disabled={submitting}>
+            <Button type="submit" className="w-full py-3 text-base" disabled={submitting}>
               {submitting ? "Creating..." : "Create account"}
             </Button>
             {message ? (
               <p className="font-sans text-sm text-[var(--text-secondary)]">{message}</p>
             ) : null}
           </form>
-          <p className="mt-4 font-sans text-sm text-[var(--text-secondary)]">
+          <p className="mt-6 text-center font-sans text-sm text-[var(--text-secondary)]">
             Already have an account?{" "}
-            <Link href="/dabble/signin" className="underline-offset-4 hover:underline">
+            <Link href="/dabble/signin" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
               Sign in
             </Link>
           </p>
         </Card>
-      </section>
-    </div>
+      </div>
+    </AuthShell>
   );
 }

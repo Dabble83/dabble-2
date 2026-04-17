@@ -2,9 +2,71 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Card, Tag } from "@/app/components/ui";
+import { Button, Tag } from "@/app/components/ui";
 import { MapAdapterShell } from "@/app/explore/MapAdapterShell";
 import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
+
+function ExploreProfileCard({
+  dabbler,
+  featured,
+}: {
+  dabbler: DiscoverableProfile;
+  featured?: boolean;
+}) {
+  const name = dabbler.display_name || "Neighbor";
+  const handle = dabbler.username ? `@${dabbler.username}` : "";
+  const place = dabbler.location_label || "Neighborhood not set";
+
+  return (
+    <article
+      className={`group flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_12px_40px_-20px_rgba(42,61,44,0.15)] transition hover:border-[color-mix(in_srgb,var(--brand)_40%,var(--border))] ${
+        featured ? "lg:row-span-2 lg:justify-between lg:p-8" : ""
+      }`}
+    >
+      <div>
+        <p className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[var(--brand-text)]">
+          {place}
+        </p>
+        <h2 className="ui-heading mt-2 text-2xl text-[var(--text-primary)] md:text-3xl">
+          {name}
+        </h2>
+        {handle ? (
+          <p className="mt-1 font-sans text-sm text-[var(--text-tertiary)]">{handle}</p>
+        ) : null}
+      </div>
+
+      <div className={`mt-6 space-y-5 ${featured ? "lg:mt-10" : ""}`}>
+        <div>
+          <p className="ui-label mb-2">Offers</p>
+          <div className="flex flex-wrap gap-2">
+            {(dabbler.skills || []).length ? (
+              (dabbler.skills || []).map((offer) => <Tag key={offer}>{offer}</Tag>)
+            ) : (
+              <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
+            )}
+          </div>
+        </div>
+        <div>
+          <p className="ui-label mb-2">Wants to learn</p>
+          <div className="flex flex-wrap gap-2">
+            {(dabbler.interests || []).length ? (
+              (dabbler.interests || []).map((want) => <Tag key={want}>{want}</Tag>)
+            ) : (
+              <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <Link
+        href={`/profile/${dabbler.username}`}
+        className="mt-6 inline-flex font-sans text-sm font-medium text-[var(--brand-text)] underline-offset-[5px] transition group-hover:underline"
+      >
+        View profile
+      </Link>
+    </article>
+  );
+}
 
 export default function ExplorePage() {
   const mapsEnabled = process.env.NEXT_PUBLIC_ENABLE_MAPS === "true";
@@ -67,29 +129,29 @@ export default function ExplorePage() {
   });
 
   return (
-    <div className="py-16">
-      <section className="ui-container space-y-8">
-        <header className="space-y-3">
+    <div className="py-16 md:py-20">
+      <section className="ui-container space-y-12">
+        <header className="max-w-3xl space-y-4">
           <p className="ui-label">Explore</p>
-          <h1 className="ui-heading text-5xl">Dabblers near you</h1>
-          <p className="max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-            Discovery is list-first and resilient. Optional map rendering stays
-            behind an adapter so core browsing never breaks.
+          <h1 className="ui-heading text-4xl md:text-5xl">Neighbors worth meeting</h1>
+          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+            Browse at your own pace. Each card is a small portrait — what someone shares, what they
+            hope to learn, and where they are in the neighborhood.
           </p>
         </header>
 
         <MapAdapterShell enabled={mapsEnabled} points={profiles} />
 
-        <div className="ui-card p-4">
-          <div className="grid gap-3 md:grid-cols-[1fr_auto]">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:p-6">
+          <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <label className="block space-y-2">
-              <span className="ui-label">Search by name, offer, or want</span>
+              <span className="ui-label">Search</span>
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="e.g. sourdough, bike repair, Alex"
-                className="w-full rounded-lg border-2 border-zinc-300 bg-white px-4 py-2.5 font-sans text-sm text-[var(--text-primary)] outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand)]"
+                placeholder="Name, skill, or curiosity"
+                className="w-full rounded-xl border-2 border-[var(--border)] bg-white px-4 py-3 font-sans text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-tertiary)] focus:border-[var(--brand)]"
               />
             </label>
             <label className="block space-y-2">
@@ -97,9 +159,9 @@ export default function ExplorePage() {
               <select
                 value={neighborhood}
                 onChange={(e) => setNeighborhood(e.target.value)}
-                className="h-[42px] rounded-lg border-2 border-zinc-300 bg-white px-3 font-sans text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--brand)]"
+                className="h-[48px] min-w-[11rem] rounded-xl border-2 border-[var(--border)] bg-white px-3 font-sans text-sm text-[var(--text-primary)] outline-none focus:border-[var(--brand)]"
               >
-                <option value="all">All neighborhoods</option>
+                <option value="all">Everywhere</option>
                 {neighborhoods.map((label) => (
                   <option key={label} value={label}>
                     {label}
@@ -109,22 +171,22 @@ export default function ExplorePage() {
             </label>
           </div>
           {!loading && !error ? (
-            <p className="mt-3 font-sans text-xs text-[var(--text-tertiary)]">
+            <p className="mt-4 font-sans text-xs text-[var(--text-tertiary)]">
               Showing {filteredProfiles.length} of {profiles.length} profiles.
             </p>
           ) : null}
         </div>
 
         {loading ? (
-          <div className="ui-card p-6 font-sans text-sm text-[var(--text-secondary)]">
-            Loading discoverable profiles...
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+            Gathering neighbors...
           </div>
         ) : null}
 
         {error ? (
-          <div className="ui-card p-6 font-sans text-sm text-red-600">
+          <div className="rounded-2xl border border-red-200 bg-red-50/80 p-6 font-sans text-sm text-red-800">
             <p>{error}</p>
-            <div className="mt-3">
+            <div className="mt-4">
               <Button variant="secondary" onClick={loadDiscoverable}>
                 Retry
               </Button>
@@ -133,54 +195,22 @@ export default function ExplorePage() {
         ) : null}
 
         {!loading && !error && profiles.length === 0 ? (
-          <div className="ui-card p-6 font-sans text-sm text-[var(--text-secondary)]">
-            No discoverable profiles yet. Complete profile setup and enable
-            discoverability to appear here.
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+            No discoverable profiles yet. Complete profile setup and enable discoverability to appear
+            here.
           </div>
         ) : null}
 
         {!loading && !error && profiles.length > 0 && filteredProfiles.length === 0 ? (
-          <div className="ui-card p-6 font-sans text-sm text-[var(--text-secondary)]">
-            No matches for your current filters. Try a broader search or choose
-            &quot;All neighborhoods&quot;.
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+            No matches for your filters. Try a broader search or choose &quot;Everywhere&quot;.
           </div>
         ) : null}
 
         {!loading && !error ? (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {filteredProfiles.map((dabbler) => (
-              <Card
-                key={dabbler.id}
-                title={`${dabbler.display_name || "Dabbler"} (@${dabbler.username})`}
-              >
-                <p className="font-sans text-sm text-[var(--text-tertiary)]">
-                  {dabbler.location_label || "Neighborhood not set"}
-                </p>
-                <div className="mt-4 space-y-3">
-                  <div>
-                    <p className="ui-label mb-2">Offers</p>
-                    <div className="flex flex-wrap gap-2">
-                      {(dabbler.skills || []).map((offer) => (
-                        <Tag key={offer}>{offer}</Tag>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="ui-label mb-2">Wants</p>
-                    <div className="flex flex-wrap gap-2">
-                      {(dabbler.interests || []).map((want) => (
-                        <Tag key={want}>{want}</Tag>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <Link
-                  href={`/profile/${dabbler.username}`}
-                  className="mt-4 inline-block font-sans text-sm underline-offset-4 hover:underline"
-                >
-                  View profile
-                </Link>
-              </Card>
+          <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {filteredProfiles.map((dabbler, index) => (
+              <ExploreProfileCard key={dabbler.id} dabbler={dabbler} featured={index === 0} />
             ))}
           </div>
         ) : null}

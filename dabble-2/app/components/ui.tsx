@@ -27,13 +27,15 @@ export function Button({
 export function Card({
   title,
   children,
+  className = "",
 }: {
   title?: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="ui-card p-6">
-      {title ? <h3 className="ui-heading mb-4 text-2xl">{title}</h3> : null}
+    <section className={`ui-card p-6 ${className}`}>
+      {title ? <h3 className="ui-heading mb-4 font-serif text-2xl">{title}</h3> : null}
       {children}
     </section>
   );
@@ -61,7 +63,7 @@ export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
 
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex rounded-full bg-zinc-200 px-3 py-1 font-sans text-sm text-zinc-700">
+    <span className="inline-flex rounded-full border border-[color-mix(in_srgb,var(--brand)_35%,transparent)] bg-[color-mix(in_srgb,var(--brand)_14%,white)] px-3 py-1 font-sans text-xs font-medium text-[var(--text-primary)]">
       {children}
     </span>
   );

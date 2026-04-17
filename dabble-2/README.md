@@ -27,6 +27,10 @@ Copy `.env.example` to `.env.local` when you start integrating services. **Phase
 
 If you want Dabble 2.0 as its own repository (instead of deploying from the monorepo with Root Directory `dabble-2`), see `docs/STANDALONE_REPO_EXPORT.md`.
 
+### Product & design plan
+
+- Master plan (including Phase 2 design): `docs/MASTER_PLAN.md`
+
 ### Scripts
 
 | Script        | Purpose                                      |

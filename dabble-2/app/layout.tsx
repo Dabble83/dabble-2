@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
 import Link from "next/link";
-import { AuthNav } from "@/app/components/AuthNav";
+import { SiteHeader } from "@/app/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,9 +14,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Dabble 2.0",
-  description: "Try something new, wherever you are — prototype shell",
+  description: "Warm local skill exchange — editorial community platform",
 };
 
 export default function RootLayout({
@@ -27,30 +33,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[var(--background)] text-[var(--text-primary)]">
         <div className="flex min-h-full flex-col">
-          <header className="border-b border-[var(--border)]">
-            <div className="ui-container flex items-center justify-between py-6">
-              <Link href="/" className="ui-heading text-3xl text-[var(--brand-text)]">
-                Dabble
-              </Link>
-              <nav className="flex items-center gap-6 font-sans text-sm font-medium text-[var(--text-secondary)]">
-                <Link href="/explore" className="hover:text-[var(--text-primary)]">
-                  Explore
-                </Link>
-                <Link href="/about" className="hover:text-[var(--text-primary)]">
-                  About
-                </Link>
-                <AuthNav />
-              </nav>
-            </div>
-          </header>
+          <SiteHeader />
           <main className="flex-1">{children}</main>
-          <footer className="border-t border-[var(--border)]">
-            <div className="ui-container py-6 font-sans text-sm text-[var(--text-tertiary)]">
-              Dabble 2.0 prototype - calm local skill exchange.
+          <footer className="border-t border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_60%,var(--background))]">
+            <div className="ui-container flex flex-col gap-2 py-10 font-sans text-sm text-[var(--text-tertiary)] md:flex-row md:items-center md:justify-between">
+              <span>Dabble — neighbors learning together.</span>
+              <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                About this prototype
+              </Link>
             </div>
           </footer>
         </div>

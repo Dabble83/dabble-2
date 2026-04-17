@@ -2,7 +2,7 @@
 
 ## Current branch
 
-- `cursor/dabble2-agent-workflow`
+- `cursor/phase2-design-overhaul-0551` (Phase 2 design)
 
 ## Completed
 
@@ -15,6 +15,7 @@
 - API response normalization helpers
 - Phase 1 QA checklist
 - Client reliability improvements (loading/error/retry on key screens)
+- **Phase 2 — Design overhaul** (`docs/MASTER_PLAN.md` §2.1–§2.7): Lora typography, hero redesign, sticky nav + mobile menu + Join CTA, Explore card grid, profile setup steps + tag input, public profile layout, auth shells
 
 ## Remaining before merge
 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AuthShell } from "@/app/components/AuthShell";
 import { Button, Card, Input } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 import { useAuthSession } from "@/src/hooks/useAuthSession";
@@ -44,15 +45,22 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="py-16">
-      <section className="ui-container max-w-xl">
-        <Card title="Sign in">
-          {loading ? (
-            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">
-              Checking session...
+    <AuthShell>
+      <div className="w-full max-w-md">
+        <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
+          Welcome back. Your block saved you a seat.
+        </p>
+        <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
+          <div className="mb-6 border-b border-[var(--border)] pb-6">
+            <h1 className="ui-heading text-3xl">Sign in</h1>
+            <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
+              Use the email and password you chose when you joined.
             </p>
+          </div>
+          {loading ? (
+            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">Checking session...</p>
           ) : null}
-          <form className="space-y-4" onSubmit={onSubmit}>
+          <form className="space-y-5" onSubmit={onSubmit}>
             <label className="block space-y-2">
               <span className="ui-label">Email</span>
               <Input
@@ -73,21 +81,19 @@ export default function SignInPage() {
                 required
               />
             </label>
-            <Button type="submit" className="w-full" disabled={submitting}>
+            <Button type="submit" className="w-full py-3 text-base" disabled={submitting}>
               {submitting ? "Signing in..." : "Continue"}
             </Button>
-            {message ? (
-              <p className="font-sans text-sm text-red-600">{message}</p>
-            ) : null}
+            {message ? <p className="font-sans text-sm text-red-600">{message}</p> : null}
           </form>
-          <p className="mt-4 font-sans text-sm text-[var(--text-secondary)]">
+          <p className="mt-6 text-center font-sans text-sm text-[var(--text-secondary)]">
             New here?{" "}
-            <Link href="/dabble/signup" className="underline-offset-4 hover:underline">
+            <Link href="/dabble/signup" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
               Create an account
             </Link>
           </p>
         </Card>
-      </section>
-    </div>
+      </div>
+    </AuthShell>
   );
 }
