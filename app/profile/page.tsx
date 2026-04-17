@@ -5,6 +5,15 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 
+async function authHeaders() {
+  const supabase = getSupabaseClient();
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) return null;
+  return { Authorization: `Bearer ${token}` };
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const [status, setStatus] = useState("Checking session...");
@@ -27,7 +36,14 @@ export default function ProfilePage() {
       }
 
       setStatus("Loading profile...");
-      const response = await fetch(`/api/profile/check?userId=${encodeURIComponent(user.id)}`, {
+      const headers = await authHeaders();
+      if (!headers) {
+        router.replace("/dabble/signin");
+        return;
+      }
+
+      const response = await fetch("/api/profile/check", {
+        headers,
         cache: "no-store",
       });
       const body = await response.json();
@@ -59,3 +75,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

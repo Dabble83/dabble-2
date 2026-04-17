@@ -49,12 +49,14 @@ export default function SignUpPage() {
       return;
     }
 
-    if (data.user?.id) {
+    if (data.user?.id && data.session?.access_token) {
       const profileResponse = await fetch("/api/profile/update", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.session.access_token}`,
+        },
         body: JSON.stringify({
-          userId: data.user.id,
           displayName,
         }),
       });
@@ -135,3 +137,4 @@ export default function SignUpPage() {
     </div>
   );
 }
+

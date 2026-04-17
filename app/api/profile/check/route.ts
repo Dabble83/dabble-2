@@ -3,24 +3,23 @@ import type { ProfileRecord } from "@/src/lib/profileTypes";
 import { isProfileComplete } from "@/src/lib/profileCompletion";
 import { fail, ok } from "@/src/lib/apiResponses";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
+import { requireRouteUser } from "@/src/lib/routeAuth";
 
 export async function GET(request: NextRequest) {
-  const userId = request.nextUrl.searchParams.get("userId");
-  if (!userId) {
-    return fail("Missing userId", 400);
-  }
-
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     return fail("Supabase server configuration missing", 500);
   }
+
+  const auth = await requireRouteUser(request, supabase);
+  if (auth instanceof Response) return auth;
 
   const { data, error } = await supabase
     .from("profiles")
     .select(
       "id, username, display_name, interests_intro, skills_intro, interests, skills, location_label, is_discoverable",
     )
-    .eq("id", userId)
+    .eq("id", auth.user.id)
     .maybeSingle();
 
   if (error) {
@@ -33,3 +32,4 @@ export async function GET(request: NextRequest) {
     username: profile?.username ?? null,
   });
 }
+
