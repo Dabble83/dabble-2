@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { fail, ok } from "@/src/lib/apiResponses";
+import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 function toUsernameSeed(input: string) {
@@ -22,6 +23,11 @@ export async function POST(request: NextRequest) {
     return fail("Supabase server configuration missing", 500);
   }
 
+  const authResult = await requireRouteUser(request, supabase);
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   const body = (await request.json()) as {
     userId?: string;
     displayName?: string;
@@ -34,9 +40,10 @@ export async function POST(request: NextRequest) {
     isDiscoverable?: boolean;
   };
 
-  if (!body.userId) {
-    return fail("Missing userId", 400);
+  if (body.userId && body.userId !== authResult.user.id) {
+    return fail("Forbidden", 403);
   }
+  const userId = authResult.user.id;
 
   const displayName = body.displayName?.trim() || null;
   const usernameInput = body.username?.trim();
@@ -44,22 +51,22 @@ export async function POST(request: NextRequest) {
     ? toUsernameSeed(usernameInput)
     : displayName
       ? toUsernameSeed(displayName)
-      : `dabbler-${body.userId.slice(0, 8)}`;
-  const username = candidateUsername || `dabbler-${body.userId.slice(0, 8)}`;
+      : `dabbler-${userId.slice(0, 8)}`;
+  const username = candidateUsername || `dabbler-${userId.slice(0, 8)}`;
 
   // Friendly guard before upsert to avoid opaque DB unique violation messages.
   const { data: existingUsername } = await supabase
     .from("profiles")
     .select("id")
     .eq("username", username)
-    .neq("id", body.userId)
+    .neq("id", userId)
     .maybeSingle();
   if (existingUsername?.id) {
     return fail("That username is already in use. Please choose another.", 409);
   }
 
   const payload = {
-    id: body.userId,
+    id: userId,
     username,
     display_name: displayName,
     interests_intro: body.interestsIntro ?? null,
@@ -80,7 +87,7 @@ export async function POST(request: NextRequest) {
     // Some schemas may not include optional fields yet; retry with core columns.
     if (isMissingColumnError(error.message)) {
       const corePayload = {
-        id: body.userId,
+        id: userId,
         username,
         display_name: displayName,
         interests: Array.isArray(body.interests) ? body.interests : [],

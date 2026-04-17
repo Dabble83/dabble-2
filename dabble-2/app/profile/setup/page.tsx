@@ -38,6 +38,7 @@ export default function ProfileSetupPage() {
 
       const { data: sessionData } = await supabase.auth.getSession();
       const user = sessionData.session?.user;
+      const accessToken = sessionData.session?.access_token;
       if (!user) {
         router.replace("/dabble/signin");
         return;
@@ -47,8 +48,17 @@ export default function ProfileSetupPage() {
       const metadataName = (user.user_metadata?.display_name as string) || "";
       setDisplayName(metadataName);
 
-      const response = await fetch(`/api/profile/me?userId=${encodeURIComponent(user.id)}`, {
+      if (!accessToken) {
+        setMessage("Session token missing. Please sign in again.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch("/api/profile/me", {
         cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       const body = await response.json();
       if (!response.ok) {
@@ -111,9 +121,26 @@ export default function ProfileSetupPage() {
     setMessage(null);
 
     try {
+      const supabase = getSupabaseClient();
+      if (!supabase) {
+        setSaving(false);
+        setMessage("Supabase public env vars are missing.");
+        return;
+      }
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (!accessToken) {
+        setSaving(false);
+        setMessage("Session token missing. Please sign in again.");
+        return;
+      }
+
       const response = await fetch("/api/profile/update", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
         body: JSON.stringify({
           userId,
           displayName,
