@@ -140,80 +140,82 @@ export default function ExplorePage() {
           </p>
         </header>
 
-        <MapAdapterShell enabled={mapsEnabled} points={profiles} />
-
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:p-6">
-          <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
-            <label className="block space-y-2">
-              <span className="ui-label">Search</span>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Name, skill, or curiosity"
-                className="w-full rounded-xl border-2 border-[var(--border)] bg-white px-4 py-3 font-sans text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-tertiary)] focus:border-[var(--brand)]"
-              />
-            </label>
-            <label className="block space-y-2">
-              <span className="ui-label">Neighborhood</span>
-              <select
-                value={neighborhood}
-                onChange={(e) => setNeighborhood(e.target.value)}
-                className="h-[48px] min-w-[11rem] rounded-xl border-2 border-[var(--border)] bg-white px-3 font-sans text-sm text-[var(--text-primary)] outline-none focus:border-[var(--brand)]"
-              >
-                <option value="all">Everywhere</option>
-                {neighborhoods.map((label) => (
-                  <option key={label} value={label}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          {!loading && !error ? (
-            <p className="mt-4 font-sans text-xs text-[var(--text-tertiary)]">
-              Showing {filteredProfiles.length} of {profiles.length} profiles.
-            </p>
-          ) : null}
-        </div>
-
-        {loading ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
-            Gathering neighbors...
-          </div>
-        ) : null}
-
-        {error ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50/80 p-6 font-sans text-sm text-red-800">
-            <p>{error}</p>
-            <div className="mt-4">
-              <Button variant="secondary" onClick={loadDiscoverable}>
-                Retry
-              </Button>
+        <MapAdapterShell enabled={mapsEnabled} points={profiles}>
+          <div className="space-y-6">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:p-6">
+              <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+                <label className="block space-y-2">
+                  <span className="ui-label">Search</span>
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Name, skill, or curiosity"
+                    className="w-full rounded-xl border-2 border-[var(--border)] bg-white px-4 py-3 font-sans text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-tertiary)] focus:border-[var(--brand)]"
+                  />
+                </label>
+                <label className="block space-y-2">
+                  <span className="ui-label">Neighborhood</span>
+                  <select
+                    value={neighborhood}
+                    onChange={(e) => setNeighborhood(e.target.value)}
+                    className="h-[48px] min-w-[11rem] rounded-xl border-2 border-[var(--border)] bg-white px-3 font-sans text-sm text-[var(--text-primary)] outline-none focus:border-[var(--brand)]"
+                  >
+                    <option value="all">Everywhere</option>
+                    {neighborhoods.map((label) => (
+                      <option key={label} value={label}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              {!loading && !error ? (
+                <p className="mt-4 font-sans text-xs text-[var(--text-tertiary)]">
+                  Showing {filteredProfiles.length} of {profiles.length} profiles.
+                </p>
+              ) : null}
             </div>
-          </div>
-        ) : null}
 
-        {!loading && !error && profiles.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
-            No discoverable profiles yet. Complete profile setup and enable discoverability to appear
-            here.
-          </div>
-        ) : null}
+            {loading ? (
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+                Gathering neighbors...
+              </div>
+            ) : null}
 
-        {!loading && !error && profiles.length > 0 && filteredProfiles.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
-            No matches for your filters. Try a broader search or choose &quot;Everywhere&quot;.
-          </div>
-        ) : null}
+            {error ? (
+              <div className="rounded-2xl border border-red-200 bg-red-50/80 p-6 font-sans text-sm text-red-800">
+                <p>{error}</p>
+                <div className="mt-4">
+                  <Button variant="secondary" onClick={loadDiscoverable}>
+                    Retry
+                  </Button>
+                </div>
+              </div>
+            ) : null}
 
-        {!loading && !error ? (
-          <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredProfiles.map((dabbler, index) => (
-              <ExploreProfileCard key={dabbler.id} dabbler={dabbler} featured={index === 0} />
-            ))}
+            {!loading && !error && profiles.length === 0 ? (
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+                No discoverable profiles yet. Complete profile setup and enable discoverability to appear
+                here.
+              </div>
+            ) : null}
+
+            {!loading && !error && profiles.length > 0 && filteredProfiles.length === 0 ? (
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]">
+                No matches for your filters. Try a broader search or choose &quot;Everywhere&quot;.
+              </div>
+            ) : null}
+
+            {!loading && !error ? (
+              <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredProfiles.map((dabbler, index) => (
+                  <ExploreProfileCard key={dabbler.id} dabbler={dabbler} featured={index === 0} />
+                ))}
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        </MapAdapterShell>
       </section>
     </div>
   );
