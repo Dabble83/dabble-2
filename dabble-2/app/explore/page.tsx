@@ -6,6 +6,25 @@ import { Button, Tag } from "@/app/components/ui";
 import { MapAdapterShell } from "@/app/explore/MapAdapterShell";
 import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
 
+const BAND_PALETTE = [
+  "#cdd8ce", // sage
+  "#d8cfc5", // warm terracotta
+  "#c8d0d8", // dusty slate
+  "#d4cfcc", // warm taupe
+  "#cec8d4", // lavender dust
+] as const;
+
+function bandColor(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = ((h * 31) + seed.charCodeAt(i)) >>> 0;
+  return BAND_PALETTE[h % BAND_PALETTE.length];
+}
+
+function nameInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  return parts.slice(0, 2).map((w) => w[0] ?? "").join("").toUpperCase() || "N";
+}
+
 function ExploreProfileCard({
   dabbler,
   featured,
@@ -18,57 +37,68 @@ function ExploreProfileCard({
   const name = dabbler.display_name || "Neighbor";
   const handle = dabbler.username ? `@${dabbler.username}` : "";
   const place = dabbler.location_label || "Neighborhood not set";
+  const color = bandColor(dabbler.id);
 
   return (
     <article
       id={`explore-card-${dabbler.id}`}
-      className={`group flex flex-col rounded-2xl border bg-[var(--surface)] p-6 shadow-[0_12px_40px_-20px_rgba(42,61,44,0.15)] transition hover:border-[color-mix(in_srgb,var(--brand)_40%,var(--border))] ${
+      className={`group flex flex-col overflow-hidden rounded-2xl border bg-[var(--surface)] shadow-[0_12px_40px_-20px_rgba(42,61,44,0.15)] transition hover:border-[color-mix(in_srgb,var(--brand)_40%,var(--border))] ${
         highlighted
           ? "border-[var(--brand-border)] ring-2 ring-[color:rgba(109,133,112,0.35)]"
           : "border-[var(--border)]"
-      } ${featured ? "lg:row-span-2 lg:justify-between lg:p-8" : ""}`}
+      } ${featured ? "lg:row-span-2 lg:justify-between" : ""}`}
     >
-      <div>
-        <p className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[var(--brand-text)]">
-          {place}
-        </p>
-        <h2 className="ui-heading mt-2 text-2xl text-[var(--text-primary)] md:text-3xl">
-          {name}
-        </h2>
-        {handle ? (
-          <p className="mt-1 font-sans text-sm text-[var(--text-tertiary)]">{handle}</p>
-        ) : null}
-      </div>
-
-      <div className={`mt-6 space-y-5 ${featured ? "lg:mt-10" : ""}`}>
-        <div>
-          <p className="ui-label mb-2">Offers</p>
-          <div className="flex flex-wrap gap-2">
-            {(dabbler.skills || []).length ? (
-              (dabbler.skills || []).map((offer) => <Tag key={offer}>{offer}</Tag>)
-            ) : (
-              <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
-            )}
-          </div>
-        </div>
-        <div>
-          <p className="ui-label mb-2">Wants to learn</p>
-          <div className="flex flex-wrap gap-2">
-            {(dabbler.interests || []).length ? (
-              (dabbler.interests || []).map((want) => <Tag key={want}>{want}</Tag>)
-            ) : (
-              <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
-            )}
-          </div>
+      <div className="relative h-[72px] shrink-0" style={{ background: color }}>
+        <div className="absolute -bottom-5 left-5 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--surface)] bg-[var(--brand)] shadow-sm">
+          <span className="font-sans text-sm font-bold leading-none text-white">
+            {nameInitials(name)}
+          </span>
         </div>
       </div>
 
-      <Link
-        href={`/profile/${dabbler.username}`}
-        className="mt-6 inline-flex font-sans text-sm font-medium text-[var(--brand-text)] underline-offset-[5px] transition group-hover:underline"
-      >
-        View profile
-      </Link>
+      <div className={`flex flex-1 flex-col px-6 pb-6 pt-9 ${featured ? "lg:pt-11" : ""}`}>
+        <div>
+          <p className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[var(--brand-text)]">
+            {place}
+          </p>
+          <h2 className="ui-heading mt-2 text-2xl text-[var(--text-primary)] md:text-3xl">
+            {name}
+          </h2>
+          {handle ? (
+            <p className="mt-1 font-sans text-sm text-[var(--text-tertiary)]">{handle}</p>
+          ) : null}
+        </div>
+
+        <div className={`mt-6 space-y-5 ${featured ? "lg:mt-10" : ""}`}>
+          <div>
+            <p className="ui-label mb-2">Offers</p>
+            <div className="flex flex-wrap gap-2">
+              {(dabbler.skills || []).length ? (
+                (dabbler.skills || []).map((offer) => <Tag key={offer}>{offer}</Tag>)
+              ) : (
+                <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <p className="ui-label mb-2">Wants to learn</p>
+            <div className="flex flex-wrap gap-2">
+              {(dabbler.interests || []).length ? (
+                (dabbler.interests || []).map((want) => <Tag key={want}>{want}</Tag>)
+              ) : (
+                <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <Link
+          href={`/profile/${dabbler.username}`}
+          className="mt-6 inline-flex font-sans text-sm font-medium text-[var(--brand-text)] underline-offset-[5px] transition group-hover:underline"
+        >
+          View profile
+        </Link>
+      </div>
     </article>
   );
 }
