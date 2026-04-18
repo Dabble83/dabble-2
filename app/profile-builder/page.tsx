@@ -156,11 +156,12 @@ export default function ProfileBuilderPage() {
 
           // Parse interests from JSON array or use interests_intro
           let interests: string[] = []
-          if (profileData.interests) {
+          const rawInterests = (profileData as any).interests
+          if (rawInterests) {
             try {
-              interests = typeof profileData.interests === 'string' 
-                ? JSON.parse(profileData.interests) 
-                : profileData.interests
+              interests = typeof rawInterests === 'string'
+                ? JSON.parse(rawInterests)
+                : rawInterests
             } catch {
               interests = []
             }
@@ -1100,7 +1101,7 @@ function MapsComponent({
         onLoad={() => {
           onStatusChange?.('loaded')
         }}
-        onError={(error) => {
+        onError={(error: any) => {
           console.error('Google Map error:', error)
           setMapError('Failed to load map')
           onError?.('Failed to load map')

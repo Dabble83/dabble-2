@@ -1000,7 +1000,6 @@ function MapsComponent({
           fullscreenControl: true,
         }}
         onLoad={(_map: unknown) => {
-          // Map loaded successfully
           onStatusChange?.('loaded')
         }}
         onError={(error: unknown) => {

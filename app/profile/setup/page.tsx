@@ -15,6 +15,7 @@ interface Skill {
 }
 
 interface ProfileData {
+  display_name: string
   username: string
   bio_interests: string
   bio_skills: string
@@ -46,6 +47,7 @@ export default function ProfileSetupPage() {
   const [aiConfigured, setAiConfigured] = useState(false)
 
   const [formData, setFormData] = useState<ProfileData>({
+    display_name: '',
     username: '',
     bio_interests: '',
     bio_skills: '',
