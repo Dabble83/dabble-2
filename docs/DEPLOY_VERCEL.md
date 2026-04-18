@@ -1,28 +1,22 @@
 ## Deploy Dabble 2.0 to Vercel
 
-This app lives under `dabble-2/` and is a Next.js App Router project.
+This repository is a Next.js App Router project deployed from the repo root.
 
-### 1) Create the Vercel project
+### 1) Create/link the Vercel project
 
 - In Vercel: **Add New → Project**
-- Import the GitHub repo
+- Import this GitHub repository
+- Confirm **Framework Preset** is Next.js
 
-### 2) Point Vercel at the `dabble-2` app
-
-In the “Configure Project” step (or later in Project Settings):
-
-- **Root Directory**: `dabble-2`
-- **Framework Preset**: Next.js (auto-detected)
-
-Suggested commands if Vercel asks:
+Suggested project commands:
 
 - **Install Command**: `npm ci`
 - **Build Command**: `npm run build`
 - **Output Directory**: default
 
-### 3) Set environment variables
+### 2) Configure environment variables
 
-In **Project → Settings → Environment Variables**, set the following (at least for **Production**, and for **Preview** if you want preview deploys to work):
+In **Project → Settings → Environment Variables**, set these for **Production** and **Preview**:
 
 Required for auth/profile/explore:
 
@@ -40,16 +34,38 @@ Optional (AI):
 
 - `OPENAI_API_KEY`
 
-Use `dabble-2/.env.example` as the canonical list.
+Use `.env.example` as the canonical list.
 
-### 4) Deploy
+### 3) Enable automatic redeploys from GitHub Actions
 
-Click **Deploy**. Vercel will provide a URL.
+This repo includes `.github/workflows/vercel-auto-deploy.yml`, which does:
 
-### 5) Production branch (recommended)
+- **PRs to `main`**: run `npm run ready`, then create a **Vercel Preview** deployment
+- **Push to `main`**: run `npm run ready`, then deploy to **Vercel Production**
 
-In **Project → Settings → Git**, set:
+Add the following **GitHub Actions secrets** at:
+**GitHub Repo → Settings → Secrets and variables → Actions**.
 
-- **Production Branch**: `main`
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
-This ensures merges to `main` trigger production deployments.
+How to get IDs:
+
+1. Link locally once with `npx vercel link`
+2. Read `.vercel/project.json` for `orgId` and `projectId`
+
+### 4) Production branch and protection
+
+In **Vercel → Project → Settings → Git**:
+
+- Set **Production Branch** = `main`
+
+In **GitHub branch protection** (recommended):
+
+- Require the "Vercel Auto Deploy / Verify app gates" check before merge
+
+### 5) First deployment
+
+After secrets are added, push to `main` (or merge a PR into `main`).
+The workflow will deploy automatically without manual intervention.
