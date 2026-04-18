@@ -3,7 +3,21 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Fraunces, Inter } from 'next/font/google'
+import { flags } from '../lib/flags'
 import './globals.css'
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Dabble - Try something new, wherever you are',
@@ -16,10 +30,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:rounded"
+          style={{ background: '#2d5016', color: '#fff' }}
+        >
+          Skip to main content
+        </a>
         <Header />
-        <main className="min-h-screen">
+        <main id="main-content" className="min-h-screen">
           {children}
         </main>
         <Footer />
@@ -38,14 +59,14 @@ function Header() {
       borderBottom: '1px solid #e5e7eb'
     }}>
       <nav className="flex justify-between items-center max-w-1200px mx-auto" style={{ maxWidth: '1200px' }}>
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="font-bold"
           style={{
             fontSize: '40px',
             color: '#2d5016',
             fontWeight: '700',
-            fontFamily: 'Georgia, serif',
+            fontFamily: 'var(--font-fraunces, Georgia, serif)',
             textDecoration: 'none'
           }}
         >
@@ -100,19 +121,21 @@ function Footer() {
             © {new Date().getFullYear()} Dabble. Built for community.
           </p>
           <nav className="flex gap-6" style={{ gap: '24px' }}>
-            <Link 
-              href="/about" 
-              className="link-primary text-sm"
-              style={{ fontSize: '14px' }}
-            >
+            <Link href="/about" className="link-primary text-sm" style={{ fontSize: '14px' }}>
               About
             </Link>
+            {flags.safetyPagesEnabled && (
+              <>
+                <Link href="/safety" className="link-primary text-sm" style={{ fontSize: '14px' }}>
+                  Safety
+                </Link>
+                <Link href="/guidelines" className="link-primary text-sm" style={{ fontSize: '14px' }}>
+                  Guidelines
+                </Link>
+              </>
+            )}
             {process.env.NODE_ENV === 'development' && (
-              <Link 
-                href="/debug/routes" 
-                className="link-primary text-sm"
-                style={{ fontSize: '14px' }}
-              >
+              <Link href="/debug/routes" className="link-primary text-sm" style={{ fontSize: '14px' }}>
                 Debug
               </Link>
             )}
