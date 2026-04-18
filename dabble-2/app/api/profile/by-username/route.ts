@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "id, username, display_name, interests_intro, skills_intro, interests, skills, location_label, is_discoverable",
+      "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, location_label, is_discoverable",
     )
     .eq("username", username)
     .maybeSingle();
@@ -25,5 +25,9 @@ export async function GET(request: NextRequest) {
     return fail("Failed to load profile", 500, error.message);
   }
 
-  return ok({ profile: data ?? null });
+  if (!data) {
+    return fail("Profile not found", 404);
+  }
+
+  return ok({ profile: data });
 }

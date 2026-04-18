@@ -2,6 +2,7 @@ export interface ProfileRecord {
   id: string;
   username: string;
   display_name: string | null;
+  bio?: string | null;
   interests_intro: string | null;
   skills_intro: string | null;
   interests: string[] | null;

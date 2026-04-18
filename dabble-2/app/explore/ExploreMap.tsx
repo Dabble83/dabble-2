@@ -1,60 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
 
 const MAP_STYLE: google.maps.MapTypeStyle[] = [
-  { featureType: "all", stylers: [{ saturation: -30 }, { lightness: 10 }] },
-  { featureType: "water", stylers: [{ color: "#c9d8c5" }] },
-  { featureType: "landscape", stylers: [{ color: "#f4f0e6" }] },
+  { elementType: "geometry", stylers: [{ color: "#f4f0e6" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#4a4a4a" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#c9d8d5" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#e8e2d6" }] },
 ];
 
-declare global {
-  interface Window {
-    google?: typeof google;
-    __dabbleMapsInitPromise?: Promise<void>;
-  }
-}
-
-function loadGoogleMaps(apiKey: string): Promise<void> {
-  if (typeof window === "undefined") return Promise.resolve();
-  if (window.google?.maps) return Promise.resolve();
-  if (window.__dabbleMapsInitPromise) return window.__dabbleMapsInitPromise;
-
-  window.__dabbleMapsInitPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      'script[data-dabble-google-maps="true"]',
-    );
-    if (existing) {
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", () => reject(new Error("Maps script failed")), {
-        once: true,
-      });
-      return;
-    }
-    const script = document.createElement("script");
-    script.dataset.dabbleGoogleMaps = "true";
-    script.async = true;
-    script.defer = true;
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&loading=async`;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Maps script failed"));
-    document.head.appendChild(script);
-  });
-
-  return window.__dabbleMapsInitPromise;
-}
+const US_CENTER = { lat: 39.5, lng: -98.35 };
+const DEFAULT_ZOOM = 4;
 
 function buildInfoContent(p: DiscoverableProfile): HTMLElement {
   const wrap = document.createElement("div");
   wrap.style.maxWidth = "260px";
   wrap.style.padding = "6px 4px";
   wrap.style.color = "#1c2424";
-  wrap.style.fontFamily = "var(--font-geist-sans), system-ui, sans-serif";
+  wrap.style.fontFamily = "system-ui, sans-serif";
 
   const title = document.createElement("div");
-  title.textContent = p.display_name || "Neighbor";
-  title.style.fontFamily = "var(--font-lora), Georgia, serif";
+  title.textContent = p.display_name || "Dabbler";
+  title.style.fontFamily = "Georgia, serif";
   title.style.fontSize = "1.05rem";
   title.style.fontWeight = "600";
   title.style.marginBottom = "4px";
@@ -65,12 +34,18 @@ function buildInfoContent(p: DiscoverableProfile): HTMLElement {
   place.style.color = "#6b736b";
   place.style.marginBottom = "8px";
 
-  const skills = document.createElement("div");
-  const skillText = (p.skills || []).slice(0, 8).join(", ") || "—";
-  skills.innerHTML = `<span style="font-weight:600">Offers:</span> ${skillText}`;
-  skills.style.fontSize = "12px";
-  skills.style.color = "#4a524a";
-  skills.style.marginBottom = "10px";
+  const skillsLine = document.createElement("div");
+  const topSkills = (p.skills || []).slice(0, 2);
+  const label = document.createElement("span");
+  label.textContent = "Offers: ";
+  label.style.fontWeight = "600";
+  const value = document.createElement("span");
+  value.textContent = topSkills.length ? topSkills.join(", ") : "—";
+  skillsLine.appendChild(label);
+  skillsLine.appendChild(value);
+  skillsLine.style.fontSize = "12px";
+  skillsLine.style.color = "#4a524a";
+  skillsLine.style.marginBottom = "10px";
 
   const link = document.createElement("a");
   link.href = `/profile/${encodeURIComponent(p.username)}`;
@@ -81,7 +56,7 @@ function buildInfoContent(p: DiscoverableProfile): HTMLElement {
 
   wrap.appendChild(title);
   wrap.appendChild(place);
-  wrap.appendChild(skills);
+  wrap.appendChild(skillsLine);
   wrap.appendChild(link);
   return wrap;
 }
@@ -100,6 +75,15 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
+  const loader = useMemo(() => {
+    if (!apiKey) return null;
+    return new Loader({
+      apiKey,
+      version: "weekly",
+      libraries: ["maps"],
+    });
+  }, [apiKey]);
+
   const openInfo = useCallback(
     (map: google.maps.Map, marker: google.maps.Marker, p: DiscoverableProfile) => {
       onSelectProfile?.(p);
@@ -113,20 +97,21 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   );
 
   useEffect(() => {
-    if (!apiKey) return;
+    if (!apiKey || !loader) return;
+    const mapLoader = loader;
 
     let cancelled = false;
 
     async function init() {
       queueMicrotask(() => setLoadError(null));
       try {
-        await loadGoogleMaps(apiKey);
+        await mapLoader.load();
         if (cancelled || !containerRef.current) return;
 
         if (!mapRef.current) {
           mapRef.current = new google.maps.Map(containerRef.current, {
-            center: { lat: 40.6782, lng: -73.9442 },
-            zoom: 11,
+            center: US_CENTER,
+            zoom: DEFAULT_ZOOM,
             disableDefaultUI: true,
             zoomControl: true,
             mapTypeControl: false,
@@ -149,8 +134,8 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         ) as (DiscoverableProfile & { lat: number; lng: number })[];
 
         if (withCoords.length === 0) {
-          map.setCenter({ lat: 40.6782, lng: -73.9442 });
-          map.setZoom(11);
+          map.setCenter(US_CENTER);
+          map.setZoom(DEFAULT_ZOOM);
           return;
         }
 
@@ -179,7 +164,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     return () => {
       cancelled = true;
     };
-  }, [apiKey, openInfo, profiles]);
+  }, [apiKey, loader, openInfo, profiles]);
 
   if (!apiKey) {
     return (
@@ -206,7 +191,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   return (
     <div
       ref={containerRef}
-      className="h-full min-h-[320px] w-full rounded-2xl border border-[var(--border)] bg-[#f4f0e6]"
+      className="h-full min-h-[min(100dvh,56rem)] w-full rounded-2xl border border-[var(--border)] bg-[#f4f0e6] lg:min-h-[calc(100dvh-8rem)]"
     />
   );
 }

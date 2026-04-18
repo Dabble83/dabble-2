@@ -30,6 +30,7 @@ export default function ProfileSetupPage() {
   const [interestTags, setInterestTags] = useState<string[]>([]);
   const [interestsIntro, setInterestsIntro] = useState("");
   const [skillsIntro, setSkillsIntro] = useState("");
+  const [bio, setBio] = useState("");
   const [isDiscoverable, setIsDiscoverable] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
@@ -92,6 +93,7 @@ export default function ProfileSetupPage() {
         setInterestTags(profile.interests || []);
         setInterestsIntro(profile.interests_intro || "");
         setSkillsIntro(profile.skills_intro || "");
+        setBio(profile.bio || "");
         setIsDiscoverable(Boolean(profile.is_discoverable));
       }
 
@@ -136,6 +138,7 @@ export default function ProfileSetupPage() {
         locationLabel: localProfile.location_label,
         interestsIntro: localProfile.interests_intro,
         skillsIntro: localProfile.skills_intro,
+        bio: localProfile.bio,
         isDiscoverable: localProfile.is_discoverable,
         skills: localProfile.skills,
         interests: localProfile.interests,
@@ -162,6 +165,7 @@ export default function ProfileSetupPage() {
     id: userId || "",
     username: username.trim(),
     display_name: displayName.trim() || null,
+    bio: bio.trim() || null,
     interests_intro: interestsIntro.trim() || null,
     skills_intro: skillsIntro.trim() || null,
     interests: interestTags,
@@ -334,6 +338,15 @@ export default function ProfileSetupPage() {
                     value={skillsIntro}
                     onChange={(e) => setSkillsIntro(e.target.value)}
                     rows={4}
+                  />
+                </label>
+                <label className="block space-y-2">
+                  <span className="ui-label">Short bio (optional)</span>
+                  <Textarea
+                    placeholder="A line or two for your public profile — who you are on the block."
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    rows={3}
                   />
                 </label>
                 <div>

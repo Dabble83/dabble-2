@@ -6,16 +6,15 @@ import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
 
 type MapAdapterShellProps = {
   enabled: boolean;
-  /** All discoverable profiles (map pins use lat/lng when present) */
   points: DiscoverableProfile[];
-  /** Right column: filters + list */
+  /** Sidebar: filters + profile list */
   children: ReactNode;
   onSelectProfile?: (profile: DiscoverableProfile) => void;
 };
 
 /**
- * When maps are enabled and a browser key exists, shows a 60/40 split:
- * Google Map (left) + scrollable list (right). Otherwise list-only with a calm notice.
+ * When maps are enabled and a browser key exists: desktop = sidebar (40%) left,
+ * map (60%) right, both full viewport height. Otherwise list-only.
  */
 export function MapAdapterShell({
   enabled,
@@ -31,7 +30,7 @@ export function MapAdapterShell({
       <div className="space-y-4">
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 font-sans text-sm text-[var(--text-secondary)]">
           Maps are off. Set <code className="rounded bg-[var(--background)] px-1">NEXT_PUBLIC_ENABLE_MAPS=true</code>{" "}
-          and add a Maps browser key to see the neighborhood map.
+          and add a Maps browser key to see dabblers on the map.
         </div>
         {children}
       </div>
@@ -54,12 +53,12 @@ export function MapAdapterShell({
   }
 
   return (
-    <div className="flex min-h-[min(70vh,720px)] flex-col gap-6 lg:flex-row lg:gap-0">
-      <div className="min-h-[320px] w-full lg:w-[60%] lg:min-w-0 lg:pr-4">
-        <ExploreMap profiles={points} onSelectProfile={onSelectProfile} />
+    <div className="flex min-h-0 flex-col gap-6 lg:min-h-[calc(100dvh-8rem)] lg:flex-row lg:gap-0">
+      <div className="order-2 flex min-h-0 w-full flex-col lg:order-1 lg:w-[40%] lg:max-w-[40%] lg:border-r lg:border-[var(--border)] lg:pr-6">
+        <div className="min-h-0 flex-1 overflow-y-auto pr-1">{children}</div>
       </div>
-      <div className="flex w-full min-h-0 flex-1 flex-col border-t border-[var(--border)] pt-6 lg:w-[40%] lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
-        <div className="min-h-0 flex-1 overflow-y-auto pr-1 lg:max-h-[min(70vh,720px)]">{children}</div>
+      <div className="order-1 min-h-0 w-full lg:order-2 lg:flex-1 lg:min-w-0 lg:pl-6">
+        <ExploreMap profiles={points} onSelectProfile={onSelectProfile} />
       </div>
     </div>
   );

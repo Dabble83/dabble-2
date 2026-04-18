@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "id, username, display_name, interests_intro, skills_intro, interests, skills, location_label, is_discoverable",
+      "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, location_label, is_discoverable",
     )
     .eq("id", auth.user.id)
     .maybeSingle();

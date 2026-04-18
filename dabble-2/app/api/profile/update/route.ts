@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
   const body = (await request.json()) as {
     userId?: string;
     displayName?: string;
+    bio?: string;
     username?: string;
     interestsIntro?: string;
     skillsIntro?: string;
@@ -69,6 +70,7 @@ export async function POST(request: NextRequest) {
     id: userId,
     username,
     display_name: displayName,
+    bio: body.bio?.trim() ? body.bio.trim() : null,
     interests_intro: body.interestsIntro ?? null,
     skills_intro: body.skillsIntro ?? null,
     interests: Array.isArray(body.interests) ? body.interests : [],
