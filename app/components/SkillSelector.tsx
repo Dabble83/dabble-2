@@ -4,7 +4,7 @@
 
 // Type aliases for Prisma enums
 type SkillCategory = 'Adventure' | 'HomeImprovement' | 'Creative'
-type SkillLevel = 'Beginner' | 'Intermediate' | 'Advanced'
+type SkillLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert'
 import SkiLevelBadge from './SkiLevelBadge'
 
 interface Skill {

@@ -93,7 +93,7 @@ export default function ChatPopover({ recipientId, recipientUsername, onClose }:
         }
 
         setConversationId(convId)
-        loadMessages(convId)
+        if (convId) loadMessages(convId)
       } catch (err) {
         console.error('Error setting up conversation:', err)
         setLoading(false)

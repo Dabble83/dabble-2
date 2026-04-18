@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { getSupabaseClient } from '@/src/lib/supabaseClient'
 import { useSupabaseAuth } from '@/src/hooks/useSupabaseAuth'
+import ChatPopover from '@/app/components/ChatPopover'
 
 /**
  * Explore Page with Google Maps
@@ -998,11 +999,11 @@ function MapsComponent({
           streetViewControl: false,
           fullscreenControl: true,
         }}
-        onLoad={(map) => {
+        onLoad={(_map: unknown) => {
           // Map loaded successfully
           onStatusChange?.('loaded')
         }}
-        onError={(error) => {
+        onError={(error: unknown) => {
           console.error('GoogleMap component error:', error)
           // Extract error message without exposing API key
           let errorMsg = 'Map failed to load'

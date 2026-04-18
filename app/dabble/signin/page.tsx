@@ -60,7 +60,6 @@ export default function SigninPage() {
       submittingRef.current = false
       
       // Check if user has completed onboarding
-      const client = getSupabaseClient()
       const { data: profileData } = await client
         .from('profiles')
         .select('has_onboarded')

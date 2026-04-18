@@ -78,12 +78,17 @@ export async function GET(request: NextRequest) {
           category: ps.skills?.category,
           type: ps.type,
         })),
-        location: profileData.profile_location ? {
-          isDiscoverable: profileData.profile_location.is_discoverable,
-          addressLabel: profileData.profile_location.address_label,
-          lat: profileData.profile_location.lat,
-          lng: profileData.profile_location.lng,
-        } : null,
+        location: (() => {
+          const loc = Array.isArray(profileData.profile_location)
+            ? profileData.profile_location[0]
+            : profileData.profile_location
+          return loc ? {
+            isDiscoverable: loc.is_discoverable,
+            addressLabel: loc.address_label,
+            lat: loc.lat,
+            lng: loc.lng,
+          } : null
+        })(),
       }
 
       return NextResponse.json({ profile: transformedProfile })
