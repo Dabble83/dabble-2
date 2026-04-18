@@ -28,4 +28,3 @@ export async function requireRouteUser(
 
   return { user: data.user };
 }
-

@@ -27,4 +27,3 @@ export async function GET(request: NextRequest) {
 
   return ok({ profile: data ?? null });
 }
-

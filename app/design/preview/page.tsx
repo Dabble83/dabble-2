@@ -1,3 +1,4 @@
+import { TagInputDemo } from "@/app/design/preview/TagInputDemo";
 import { Button, Card, Input, Tag } from "@/app/components/ui";
 
 export const metadata = {
@@ -11,7 +12,7 @@ export default function DesignPreviewPage() {
         <header className="space-y-3">
           <p className="ui-label">Gate C approval surface</p>
           <h1 className="ui-heading text-5xl">Dabble 2.0 Design Preview</h1>
-          <p className="max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
+          <p className="max-w-2xl font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
             This page is the single visual contract for typography, spacing, and
             component style before broader feature implementation.
           </p>
@@ -49,6 +50,7 @@ export default function DesignPreviewPage() {
                 <span className="ui-label">Neighborhood</span>
                 <Input placeholder="Park Slope, Brooklyn" />
               </label>
+              <TagInputDemo />
             </div>
           </Card>
 

@@ -1,29 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f1e8;
-  --surface: #ffffff;
-  --border: #e5e7eb;
-  --text-primary: #1f2a37;
-  --text-secondary: #4b5563;
-  --text-tertiary: #6b7280;
-  --brand: #7a8f6a;
-  --brand-hover: #6b7a5a;
-  --brand-border: #5f6b55;
-  --brand-text: #2d5016;
+  --background: #f4f0e6;
+  --surface: #fffcf7;
+  --border: #e2ddd4;
+  --text-primary: #1c2424;
+  --text-secondary: #4a524a;
+  --text-tertiary: #6b736b;
+  --brand: #6d8570;
+  --brand-hover: #5f745f;
+  --brand-border: #4d5c4d;
+  --brand-text: #2a3d2c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-lora);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--text-primary);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
 a {
@@ -43,8 +44,13 @@ a {
 }
 
 .ui-heading {
+  font-family: var(--font-serif), Georgia, serif;
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
 }
 
 .ui-label {

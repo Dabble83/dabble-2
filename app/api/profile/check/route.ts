@@ -32,4 +32,3 @@ export async function GET(request: NextRequest) {
     username: profile?.username ?? null,
   });
 }
-

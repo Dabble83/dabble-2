@@ -1,37 +1,49 @@
 import Link from "next/link";
-import { Button } from "@/app/components/ui";
+import { HeroIllustration } from "@/app/components/HeroIllustration";
+
+const primaryCta =
+  "inline-flex items-center justify-center rounded-lg border border-[var(--brand-border)] bg-[var(--brand)] px-8 py-3 font-sans text-base font-semibold text-white transition-colors hover:bg-[var(--brand-hover)]";
+const secondaryCta =
+  "inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 font-sans text-base font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-border)] hover:text-[var(--text-primary)]";
 
 export default function Home() {
   return (
-    <div className="py-20">
-      <main className="ui-container flex max-w-3xl flex-col gap-8">
-        <p className="ui-label">Phase 1 foundation</p>
-        <h1 className="ui-heading text-5xl">Dabble 2.0</h1>
-        <p className="max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-          Try something new, wherever you are. We are building the core app
-          with a calm design system, optional integrations, and clear agent
-          handoffs.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/design/preview"
-            className="inline-flex"
-          >
-            <Button>Open design preview</Button>
-          </Link>
-          <Link href="/api/health" className="inline-flex">
-            <Button variant="secondary">Check API health</Button>
-          </Link>
-          <a
-            href="https://nextjs.org/docs"
-            className="inline-flex items-center text-sm font-medium text-[var(--text-secondary)] underline-offset-4 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Next.js docs
-          </a>
+    <div className="py-16 md:py-24">
+      <section className="ui-container">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="space-y-8">
+            <p className="ui-label">A gentle place to learn and share</p>
+            <h1 className="ui-heading max-w-xl text-4xl leading-[1.08] text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
+              Skills travel best when they walk next door
+            </h1>
+            <p className="max-w-lg font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              Dabble connects neighbors who want to teach what they love with neighbors who are
+              curious to try something new — bread, bikes, music, repair, and everything in between.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href="/dabble/signup" className={primaryCta}>
+                Start your profile
+              </Link>
+              <Link href="/explore" className={secondaryCta}>
+                Browse neighbors
+              </Link>
+            </div>
+            <p className="max-w-md font-sans text-sm leading-relaxed text-[var(--text-tertiary)]">
+              No hustle, no leaderboard — just clear profiles, calm layouts, and room to say what
+              you offer and what you hope to learn.
+            </p>
+          </div>
+          <div className="flex justify-center lg:justify-end">
+            <div className="w-full max-w-[26rem] rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[0_24px_60px_-24px_rgba(42,61,44,0.12)]">
+              <HeroIllustration />
+              <p className="mt-6 text-center font-serif text-sm italic text-[var(--text-secondary)]">
+                Illustration: homes, paths, and a small exchange — the shape of a block that looks
+                out for one another.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }
