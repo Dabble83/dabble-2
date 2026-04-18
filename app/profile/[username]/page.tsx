@@ -34,6 +34,13 @@ export default function PublicProfilePage() {
       );
       const body = await response.json();
 
+      if (response.status === 404) {
+        setProfile(null);
+        setError(body.error || "This dabbler could not be found.");
+        setLoading(false);
+        return;
+      }
+
       if (!response.ok) {
         setError(body.error || "Unable to load this profile.");
         setLoading(false);
@@ -76,6 +83,12 @@ export default function PublicProfilePage() {
       <div className="ui-container py-12 md:py-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <div className="space-y-8">
+            {profile?.bio ? (
+              <section>
+                <h2 className="ui-label mb-3">About</h2>
+                <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)]">{profile.bio}</p>
+              </section>
+            ) : null}
             {profile?.interests_intro ? (
               <section>
                 <h2 className="ui-label mb-3">Curious about</h2>
