@@ -49,12 +49,27 @@ export async function POST(request: NextRequest) {
     travelRadiusKm?: number | null;
     availabilityNote?: string | null;
     safetyTierConsent?: number;
+    lat?: number | null;
+    lng?: number | null;
   };
 
   if (body.userId && body.userId !== authResult.user.id) {
     return fail("Forbidden", 403);
   }
   const userId = authResult.user.id;
+
+  function parseOptionalLatLng(): { lat: number | null; lng: number | null } {
+    const la = body.lat;
+    const ln = body.lng;
+    if (la == null || ln == null) return { lat: null, lng: null };
+    const latN = typeof la === "number" ? la : Number(la);
+    const lngN = typeof ln === "number" ? ln : Number(ln);
+    if (!Number.isFinite(latN) || !Number.isFinite(lngN)) return { lat: null, lng: null };
+    if (latN < -90 || latN > 90 || lngN < -180 || lngN > 180) return { lat: null, lng: null };
+    return { lat: latN, lng: lngN };
+  }
+
+  const coords = parseOptionalLatLng();
 
   const displayName = body.displayName?.trim() || null;
   const usernameInput = body.username?.trim();
@@ -103,6 +118,28 @@ export async function POST(request: NextRequest) {
     travel_radius_km: parseTravelRadiusKm(body.travelRadiusKm),
     availability_note: body.availabilityNote?.trim() ? body.availabilityNote.trim() : null,
     safety_tier_consent: clampSafetyTierConsent(body.safetyTierConsent ?? 2),
+    lat: coords.lat,
+    lng: coords.lng,
+  };
+
+  const extendedPayloadNoCoords = {
+    id: userId,
+    username,
+    display_name: displayName,
+    bio: body.bio?.trim() ? body.bio.trim() : null,
+    interests_intro: body.interestsIntro ?? null,
+    skills_intro: body.skillsIntro ?? null,
+    interests: skillsCurious,
+    skills: skillsOffered,
+    skills_offered: skillsOffered,
+    skills_curious: skillsCurious,
+    experience_note: clampExperienceNote(body.experienceNote ?? undefined),
+    location_label: body.locationLabel ?? null,
+    is_discoverable: body.isDiscoverable ?? false,
+    show_exact_location: body.showExactLocation ?? false,
+    travel_radius_km: parseTravelRadiusKm(body.travelRadiusKm),
+    availability_note: body.availabilityNote?.trim() ? body.availabilityNote.trim() : null,
+    safety_tier_consent: clampSafetyTierConsent(body.safetyTierConsent ?? 2),
   };
 
   const legacyPayload = {
@@ -130,6 +167,9 @@ export async function POST(request: NextRequest) {
     supabase.from("profiles").upsert(payload, { onConflict: "id" }).select("id, username, display_name").single();
 
   let { data, error } = await tryUpsert(extendedPayload);
+  if (error && isMissingColumnError(error.message)) {
+    ({ data, error } = await tryUpsert(extendedPayloadNoCoords));
+  }
   if (error && isMissingColumnError(error.message)) {
     ({ data, error } = await tryUpsert(legacyPayload));
   }
