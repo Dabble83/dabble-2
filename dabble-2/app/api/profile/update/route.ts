@@ -7,6 +7,7 @@ import {
   isMissingColumnError,
   parseTravelRadiusKm,
 } from "@/src/lib/profileDb";
+import { maybeGrantSeedSignupCredits } from "@/src/lib/credits";
 import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
@@ -74,6 +75,13 @@ export async function POST(request: NextRequest) {
     return fail("That username is already in use. Please choose another.", 409);
   }
 
+  const { data: existingProfileRow } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("id", userId)
+    .maybeSingle();
+  const isNewProfile = !existingProfileRow?.id;
+
   const skillsOffered = clampTagArray(body.skillsOffered ?? body.skills);
   const skillsCurious = clampTagArray(body.skillsCurious ?? body.interests);
 
@@ -131,6 +139,13 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return fail("Failed to update profile", 500, error.message);
+  }
+
+  if (isNewProfile) {
+    const seed = await maybeGrantSeedSignupCredits(userId);
+    if (!seed.ok) {
+      console.error("[credits] seed signup grant failed:", seed.error);
+    }
   }
 
   return ok({ profile: data });

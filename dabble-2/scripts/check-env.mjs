@@ -34,6 +34,12 @@ const DOCUMENTED = [
     warnIfMissing: false,
   },
   {
+    key: "NEXT_PUBLIC_FREE_SEED_PHASE",
+    tier: "PUBLIC",
+    phase: "Credits — grant 3 starter credits on first profile while under 10k members (RFC 002)",
+    warnIfMissing: false,
+  },
+  {
     key: "GOOGLE_MAPS_SERVER_KEY",
     tier: "SERVER_ONLY",
     phase: "Maps / geocode",
