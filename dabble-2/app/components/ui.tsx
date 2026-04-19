@@ -3,6 +3,8 @@
 import type { ComponentProps, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 import Link from "next/link";
 import { useState } from "react";
+import { CategoryIcon } from "./CategoryIcon";
+import type { CategoryIconCategory } from "./CategoryIcon";
 import { TagInput } from "./TagInput";
 
 const BUTTON_BASE =
@@ -345,15 +347,20 @@ export function FormControlsShowcase() {
   );
 }
 
-const CATEGORY_LABELS = ["Outdoor", "DIY", "Craft", "Food", "Music"] as const;
+const CATEGORY_PREVIEW: { label: string; category: CategoryIconCategory }[] = [
+  { label: "Outdoor", category: "outdoor" },
+  { label: "DIY", category: "diy" },
+  { label: "Craft", category: "craft" },
+  { label: "Food", category: "food" },
+  { label: "Music", category: "music" },
+];
 
-function CategoryIconPlaceholder({ label }: { label: string }) {
+function CategoryIconPlaceholder({ label, category }: { label: string; category: CategoryIconCategory }) {
   return (
     <div className="flex w-28 flex-col items-center gap-2">
-      <div
-        className="flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-dashed border-[var(--rule)] bg-[color-mix(in_srgb,var(--surface)_88%,var(--cream))]"
-        aria-hidden
-      />
+      <div className="flex h-20 w-20 items-center justify-center">
+        <CategoryIcon category={category} size={44} />
+      </div>
       <span className="text-center font-sans text-[var(--text-tertiary)] [font-size:var(--fs-micro)]">{label}</span>
     </div>
   );
@@ -366,12 +373,13 @@ export function CategoryIconPlaceholderRow() {
         Category icons
       </h2>
       <p className="max-w-3xl font-sans text-[var(--text-secondary)] [font-size:var(--fs-body)]">
-        Placeholder slots until §2 illustration set ships. Labels match top-level browse categories.
+        Placeholder glyphs per CURSOR_BUILD_PROMPTS §2.2 (`CategoryIcon`). Strip extensions on the home page use the
+        same component with interim accents for bikes, water, and bird.
       </p>
       <Card>
         <div className="flex flex-wrap justify-between gap-6">
-          {CATEGORY_LABELS.map((label) => (
-            <CategoryIconPlaceholder key={label} label={label} />
+          {CATEGORY_PREVIEW.map(({ label, category }) => (
+            <CategoryIconPlaceholder key={category} label={label} category={category} />
           ))}
         </div>
       </Card>

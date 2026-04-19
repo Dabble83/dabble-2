@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { CategoryIcon } from "@/app/components/CategoryIcon";
+import type { CategoryIconCategory } from "@/app/components/CategoryIcon";
 import { HeroIllustration } from "@/app/components/HeroIllustration";
 import { TestimonialRow } from "@/app/components/TestimonialRow";
 import { ButtonLink } from "@/app/components/ui";
 
-const SKILL_CATEGORIES: { label: string; slug: string }[] = [
+const SKILL_CATEGORIES: { label: string; slug: CategoryIconCategory }[] = [
   { label: "Outdoor", slug: "outdoor" },
   { label: "DIY", slug: "diy" },
   { label: "Craft", slug: "craft" },
@@ -58,16 +60,17 @@ export default function Home() {
             Browse by category
           </h2>
           <p className="max-w-2xl font-sans text-[var(--text-secondary)] [font-size:var(--fs-small)]">
-            Text-only tiles for now; each links to Explore with a category hint for filtering (when wired).
+            Line-art placeholders per §2.2; each tile links to Explore with a category hint for filtering (when wired).
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
             {SKILL_CATEGORIES.map(({ label, slug }) => (
               <Link
                 key={slug}
                 href={`/explore?category=${slug}`}
-                className="ui-card flex min-h-[4.5rem] items-center justify-center px-3 py-4 text-center font-sans font-medium text-[var(--text-primary)] transition-colors [font-size:var(--fs-small)] hover:border-[var(--clay-dark)] hover:bg-[color-mix(in_srgb,var(--clay)_18%,var(--surface))]"
+                className="ui-card flex flex-col items-center gap-3 px-3 py-4 text-center font-sans font-medium text-[var(--text-primary)] transition-colors [font-size:var(--fs-small)] hover:border-[var(--clay-dark)] hover:bg-[color-mix(in_srgb,var(--clay)_18%,var(--surface))]"
               >
-                {label}
+                <CategoryIcon category={slug} size={36} />
+                <span>{label}</span>
               </Link>
             ))}
           </div>

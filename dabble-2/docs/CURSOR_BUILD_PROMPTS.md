@@ -53,6 +53,20 @@ Brand, type, imagery briefs, and phased build checklist for Dabble 2.0 implement
 
 Use placeholder components only until assets exist; do not generate photography in build pipelines.
 
+### §2.2 Illustration system — category icon placeholders
+
+`CategoryIcon` renders stroke-only glyphs on a light circular badge until final icons ship. Stroke weight **1.4px**, round caps/joins, **no fills** on glyphs (only the badge circle is filled).
+
+| Category | Accent hex | Motif |
+|----------|------------|--------|
+| `outdoor` | `#7A8F6A` | Mountain peak outline |
+| `diy` | `#C46A3E` | Hammer silhouette |
+| `craft` | `#B85C38` | Spool / thread outline |
+| `food` | `#5A6E48` | Grain bowl outline |
+| `music` | `#1F2A37` | Guitar pick outline |
+
+**Home strip extensions (interim):** `bikes`, `water`, and `bird` reuse neutral / brand-adjacent accents (`#6b736b`, `#4d5c4d`, `#2a3d2c`) with simple wheel, wave, and wing strokes until §2.2 adds final specs.
+
 ### §2.3 Map pin colors
 
 Pins and map affordances use the brand palette so the map feels like the rest of Dabble.
@@ -74,3 +88,4 @@ Pins and map affordances use the brand palette so the map feels like the rest of
 - **P0.4** — UI kit in `app/components/ui.tsx`: button variants (primary sage, secondary clay outline, ghost, destructive), card variants, text field primitives (`TextInput`, `Textarea`, `TagInput`), composed only on the preview page via those exports (no ad-hoc inline styles on the page).
 - **P0.5** — Canonical marketing home at `app/page.tsx`: hero matches Master Plan §5.1 (eyebrow, H1, subhead, dual CTAs); retire superseded taglines (see §5.1 “Retired”).
 - **P0.6** — Home below-the-fold modules: category deep-links to Explore (`/explore?category=…`), credits explainer with link to `/how-it-works`, testimonial placeholder (`TestimonialRow`, Master Plan §5.6).
+- **P0.7** — `CategoryIcon` placeholder component (`app/components/CategoryIcon.tsx`): per-category SVG line art and §2.2 accent colors; home category strip consumes it (design preview updated to match).
