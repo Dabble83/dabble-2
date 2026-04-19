@@ -119,6 +119,55 @@ const SEED_CREDITS = 3;
  * Idempotent seed grant (RFC 002 §10.5): 3 credits on first profile row when flag is on and member count is under cap.
  * Intended to run from the profile upsert route after a new `profiles` row is created.
  */
+/** Ledger reasons for session credit lifecycle (RFC 002 + 003). */
+export const SESSION_CREDIT_REASONS = {
+  ACCEPT_DEBIT: "session_accept_debit",
+  CANCEL_REFUND: "session_cancel_refund",
+  TEACHER_EARN: "session_teacher_earn",
+} as const;
+
+/**
+ * Debit learner when a session is accepted (commitment / “hold” as ledger debit per MVP).
+ */
+export async function sessionDebitOnAccept(
+  learnerId: string,
+  amount: number,
+  sessionId: string,
+  teacherId: string,
+): Promise<CreditsResult> {
+  return spend(learnerId, amount, SESSION_CREDIT_REASONS.ACCEPT_DEBIT, sessionId, {
+    idempotencyKey: `session_accept_debit:${sessionId}`,
+    counterpartyUserId: teacherId,
+    metadata: { session_id: sessionId },
+  });
+}
+
+/** Refund learner when a session is cancelled after debit (MVP: full refund whenever cancelled before completion). */
+export async function sessionRefundOnCancel(
+  learnerId: string,
+  amount: number,
+  sessionId: string,
+): Promise<CreditsResult> {
+  return earn(learnerId, amount, SESSION_CREDIT_REASONS.CANCEL_REFUND, sessionId, {
+    idempotencyKey: `session_cancel_refund:${sessionId}`,
+    metadata: { session_id: sessionId },
+  });
+}
+
+/** Pay teacher when a session is fully marked complete (learner was debited at accept). */
+export async function sessionPayTeacher(
+  teacherId: string,
+  amount: number,
+  sessionId: string,
+  learnerId: string,
+): Promise<CreditsResult> {
+  return earn(teacherId, amount, SESSION_CREDIT_REASONS.TEACHER_EARN, sessionId, {
+    idempotencyKey: `session_teacher_earn:${sessionId}`,
+    counterpartyUserId: learnerId,
+    metadata: { session_id: sessionId },
+  });
+}
+
 export async function maybeGrantSeedSignupCredits(userId: string): Promise<CreditsResult> {
   if (!seedPhaseEnabled()) {
     return { ok: true };
