@@ -24,4 +24,5 @@ export interface ProfileRecord {
   safety_tier_consent?: number | null;
   lat?: number | null;
   lng?: number | null;
+  avatar_url?: string | null;
 }

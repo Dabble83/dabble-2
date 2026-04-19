@@ -6,10 +6,10 @@ import type { ProfileRecord } from "@/src/lib/profileTypes";
 export const PROFILE_TAG_ARRAY_MAX = 50;
 
 export const PROFILE_SELECT_OWNER_EXTENDED =
-  "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, skills_offered, skills_curious, experience_note, credit_balance, location_label, is_discoverable, show_exact_location, travel_radius_km, availability_note, safety_tier_consent, lat, lng";
+  "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, skills_offered, skills_curious, experience_note, credit_balance, location_label, is_discoverable, show_exact_location, travel_radius_km, availability_note, safety_tier_consent, lat, lng, avatar_url";
 
 export const PROFILE_SELECT_OWNER_LEGACY =
-  "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, location_label, is_discoverable, lat, lng";
+  "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, location_label, is_discoverable, lat, lng, avatar_url";
 
 export const DISCOVERABLE_SELECT_EXTENDED =
   "id, username, display_name, location_label, interests, skills, skills_offered, skills_curious, is_discoverable, show_exact_location, travel_radius_km, lat, lng";
@@ -113,6 +113,7 @@ export function normalizeProfileRow(row: ProfileRow | null): ProfileRecord | nul
     safety_tier_consent: clampSafetyTierConsent(row.safety_tier_consent),
     lat: row.lat != null && row.lat !== "" ? Number(row.lat) : null,
     lng: row.lng != null && row.lng !== "" ? Number(row.lng) : null,
+    avatar_url: (row.avatar_url as string | null) ?? null,
   };
 }
 
@@ -138,6 +139,7 @@ export function toPublicProfile(row: ProfileRecord): ProfileRecord {
     safety_tier_consent: row.safety_tier_consent,
     lat: showExact ? row.lat ?? null : null,
     lng: showExact ? row.lng ?? null : null,
+    avatar_url: row.avatar_url ?? null,
   };
 }
 
