@@ -33,6 +33,9 @@ export function SiteHeader() {
           <Link href="/safety" className={navLinkClass}>
             Safety
           </Link>
+          <Link href="/guidelines" className={navLinkClass}>
+            Guidelines
+          </Link>
           <AuthNav />
           <Link href="/dabble/signup" className={`${ctaClass} shrink-0`}>
             Join
@@ -74,6 +77,9 @@ export function SiteHeader() {
             </Link>
             <Link href="/safety" className="py-1" onClick={() => setMenuOpen(false)}>
               Safety
+            </Link>
+            <Link href="/guidelines" className="py-1" onClick={() => setMenuOpen(false)}>
+              Guidelines
             </Link>
             <div className="border-t border-[var(--border)] pt-4" onClick={() => setMenuOpen(false)}>
               <AuthNav layout="stack" />

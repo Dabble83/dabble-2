@@ -93,3 +93,52 @@ These are **not** coordinated through Dabble’s product surface; people may cho
 - Stay in **skilled-amateur** territory; defer to licensed professionals for regulated work.
 - Prefer **in-app messaging** until you are comfortable; avoid posting phone numbers, email, or home address on profiles.
 - **Leave** if anything feels unsafe; **report** concerns to safety@dabble.it.com.
+
+## §13 Community guidelines (`/guidelines`)
+
+Canonical copy for the guidelines page. Tone: warm **trail-guide** voice (plain language, calm pacing, no hustle). Do not expand promises beyond this section without product/legal review.
+
+### §13.0 Opening
+
+The trail is better when we walk it together—calmly, honestly, and with room for beginners.
+
+### §13.1 Respect
+
+**Who we welcome.** Neighbors and curious visitors who treat others with patience and dignity—across backgrounds, ages, and skill levels. We like the trail when everyone can breathe.
+
+**Zero tolerance.** Harassment, hate, slurs, threats, intimidation, stalking, unwanted sexual attention, or coordinated pile-ons. We remove people who break the trail rules.
+
+### §13.2 Honest skill claims
+
+Dabble is built around **skilled amateurs** sharing what they have actually practiced—not around pretending to be something you are not.
+
+- Say what you have done, how often, and in what setting.
+- If you are **not** a certified instructor, do not imply licenses, insurance, union cards, or endorsements you do not have.
+- If someone needs regulated work (electrical behind walls, medical decisions, legal advice), **kindly point them** toward a licensed professional.
+
+### §13.3 Safe meetups
+
+First meets stay **public**, **short**, and **easy to leave**. The checklist below matches §12.6 so we do not fork two versions:
+
+- Meet in a **public** place the first time.
+- Tell someone you trust **where** you are going and **how long** you expect to be.
+- Keep the session **short** so expectations stay small; align with seed-phase credit norms when published.
+- Stay in **skilled-amateur** territory; defer to licensed professionals for regulated work.
+- Prefer **in-app messaging** until you are comfortable; avoid posting phone numbers, email, or home address on profiles.
+- **Leave** if anything feels unsafe; **report** concerns to safety@dabble.it.com.
+
+For the broader safety model—including tiers and out-of-scope lists—visit `/safety` (Master Plan §12).
+
+### §13.4 Credits integrity
+
+- **No** selling credits for cash or trading credits off-platform in ways that recreate a gig economy.
+- **No** ghost sessions or collusion to farm credits—if a meetup did not happen, it did not happen.
+- Keep exchanges **small**, **honest**, and aligned with the seed-phase credit story when published.
+
+### §13.5 Reporting
+
+**How.** Email **safety@dabble.it.com** with who was involved, when it happened, and what occurred—stick to facts you are comfortable sharing. In-product reporting will arrive later; email is the path for now.
+
+**What happens next.** We triage, may pause or mute accounts while we review, and follow up with the parties involved when appropriate.
+
+**72-hour response promise.** During the seed phase, we **acknowledge substantive reports within 72 hours** on business days. Some matters need more time to untangle; if so, we still send a first note inside that window so you are not left guessing.
