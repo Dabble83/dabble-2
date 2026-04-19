@@ -1,21 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
 import Link from "next/link";
 import { SiteHeader } from "@/app/components/SiteHeader";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600"],
-});
-
-const fraunces = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600"],
 });
 
 const geistMono = Geist_Mono({
@@ -23,9 +14,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Dabble 2.0",
-  description: "Trade skills with people nearby — at home or on the road.",
+  description: "Warm local skill exchange — editorial community platform",
 };
 
 export default function RootLayout({
@@ -36,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[var(--background)] text-[var(--text-primary)]">
         <div className="flex min-h-full flex-col">
