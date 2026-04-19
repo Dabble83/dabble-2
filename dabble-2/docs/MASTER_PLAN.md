@@ -1,5 +1,19 @@
 # Dabble 2.0 — Master plan
 
+## §2 Vision & mission (`/about` hero)
+
+**Wherever you are** — home block, trailhead parking lot, or a new city for the weekend — the question stays the same: who nearby will trade a little honest curiosity?
+
+**Mission.** Make low-stakes, in-person skill swaps feel natural: **neighbors first**, with room for **traveling serendipity** when a moment lines up. Not a gig marketplace, not a course catalog — a calm path from “I wonder how that works” to “we tried it together.”
+
+## §3 Philosophy (`/about` body)
+
+### Curiosity is portable
+
+You pack questions the way you pack a jacket. The reflex to ask “could someone show me?” travels with you. Dabble balances **roots and roam**: repeat faces on familiar sidewalks, and the odd perfect afternoon — kayakers rigging boats in Golden, a stoop conversation about drywall in the Bronx — without turning every hello into a transaction.
+
+**Values named on `/about`:** Curiosity, Calm, Care, Credit-not-cash (see §10 for the credits story).
+
 ## Phase 2 — Design overhaul (editorial community)
 
 Aesthetic direction: warm, editorial, generous whitespace; strong serif headlines; muted sage accents; not a “startup SaaS” look. Reference feel: community home-exchange style sites.

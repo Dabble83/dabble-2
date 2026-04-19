@@ -44,7 +44,7 @@ export default function RootLayout({
               <span>Dabble — neighbors learning together.</span>
               <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
-                  About this prototype
+                  About
                 </Link>
                 <Link href="/how-it-works" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
                   How it works
