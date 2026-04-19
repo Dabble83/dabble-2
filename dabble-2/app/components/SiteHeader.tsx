@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AuthNav } from "@/app/components/AuthNav";
+import { CreditBalanceBadge } from "@/app/components/CreditBalanceBadge";
 const navLinkClass =
   "font-sans text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]";
 
@@ -39,6 +40,7 @@ export function SiteHeader() {
           <Link href="/guidelines" className={navLinkClass}>
             Guidelines
           </Link>
+          <CreditBalanceBadge />
           <AuthNav />
           <Link href="/dabble/signup" className={`${ctaClass} shrink-0`}>
             Join
@@ -46,6 +48,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
+          <CreditBalanceBadge />
           <Link
             href="/dabble/signup"
             className={`${ctaClass} px-4 py-2 text-xs`}
