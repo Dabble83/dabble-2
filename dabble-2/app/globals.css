@@ -1,30 +1,71 @@
 @import "tailwindcss";
 
+/* §1.2 Brand palette — docs/CURSOR_BUILD_PROMPTS.md */
 :root {
-  --background: #f4f0e6;
+  --ink: #1c2424;
+  --sage: #6d8570;
+  --sage-dark: #4d5c4d;
+  --sage-hover: #5f745f;
+  --clay: #d4c4b0;
+  --clay-dark: #b8a794;
+  --ember: #c4705a;
+  --forest: #2a3d2c;
+  --cream: #f4f0e6;
+  --stone: #6b736b;
+  --rule: #e2ddd4;
+
+  /* §1.3 Type scale */
+  --fs-display: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  --fs-h1: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+  --fs-h2: clamp(1.625rem, 1.35rem + 1vw, 2rem);
+  --fs-h3: 1.375rem;
+  --fs-h4: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+
+  /* Semantic + sage-based --brand aliases */
+  --background: var(--cream);
   --surface: #fffcf7;
-  --border: #e2ddd4;
-  --text-primary: #1c2424;
+  --border: var(--rule);
+  --text-primary: var(--ink);
   --text-secondary: #4a524a;
-  --text-tertiary: #6b736b;
-  --brand: #6d8570;
-  --brand-hover: #5f745f;
-  --brand-border: #4d5c4d;
-  --brand-text: #2a3d2c;
+  --text-tertiary: var(--stone);
+  --brand: var(--sage);
+  --brand-hover: var(--sage-hover);
+  --brand-border: var(--sage-dark);
+  --brand-text: var(--forest);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--text-primary);
-  --font-sans: var(--font-geist-sans);
-  --font-serif: var(--font-lora);
+  --color-ink: var(--ink);
+  --color-sage: var(--sage);
+  --color-sage-dark: var(--sage-dark);
+  --color-sage-hover: var(--sage-hover);
+  --color-clay: var(--clay);
+  --color-clay-dark: var(--clay-dark);
+  --color-cream: var(--cream);
+  --color-stone: var(--stone);
+  --color-rule: var(--rule);
+  --color-ember: var(--ember);
+  --color-forest: var(--forest);
+  /* Fraunces: Next sets --font-display on <html> */
+  --font-serif: var(--font-display), ui-serif, serif;
   --font-mono: var(--font-geist-mono);
+}
+
+/* Inter: Next sets --font-sans on <html>; bind Tailwind `font-sans` without @theme self-reference */
+@utility font-sans {
+  font-family: var(--font-sans);
 }
 
 body {
   background: var(--background);
   color: var(--text-primary);
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
 }
 
 a {
@@ -44,18 +85,19 @@ a {
 }
 
 .ui-heading {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-display), ui-serif, serif;
+  font-size: var(--fs-h1);
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
 .font-serif {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-display), ui-serif, serif;
 }
 
 .ui-label {
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   color: var(--text-secondary);
 }
