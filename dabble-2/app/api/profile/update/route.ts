@@ -1,5 +1,12 @@
 import { NextRequest } from "next/server";
 import { fail, ok } from "@/src/lib/apiResponses";
+import {
+  clampExperienceNote,
+  clampSafetyTierConsent,
+  clampTagArray,
+  isMissingColumnError,
+  parseTravelRadiusKm,
+} from "@/src/lib/profileDb";
 import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
@@ -10,11 +17,6 @@ function toUsernameSeed(input: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 32);
-}
-
-function isMissingColumnError(message: string) {
-  const normalized = message.toLowerCase();
-  return normalized.includes("column") && normalized.includes("does not exist");
 }
 
 export async function POST(request: NextRequest) {
@@ -37,8 +39,15 @@ export async function POST(request: NextRequest) {
     skillsIntro?: string;
     interests?: string[];
     skills?: string[];
+    skillsCurious?: string[];
+    skillsOffered?: string[];
     locationLabel?: string;
     isDiscoverable?: boolean;
+    experienceNote?: string | null;
+    showExactLocation?: boolean;
+    travelRadiusKm?: number | null;
+    availabilityNote?: string | null;
+    safetyTierConsent?: number;
   };
 
   if (body.userId && body.userId !== authResult.user.id) {
@@ -55,7 +64,6 @@ export async function POST(request: NextRequest) {
       : `dabbler-${userId.slice(0, 8)}`;
   const username = candidateUsername || `dabbler-${userId.slice(0, 8)}`;
 
-  // Friendly guard before upsert to avoid opaque DB unique violation messages.
   const { data: existingUsername } = await supabase
     .from("profiles")
     .select("id")
@@ -66,47 +74,62 @@ export async function POST(request: NextRequest) {
     return fail("That username is already in use. Please choose another.", 409);
   }
 
-  const payload = {
+  const skillsOffered = clampTagArray(body.skillsOffered ?? body.skills);
+  const skillsCurious = clampTagArray(body.skillsCurious ?? body.interests);
+
+  const extendedPayload = {
     id: userId,
     username,
     display_name: displayName,
     bio: body.bio?.trim() ? body.bio.trim() : null,
     interests_intro: body.interestsIntro ?? null,
     skills_intro: body.skillsIntro ?? null,
-    interests: Array.isArray(body.interests) ? body.interests : [],
-    skills: Array.isArray(body.skills) ? body.skills : [],
+    interests: skillsCurious,
+    skills: skillsOffered,
+    skills_offered: skillsOffered,
+    skills_curious: skillsCurious,
+    experience_note: clampExperienceNote(body.experienceNote ?? undefined),
+    location_label: body.locationLabel ?? null,
+    is_discoverable: body.isDiscoverable ?? false,
+    show_exact_location: body.showExactLocation ?? false,
+    travel_radius_km: parseTravelRadiusKm(body.travelRadiusKm),
+    availability_note: body.availabilityNote?.trim() ? body.availabilityNote.trim() : null,
+    safety_tier_consent: clampSafetyTierConsent(body.safetyTierConsent ?? 2),
+  };
+
+  const legacyPayload = {
+    id: userId,
+    username,
+    display_name: displayName,
+    bio: body.bio?.trim() ? body.bio.trim() : null,
+    interests_intro: body.interestsIntro ?? null,
+    skills_intro: body.skillsIntro ?? null,
+    interests: skillsCurious,
+    skills: skillsOffered,
     location_label: body.locationLabel ?? null,
     is_discoverable: body.isDiscoverable ?? false,
   };
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .upsert(payload, { onConflict: "id" })
-    .select("id, username, display_name")
-    .single();
+  const corePayload = {
+    id: userId,
+    username,
+    display_name: displayName,
+    interests: skillsCurious,
+    skills: skillsOffered,
+  };
+
+  const tryUpsert = async (payload: Record<string, unknown>) =>
+    supabase.from("profiles").upsert(payload, { onConflict: "id" }).select("id, username, display_name").single();
+
+  let { data, error } = await tryUpsert(extendedPayload);
+  if (error && isMissingColumnError(error.message)) {
+    ({ data, error } = await tryUpsert(legacyPayload));
+  }
+  if (error && isMissingColumnError(error.message)) {
+    ({ data, error } = await tryUpsert(corePayload));
+  }
 
   if (error) {
-    // Some schemas may not include optional fields yet; retry with core columns.
-    if (isMissingColumnError(error.message)) {
-      const corePayload = {
-        id: userId,
-        username,
-        display_name: displayName,
-        interests: Array.isArray(body.interests) ? body.interests : [],
-        skills: Array.isArray(body.skills) ? body.skills : [],
-      };
-
-      const { data: fallbackData, error: fallbackError } = await supabase
-        .from("profiles")
-        .upsert(corePayload, { onConflict: "id" })
-        .select("id, username, display_name")
-        .single();
-
-      if (!fallbackError) {
-        return ok({ profile: fallbackData });
-      }
-    }
-
     return fail("Failed to update profile", 500, error.message);
   }
 

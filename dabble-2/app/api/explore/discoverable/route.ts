@@ -1,5 +1,36 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { fail, ok } from "@/src/lib/apiResponses";
+import {
+  DISCOVERABLE_SELECT_EXTENDED,
+  DISCOVERABLE_SELECT_EXTENDED_NO_COORDS,
+  DISCOVERABLE_SELECT_MINIMAL,
+  DISCOVERABLE_SELECT_NO_NEW_ARRAYS,
+  DISCOVERABLE_SELECT_NO_NEW_ARRAYS_NO_COORDS,
+  DISCOVERABLE_SELECT_NO_VISIBILITY,
+  DISCOVERABLE_SELECT_NO_VISIBILITY_NO_COORDS,
+  isMissingColumnError,
+  normalizeProfileRow,
+  toDiscoverableProfile,
+} from "@/src/lib/profileDb";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
+
+type ProfileRow = Record<string, unknown>;
+
+function withNullCoords(rows: ProfileRow[]): ProfileRow[] {
+  return rows.map((p) => ({ ...p, lat: null, lng: null }));
+}
+
+async function runDiscoverQuery(
+  supabase: SupabaseClient,
+  select: string,
+  discoverableOnly: boolean,
+) {
+  let q = supabase.from("profiles").select(select).limit(60);
+  if (discoverableOnly) {
+    q = q.eq("is_discoverable", true);
+  }
+  return q;
+}
 
 export async function GET() {
   const supabase = getSupabaseServerClient();
@@ -7,49 +38,53 @@ export async function GET() {
     return fail("Supabase server configuration missing", 500);
   }
 
-  const primaryQuery = await supabase
-    .from("profiles")
-    .select("id, username, display_name, location_label, interests, skills, is_discoverable, lat, lng")
-    .eq("is_discoverable", true)
-    .limit(60);
+  const selectAttempts: { select: string; discoverableOnly: boolean; nullCoords?: boolean }[] = [
+    { select: DISCOVERABLE_SELECT_EXTENDED, discoverableOnly: true },
+    { select: DISCOVERABLE_SELECT_NO_NEW_ARRAYS, discoverableOnly: true },
+    { select: DISCOVERABLE_SELECT_NO_VISIBILITY, discoverableOnly: true },
+    { select: DISCOVERABLE_SELECT_EXTENDED_NO_COORDS, discoverableOnly: true, nullCoords: true },
+    { select: DISCOVERABLE_SELECT_NO_NEW_ARRAYS_NO_COORDS, discoverableOnly: true, nullCoords: true },
+    { select: DISCOVERABLE_SELECT_NO_VISIBILITY_NO_COORDS, discoverableOnly: true, nullCoords: true },
+    { select: DISCOVERABLE_SELECT_MINIMAL, discoverableOnly: false },
+  ];
 
-  let data = primaryQuery.data;
-  let error = primaryQuery.error;
+  let lastError: string | null = null;
 
-  // Fallback for schemas that have no lat/lng columns on profiles.
-  if (error && error.message.toLowerCase().includes("does not exist")) {
-    const fallbackQuery = await supabase
-      .from("profiles")
-      .select("id, username, display_name, location_label, interests, skills, is_discoverable")
-      .eq("is_discoverable", true)
-      .limit(60);
+  for (const attempt of selectAttempts) {
+    const { data, error } = await runDiscoverQuery(
+      supabase,
+      attempt.select,
+      attempt.discoverableOnly,
+    );
 
-    data = (fallbackQuery.data || []).map((profile) => ({
-      ...profile,
-      lat: null,
-      lng: null,
-    }));
-    error = fallbackQuery.error;
+    if (error) {
+      const msg = error.message.toLowerCase();
+      lastError = error.message;
+      if (isMissingColumnError(error.message)) continue;
+      if (msg.includes("is_discoverable")) continue;
+      return fail("Failed to load discoverable profiles", 500, error.message);
+    }
+
+    let rows = (data ?? []) as unknown as ProfileRow[];
+    if (attempt.nullCoords) rows = withNullCoords(rows);
+    if (!attempt.discoverableOnly) {
+      rows = rows.map((p) => ({
+        ...p,
+        is_discoverable: true,
+        lat: p.lat ?? null,
+        lng: p.lng ?? null,
+        show_exact_location: p.show_exact_location ?? false,
+        travel_radius_km: p.travel_radius_km ?? null,
+      }));
+    }
+
+    const profiles = rows
+      .map((raw) => normalizeProfileRow(raw))
+      .filter((p): p is NonNullable<typeof p> => p != null)
+      .map(toDiscoverableProfile);
+
+    return ok({ profiles });
   }
 
-  // Last-resort fallback for very early schemas without discoverability flag.
-  if (error && error.message.toLowerCase().includes("is_discoverable")) {
-    const fallbackQuery = await supabase
-      .from("profiles")
-      .select("id, username, display_name, location_label, interests, skills")
-      .limit(60);
-    data = (fallbackQuery.data || []).map((profile) => ({
-      ...profile,
-      is_discoverable: true,
-      lat: null,
-      lng: null,
-    }));
-    error = fallbackQuery.error;
-  }
-
-  if (error) {
-    return fail("Failed to load discoverable profiles", 500, error.message);
-  }
-
-  return ok({ profiles: data ?? [] });
+  return fail("Failed to load discoverable profiles", 500, lastError ?? "unknown");
 }
