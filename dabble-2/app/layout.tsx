@@ -42,9 +42,14 @@ export default function RootLayout({
           <footer className="border-t border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_60%,var(--background))]">
             <div className="ui-container flex flex-col gap-2 py-10 font-sans text-sm text-[var(--text-tertiary)] md:flex-row md:items-center md:justify-between">
               <span>Dabble — neighbors learning together.</span>
-              <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
-                About this prototype
-              </Link>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  About this prototype
+                </Link>
+                <Link href="/safety" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  Safety
+                </Link>
+              </div>
             </div>
           </footer>
         </div>
