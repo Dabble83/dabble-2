@@ -14,6 +14,8 @@ type FilterBarProps = {
   hasOrigin: boolean;
   onUseMyLocation: () => void;
   locationLoading?: boolean;
+  /** Strip outer card chrome when nested (e.g. mobile bottom sheet). */
+  embedded?: boolean;
 };
 
 export function FilterBar({
@@ -26,10 +28,10 @@ export function FilterBar({
   hasOrigin,
   onUseMyLocation,
   locationLoading,
+  embedded = false,
 }: FilterBarProps) {
-  return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:p-6">
-      <div className="space-y-6">
+  const inner = (
+    <div className="space-y-6">
         <div>
           <p className="ui-label mb-2">Categories</p>
           <p className="mb-3 font-sans text-xs text-[var(--text-tertiary)]">
@@ -102,6 +104,11 @@ export function FilterBar({
           </Button>
         </div>
       </div>
-    </div>
+  );
+
+  if (embedded) return inner;
+
+  return (
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:p-6">{inner}</div>
   );
 }
