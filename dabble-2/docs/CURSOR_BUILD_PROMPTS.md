@@ -33,11 +33,42 @@ Brand, type, imagery briefs, and phased build checklist for Dabble 2.0 implement
 | `--fs-small` | `0.875rem` |
 | `--fs-micro` | `0.75rem` |
 
+### §1.5 Voice (product tone)
+
+**Do**
+
+- Write in plain, neighborly language: short sentences, concrete verbs, human warmth.
+- Prefer calm invitations (“Share what you love”, “Try a session”) over performance framing.
+- Name the benefit to the block or community, not abstract “growth” or “optimization”.
+- Use “dabblers” when a collective noun fits; otherwise say “neighbors” or “people”.
+
+**Don’t**
+
+- Use hustle culture, fake urgency, or scarcity tricks (“Only 2 spots left!!!”).
+- Sound like a marketplace, gig platform, or SaaS growth blog (“leverage”, “rockstar”, “10x”).
+- Shame incomplete profiles or use guilt to drive engagement.
+- Promise outcomes you cannot stand behind; stay honest and local.
+
 ### §2 Imagery
 
 Use placeholder components only until assets exist; do not generate photography in build pipelines.
+
+### §2.3 Map pin colors
+
+Pins and map affordances use the brand palette so the map feels like the rest of Dabble.
+
+| Role | Token | Hex | Notes |
+|------|-------|-----|--------|
+| Default / general | `sage` | `#6d8570` | Standard dropped pin |
+| Selected / focus | `forest` | `#2a3d2c` | Active selection, strong contrast on cream tiles |
+| Offering / “guide” emphasis | `sage-dark` | `#4d5c4d` | Hosting or teaching context |
+| Seeking / “want” emphasis | `clay-dark` | `#b8a794` | Learning or seeking context |
+| Attention / rare warning on map | `ember` | `#c4705a` | Use sparingly; not for routine pins |
+| Muted / cluster / low confidence | `stone` | `#6b736b` | Clusters, disabled, background pins |
 
 ### §3 Phase P0
 
 - **P0.1** — Brand palette + type scale variables in `app/globals.css` `:root`, with existing `--brand*` tokens aliased to sage family so older styles keep working.
 - **P0.2** — Fraunces (display, 400/500/600) + Inter (body, 400/500/600) via `next/font/google`, exposed as `--font-display` and `--font-sans`; wire into `@theme inline`; body uses Inter (`var(--font-sans)`).
+- **P0.3** — `/design/preview` is the stakeholder-facing brand reference: palette swatches with hex + usage, type specimen (Fraunces + Inter + scale tokens), map pin colors (§2.3), voice do/don’t (§1.5), and category icon placeholders.
+- **P0.4** — UI kit in `app/components/ui.tsx`: button variants (primary sage, secondary clay outline, ghost, destructive), card variants, text field primitives (`TextInput`, `Textarea`, `TagInput`), composed only on the preview page via those exports (no ad-hoc inline styles on the page).
