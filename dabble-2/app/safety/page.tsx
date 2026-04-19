@@ -3,8 +3,10 @@ import Link from "next/link";
 import { Card } from "@/app/components/ui";
 
 export const metadata: Metadata = {
-  title: "Safety · Dabble",
-  description: "Four-tier safety model and our guardrails.",
+  title: "Safety",
+  description:
+    "Four-tier safety model for Dabble meetups — from passing curiosity to longer sessions — plus guardrails, credits (not cash), and how we think about risk at human pace.",
+  alternates: { canonical: "/safety" },
 };
 
 const intro =

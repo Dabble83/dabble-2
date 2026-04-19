@@ -3,9 +3,10 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Community Guidelines · Dabble",
+  title: "Community Guidelines",
   description:
     "Who we welcome, honest skill claims, safe meetups, credits integrity, and how reporting works — at a walking pace.",
+  alternates: { canonical: "/guidelines" },
 };
 
 const respectWelcome =

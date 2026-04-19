@@ -346,8 +346,9 @@ export default function ProfileSetupPage() {
   if (loading) {
     return (
       <div className="py-16 md:py-20">
-        <section className="ui-container max-w-3xl">
-          <Card title="Profile setup">
+        <section className="ui-container max-w-3xl space-y-4">
+          <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">Profile setup</h1>
+          <Card>
             <p className="font-sans text-sm text-[var(--text-secondary)]">Loading your profile...</p>
             {message ? (
               <div className="mt-3">
@@ -428,7 +429,7 @@ export default function ProfileSetupPage() {
 
         <form className="space-y-8" onSubmit={onSave}>
           {step === 1 ? (
-            <Card title="Basics" className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
+            <Card title="Basics" titleLevel={2} className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
               <div className="grid gap-6 md:grid-cols-2">
                 <label className="block space-y-2 md:col-span-2">
                   <span className="ui-label">Display name</span>
@@ -461,7 +462,7 @@ export default function ProfileSetupPage() {
           ) : null}
 
           {step === 2 ? (
-            <Card title="Story & skills" className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
+            <Card title="Story & skills" titleLevel={2} className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
               <div className="space-y-6">
                 <label className="block space-y-2">
                   <span className="ui-label">What you are curious about</span>
@@ -552,7 +553,7 @@ export default function ProfileSetupPage() {
           ) : null}
 
           {step === 3 ? (
-            <Card title="Discoverability" className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
+            <Card title="Discoverability" titleLevel={2} className="shadow-[0_16px_48px_-28px_rgba(42,61,44,0.12)]">
               <div className="space-y-6">
                 <label className="flex items-start gap-4 font-serif text-base leading-relaxed text-[var(--text-secondary)]">
                   <input

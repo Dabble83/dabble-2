@@ -58,6 +58,12 @@ const DOCUMENTED = [
     warnIfMissing: false,
   },
   {
+    key: "NEXT_PUBLIC_SITE_URL",
+    tier: "PUBLIC",
+    phase: "Canonical origin for metadata, sitemap, and profile meta fetches",
+    warnIfMissing: false,
+  },
+  {
     key: "NEXT_PUBLIC_SUPABASE_URL",
     tier: "PUBLIC",
     phase: "Auth & data",

@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroIllustration } from "@/app/components/HeroIllustration";
+
+export const metadata: Metadata = {
+  description:
+    "Learn something new from the block next door — Dabble connects neighbors who teach with neighbors who are curious. Clear profiles, small credits, calm meetups.",
+  alternates: { canonical: "/" },
+};
 
 const primaryCta =
   "inline-flex items-center justify-center rounded-lg border border-[var(--brand-border)] bg-[var(--brand)] px-8 py-3 font-sans text-base font-semibold text-white transition-colors hover:bg-[var(--brand-hover)]";

@@ -1,19 +1,35 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { Button, Tag } from "@/app/components/ui";
 import { FilterBar } from "@/app/explore/FilterBar";
-import { MapAdapterShell } from "@/app/explore/MapAdapterShell";
 import {
   enrichDiscoverableProfile,
   EXPLORE_CATEGORIES,
   EXPLORE_CATEGORY_IDS,
   pinColorForCategory,
 } from "@/src/lib/exploreCategories";
-import { isMapsEnabled } from "@/lib/flags";
 import type { DiscoverableProfile, ExploreCategoryId } from "@/src/lib/exploreTypes";
+import { isMapsEnabled } from "@/lib/flags";
+
+const MapAdapterShell = dynamic(
+  () => import("@/app/explore/MapAdapterShell").then((m) => ({ default: m.MapAdapterShell })),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="flex min-h-[min(24rem,50vh)] items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 font-sans text-sm text-[var(--text-secondary)]"
+        role="status"
+        aria-live="polite"
+      >
+        Loading map…
+      </div>
+    ),
+  },
+);
 
 function parseCategoriesFromParams(sp: URLSearchParams): ExploreCategoryId[] {
   const raw = sp.get("cat")?.split(",").filter(Boolean) ?? [];

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "How Dabble works",
+  title: "How it works",
   description:
     "Credits, not cash: what a credit is, how you earn and spend them, and why we use this model during the free seed phase.",
+  alternates: { canonical: "/how-it-works" },
 };
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {

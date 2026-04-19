@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import Link from "next/link";
 import { DevAxeReporter } from "@/app/components/DevAxeReporter";
 import { SkipToMain } from "@/app/components/SkipToMain";
 import { SiteHeader } from "@/app/components/SiteHeader";
+import { getMetadataBase } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,9 +23,37 @@ const lora = Lora({
   display: "swap",
 });
 
+const defaultDescription =
+  "Meet neighbors who teach what they love and try something new—bread, bikes, music, repair, and more. Small credits, calm meetups, no marketplace hustle.";
+
+export const viewport: Viewport = {
+  themeColor: "#f4f0e6",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "Dabble 2.0",
-  description: "Warm local skill exchange — editorial community platform",
+  metadataBase: getMetadataBase(),
+  title: {
+    default: "Dabble — local skills, shared kindly",
+    template: "%s · Dabble",
+  },
+  description: defaultDescription,
+  applicationName: "Dabble",
+  formatDetection: { telephone: false },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Dabble",
+    title: "Dabble — local skills, shared kindly",
+    description: defaultDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dabble — local skills, shared kindly",
+    description: defaultDescription,
+  },
 };
 
 export default function RootLayout({

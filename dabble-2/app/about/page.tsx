@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About · Dabble",
+  title: "About",
   description:
     "Wherever you are: neighbors first, traveling serendipity welcome — curiosity is portable, and Dabble keeps the exchange calm.",
+  alternates: { canonical: "/about" },
 };
 
 const values: { name: string; blurb: string }[] = [

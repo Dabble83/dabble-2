@@ -66,8 +66,9 @@ export default function ProfilePage() {
 
   return (
     <div className="py-16">
-      <section className="ui-container max-w-2xl">
-        <Card title="Profile">
+      <section className="ui-container max-w-2xl space-y-4">
+        <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">Profile</h1>
+        <Card>
           <p className="font-sans text-sm text-[var(--text-secondary)]">{status}</p>
           {error ? <p className="mt-3 font-sans text-sm text-red-600">{error}</p> : null}
         </Card>
