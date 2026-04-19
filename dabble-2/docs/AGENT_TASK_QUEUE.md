@@ -4,9 +4,9 @@ Use this as the execution order. One implementation owner at a time.
 
 ## Current Stage
 
-- Stage: Phase 1 build start
-- Branch: `cursor/dabble2-agent-workflow`
-- Status: Ready for implementation
+- Stage: MVP shell shipped; iterate on QA + optional maps/credits flags (see `PHASE_STATUS.md`)
+- Branch: use the active Cursor/Vercel branch (e.g. `cursor/dabble-2-trim-ui-home-docs`); older queue branch names are historical
+- Status: Queue items below were bootstrap order; most are done in-tree
 
 ## Queue
 

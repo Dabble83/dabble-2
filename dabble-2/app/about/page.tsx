@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Wherever you are: neighbors first, traveling serendipity welcome — curiosity is portable, and Dabble keeps the exchange calm.",
+    "Neighbors first, room for traveling serendipity — low-stakes skill swaps without the gig marketplace frame. Curiosity is portable.",
   alternates: { canonical: "/about" },
 };
 
@@ -22,36 +22,42 @@ export default function AboutPage() {
   return (
     <div className="py-16 md:py-20">
       <article className="ui-container max-w-3xl space-y-12">
-        <header className="space-y-4">
+        <header className="space-y-5">
           <p className="ui-label">About Dabble</p>
           <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl lg:text-[2.75rem]">
-            Try something new, wherever you are
+            Wherever you are
           </h1>
           <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-            Most days that means the neighbor who already lives on your block. Some days it means the person at the
-            put-in, the bench outside the hardware store, or the trail you only visit once —{" "}
-            <strong className="font-semibold text-[var(--text-primary)]">curiosity is portable</strong>, and the best
-            swaps still happen shoulder to shoulder.
+            — home block, trailhead parking lot, or a new city for the weekend — the question stays the same: who nearby
+            will trade a little honest curiosity?
+          </p>
+          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+            <span className="font-semibold text-[var(--text-primary)]">Mission.</span> Make low-stakes, in-person skill
+            swaps feel natural: <span className="font-semibold text-[var(--text-primary)]">neighbors first</span>, with
+            room for <span className="font-semibold text-[var(--text-primary)]">traveling serendipity</span> when a
+            moment lines up. Not a gig marketplace, not a course catalog — a calm path from &ldquo;I wonder how that
+            works&rdquo; to &ldquo;we tried it together.&rdquo;
           </p>
         </header>
 
-        <div className="space-y-6 font-serif text-base leading-relaxed text-[var(--text-secondary)] md:text-lg">
-          <p>
-            Dabble began on snow: a ski trip with my wife, a fly rod I did not quite know how to use, and the
-            kindness of someone who slowed down long enough to show me the cast. It was not a lesson package — just
-            humans passing a skill hand to hand.
-          </p>
-          <p>
-            Another seed landed in Golden, Colorado: two kayakers threading straps and buckles while a few of us
-            watched from the bank. No agenda, no invoice — only the small miracle of strangers opting into the same
-            afternoon and leaving a little braver about the water.
-          </p>
-          <p>
-            The third picture is closer to the pavement: Bronx neighbors who treat DIY like a team sport — borrow a
-            tool, hold a flashlight, argue gently about which screw actually belonged there. That mix of practicality
-            and wit is the neighborhood Dabble wants to make easier everywhere, without flattening it into a market.
-          </p>
-        </div>
+        <section aria-labelledby="portable-heading" className="space-y-4 border-t border-[var(--border)] pt-10">
+          <h2 id="portable-heading" className="ui-heading text-2xl text-[var(--text-primary)] md:text-3xl">
+            Curiosity is portable
+          </h2>
+          <div className="space-y-4 font-serif text-base leading-relaxed text-[var(--text-secondary)] md:text-lg">
+            <p>
+              You pack questions the way you pack a jacket. The reflex to ask &ldquo;could someone show me?&rdquo;
+              travels with you. Dabble balances <span className="font-semibold text-[var(--text-primary)]">roots and roam</span>
+              : repeat faces on familiar sidewalks, and the odd perfect afternoon — kayakers rigging boats in Golden, a
+              stoop conversation about drywall in the Bronx — without turning every hello into a transaction.
+            </p>
+            <p>
+              Dabble began on snow: a ski trip with my wife, a fly rod I did not quite know how to use, and the
+              kindness of someone who slowed down long enough to show me the cast. It was not a lesson package — just
+              humans passing a skill hand to hand.
+            </p>
+          </div>
+        </section>
 
         <section aria-labelledby="values-heading" className="space-y-4">
           <h2 id="values-heading" className="ui-heading text-2xl text-[var(--text-primary)] md:text-3xl">

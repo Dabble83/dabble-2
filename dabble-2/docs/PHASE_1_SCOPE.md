@@ -17,6 +17,8 @@ owner intervention.
 - Auth routes
   - `/dabble/signup`
   - `/dabble/signin`
+  - `/dabble/forgot-password` (email reset link)
+  - `/dabble/update-password` (set new password after Supabase recovery redirect)
 - Profile routes
   - `/profile` (auth-aware redirect)
   - `/profile/setup`
