@@ -12,19 +12,19 @@ export const PROFILE_SELECT_OWNER_LEGACY =
   "id, username, display_name, bio, interests_intro, skills_intro, interests, skills, location_label, is_discoverable, lat, lng, avatar_url";
 
 export const DISCOVERABLE_SELECT_EXTENDED =
-  "id, username, display_name, location_label, interests, skills, skills_offered, skills_curious, is_discoverable, show_exact_location, travel_radius_km, lat, lng";
+  "id, username, display_name, location_label, interests, skills, skills_offered, skills_curious, is_discoverable, show_exact_location, travel_radius_km, lat, lng, availability_note";
 
 export const DISCOVERABLE_SELECT_NO_NEW_ARRAYS =
-  "id, username, display_name, location_label, interests, skills, is_discoverable, show_exact_location, travel_radius_km, lat, lng";
+  "id, username, display_name, location_label, interests, skills, is_discoverable, show_exact_location, travel_radius_km, lat, lng, availability_note";
 
 export const DISCOVERABLE_SELECT_NO_VISIBILITY =
   "id, username, display_name, location_label, interests, skills, is_discoverable, lat, lng";
 
 export const DISCOVERABLE_SELECT_EXTENDED_NO_COORDS =
-  "id, username, display_name, location_label, interests, skills, skills_offered, skills_curious, is_discoverable, show_exact_location, travel_radius_km";
+  "id, username, display_name, location_label, interests, skills, skills_offered, skills_curious, is_discoverable, show_exact_location, travel_radius_km, availability_note";
 
 export const DISCOVERABLE_SELECT_NO_NEW_ARRAYS_NO_COORDS =
-  "id, username, display_name, location_label, interests, skills, is_discoverable, show_exact_location, travel_radius_km";
+  "id, username, display_name, location_label, interests, skills, is_discoverable, show_exact_location, travel_radius_km, availability_note";
 
 export const DISCOVERABLE_SELECT_NO_VISIBILITY_NO_COORDS =
   "id, username, display_name, location_label, interests, skills, is_discoverable";
@@ -159,6 +159,7 @@ export function toDiscoverableProfile(row: ProfileRecord): DiscoverableProfile {
     travel_radius_km: row.travel_radius_km ?? null,
     skills_offered: row.skills_offered ?? row.skills ?? null,
     skills_curious: row.skills_curious ?? row.interests ?? null,
+    availability_note: row.availability_note ?? null,
   };
 }
 

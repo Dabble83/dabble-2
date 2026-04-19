@@ -2,15 +2,25 @@
 
 import { Loader } from "@googlemaps/js-api-loader";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { DiscoverableProfile } from "@/src/lib/exploreTypes";
+import { enrichDiscoverableProfile, pinColorForCategory } from "@/src/lib/exploreCategories";
+import type { DiscoverableProfile, ExploreCategoryId } from "@/src/lib/exploreTypes";
 
+/** §2.3 — warm muted base, sage water, stone road lines */
 const MAP_STYLE: google.maps.MapTypeStyle[] = [
-  { elementType: "geometry", stylers: [{ color: "#f4f0e6" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#4a4a4a" }] },
-  { featureType: "water", elementType: "geometry", stylers: [{ color: "#c9d8d5" }] },
-  { featureType: "road", elementType: "geometry", stylers: [{ color: "#e8e2d6" }] },
+  { elementType: "geometry", stylers: [{ color: "#f2ebe3" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#4a524a" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#f2ebe3" }, { lightness: 12 }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#b8cdc4" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#4d6658" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#d6cfc3" }] },
+  { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#c4bdb2" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#ddd5c8" }] },
+  { featureType: "transit", stylers: [{ visibility: "off" }] },
+  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#d8e2d4" }] },
+  { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#dcd4c8" }] },
 ];
 
+const MAP_BG = "#f2ebe3";
 const US_CENTER = { lat: 39.5, lng: -98.35 };
 const DEFAULT_ZOOM = 4;
 
@@ -59,6 +69,17 @@ function buildInfoContent(p: DiscoverableProfile): HTMLElement {
   wrap.appendChild(skillsLine);
   wrap.appendChild(link);
   return wrap;
+}
+
+function markerIconFor(fill: string): google.maps.Symbol {
+  return {
+    path: google.maps.SymbolPath.CIRCLE,
+    scale: 9,
+    fillColor: fill,
+    fillOpacity: 1,
+    strokeColor: "#fffcf7",
+    strokeWeight: 2,
+  };
 }
 
 type ExploreMapProps = {
@@ -118,7 +139,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
             streetViewControl: false,
             fullscreenControl: false,
             styles: MAP_STYLE,
-            backgroundColor: "#f4f0e6",
+            backgroundColor: MAP_BG,
           });
         }
 
@@ -141,10 +162,13 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
 
         const bounds = new google.maps.LatLngBounds();
         for (const p of withCoords) {
+          const enriched = enrichDiscoverableProfile(p);
+          const fill = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
           const marker = new google.maps.Marker({
             map,
             position: { lat: p.lat, lng: p.lng },
             title: p.display_name || p.username,
+            icon: markerIconFor(fill),
           });
           marker.addListener("click", () => {
             openInfo(map, marker, p);
@@ -191,7 +215,8 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   return (
     <div
       ref={containerRef}
-      className="h-full min-h-[min(100dvh,56rem)] w-full rounded-2xl border border-[var(--border)] bg-[#f4f0e6] lg:min-h-[calc(100dvh-8rem)]"
+      className="h-full min-h-[min(100dvh,56rem)] w-full rounded-2xl border border-[var(--border)] lg:min-h-[calc(100dvh-8rem)]"
+      style={{ backgroundColor: MAP_BG }}
     />
   );
 }

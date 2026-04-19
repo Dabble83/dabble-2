@@ -1,5 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { NextRequest } from "next/server";
 import { fail, ok } from "@/src/lib/apiResponses";
+import { filterDiscoverableProfiles } from "@/src/lib/exploreCategories";
+import type { ExploreCategoryId } from "@/src/lib/exploreTypes";
 import {
   DISCOVERABLE_SELECT_EXTENDED,
   DISCOVERABLE_SELECT_EXTENDED_NO_COORDS,
@@ -20,23 +23,48 @@ function withNullCoords(rows: ProfileRow[]): ProfileRow[] {
   return rows.map((p) => ({ ...p, lat: null, lng: null }));
 }
 
+const DISCOVER_PAGE_SIZE = 200;
+
 async function runDiscoverQuery(
   supabase: SupabaseClient,
   select: string,
   discoverableOnly: boolean,
 ) {
-  let q = supabase.from("profiles").select(select).limit(60);
+  let q = supabase.from("profiles").select(select).limit(DISCOVER_PAGE_SIZE);
   if (discoverableOnly) {
     q = q.eq("is_discoverable", true);
   }
   return q;
 }
 
-export async function GET() {
+const VALID_CATS: ExploreCategoryId[] = ["outdoor", "diy", "craft", "food", "music"];
+
+function parseExploreFilters(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const rawCats = searchParams.get("cat")?.split(",").filter(Boolean) ?? [];
+  const categories = rawCats.filter((c): c is ExploreCategoryId => VALID_CATS.includes(c as ExploreCategoryId));
+  const olat = Number(searchParams.get("olat"));
+  const olng = Number(searchParams.get("olng"));
+  const origin =
+    Number.isFinite(olat) && Number.isFinite(olng) ? { lat: olat, lng: olng } : null;
+  const kmParsed = Number(searchParams.get("km"));
+  const maxKm =
+    origin != null
+      ? Number.isFinite(kmParsed) && kmParsed >= 1 && kmParsed <= 50
+        ? Math.round(kmParsed)
+        : 50
+      : null;
+  const teachingOnly = searchParams.get("now") === "1";
+  return { categories, maxKm, origin, teachingOnly };
+}
+
+export async function GET(request: NextRequest) {
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     return fail("Supabase server configuration missing", 500);
   }
+
+  const filters = parseExploreFilters(request);
 
   const selectAttempts: { select: string; discoverableOnly: boolean; nullCoords?: boolean }[] = [
     { select: DISCOVERABLE_SELECT_EXTENDED, discoverableOnly: true },
@@ -78,10 +106,18 @@ export async function GET() {
       }));
     }
 
-    const profiles = rows
-      .map((raw) => normalizeProfileRow(raw))
-      .filter((p): p is NonNullable<typeof p> => p != null)
-      .map(toDiscoverableProfile);
+    const profiles = filterDiscoverableProfiles(
+      rows
+        .map((raw) => normalizeProfileRow(raw))
+        .filter((p): p is NonNullable<typeof p> => p != null)
+        .map(toDiscoverableProfile),
+      {
+        categories: filters.categories,
+        maxKm: filters.origin ? filters.maxKm : null,
+        origin: filters.origin,
+        teachingOnly: filters.teachingOnly,
+      },
+    );
 
     return ok({ profiles });
   }
