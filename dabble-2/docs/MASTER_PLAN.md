@@ -38,3 +38,30 @@ Aesthetic direction: warm, editorial, generous whitespace; strong serif headline
 ### §2.7 Auth pages design
 
 - **Centered** layout with editorial framing; single **card** for the form (sign-in / sign-up) on a soft background.
+
+## §5 Marketing copy & home
+
+### §5.1 Tagline system (canonical)
+
+Use this stack on the marketing home (`/`) and in meta descriptions unless a route-specific line is approved.
+
+| Slot | Copy |
+|------|------|
+| Eyebrow | Trade skills with people nearby |
+| Primary H1 | Try something new, wherever you are. |
+| Subhead | Dabble connects you with skilled neighbors and traveling locals who can teach you a real skill in an hour — fly casting, sourdough, drywall, first kayak strokes. No cash, no pressure, just curiosity in action. |
+| Primary CTA | Find a skill → `/explore` |
+| Secondary CTA | Offer a skill → `/profile/setup` |
+
+**Retired (do not ship):** “Skills travel best when they walk next door” and other pre–§5.1 hero lines.
+
+### §5.6 Testimonials (home)
+
+- Short neighbor quotes with first name + neighborhood (or “Dabbler in …”) — no stock-photo voice.
+- Rotate 2–3 quotes; link to `/safety` or guidelines if a quote mentions trust.
+- **Placeholder:** `TestimonialRow` on the home page until quotes and attributions are sourced.
+
+### §5.7 Credits explainer (home seed phase)
+
+- One line each: starting balance during seed phase, earning by teaching, time approximation (`1 credit ≈ 20 minutes`).
+- Link **How it works** → `/how-it-works` for the full credits/session story (RFC + product).

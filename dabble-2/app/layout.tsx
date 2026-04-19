@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dabble 2.0",
-  description: "Warm local skill exchange — editorial community platform",
+  description: "Trade skills with people nearby — at home or on the road.",
 };
 
 export default function RootLayout({

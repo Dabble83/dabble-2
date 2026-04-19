@@ -1,8 +1,25 @@
 "use client";
 
-import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import type { ComponentProps, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import Link from "next/link";
 import { useState } from "react";
 import { TagInput } from "./TagInput";
+
+const BUTTON_BASE =
+  "inline-flex items-center justify-center rounded-lg border-2 px-5 py-2.5 font-sans text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sage)] disabled:pointer-events-none disabled:opacity-50";
+
+function buttonVariantStyles(variant: "primary" | "secondary" | "ghost" | "destructive") {
+  if (variant === "primary") {
+    return "border-[var(--brand-border)] bg-[var(--brand)] text-white hover:bg-[var(--brand-hover)]";
+  }
+  if (variant === "secondary") {
+    return "border-[var(--clay-dark)] bg-transparent text-[var(--text-primary)] hover:bg-[color-mix(in_srgb,var(--clay)_42%,var(--surface))]";
+  }
+  if (variant === "ghost") {
+    return "border-transparent bg-transparent text-[var(--text-primary)] hover:bg-[color-mix(in_srgb,var(--rule)_70%,transparent)]";
+  }
+  return "border-[color-mix(in_srgb,var(--ember)_55%,var(--ink))] bg-[var(--ember)] text-white hover:bg-[color-mix(in_srgb,var(--ember)_88%,var(--ink))]";
+}
 
 type ButtonProps = {
   children: ReactNode;
@@ -15,20 +32,25 @@ export function Button({
   className = "",
   ...props
 }: ButtonProps) {
-  const base =
-    "inline-flex items-center justify-center rounded-lg border-2 px-5 py-2.5 font-sans text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sage)] disabled:pointer-events-none disabled:opacity-50";
-  const styles =
-    variant === "primary"
-      ? "border-[var(--brand-border)] bg-[var(--brand)] text-white hover:bg-[var(--brand-hover)]"
-      : variant === "secondary"
-        ? "border-[var(--clay-dark)] bg-transparent text-[var(--text-primary)] hover:bg-[color-mix(in_srgb,var(--clay)_42%,var(--surface))]"
-        : variant === "ghost"
-          ? "border-transparent bg-transparent text-[var(--text-primary)] hover:bg-[color-mix(in_srgb,var(--rule)_70%,transparent)]"
-          : "border-[color-mix(in_srgb,var(--ember)_55%,var(--ink))] bg-[var(--ember)] text-white hover:bg-[color-mix(in_srgb,var(--ember)_88%,var(--ink))]";
   return (
-    <button className={`${base} ${styles} ${className}`} {...props}>
+    <button className={`${BUTTON_BASE} ${buttonVariantStyles(variant)} ${className}`} {...props}>
       {children}
     </button>
+  );
+}
+
+type ButtonLinkProps = {
+  children: ReactNode;
+  variant?: "primary" | "secondary";
+  className?: string;
+} & Omit<ComponentProps<typeof Link>, "className">;
+
+/** Next.js `Link` styled like `Button` (primary sage / secondary clay outline). */
+export function ButtonLink({ children, variant = "primary", className = "", ...props }: ButtonLinkProps) {
+  return (
+    <Link className={`${BUTTON_BASE} ${buttonVariantStyles(variant)} ${className}`} {...props}>
+      {children}
+    </Link>
   );
 }
 
