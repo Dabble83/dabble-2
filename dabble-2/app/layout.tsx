@@ -46,6 +46,9 @@ export default function RootLayout({
                 <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
                   About this prototype
                 </Link>
+                <Link href="/how-it-works" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  How it works
+                </Link>
                 <Link href="/safety" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
                   Safety
                 </Link>

@@ -44,6 +44,29 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section
+        aria-labelledby="credits-strip-heading"
+        className="mt-16 border-y border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_70%,var(--background))] md:mt-24"
+      >
+        <div className="ui-container flex flex-col gap-4 py-10 md:flex-row md:items-center md:justify-between md:py-12">
+          <div className="max-w-2xl space-y-2">
+            <p id="credits-strip-heading" className="ui-label">
+              Credits, not cash
+            </p>
+            <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              Neighbor time moves in small credits—about twenty minutes each—so you can teach, learn, and tip without
+              turning the block into a marketplace.
+            </p>
+          </div>
+          <Link
+            href="/how-it-works"
+            className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[var(--brand-border)] bg-[var(--brand)] px-6 py-3 font-sans text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-hover)] md:px-8"
+          >
+            How credits work
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

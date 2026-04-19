@@ -142,3 +142,44 @@ For the broader safety model—including tiers and out-of-scope lists—visit `/
 **What happens next.** We triage, may pause or mute accounts while we review, and follow up with the parties involved when appropriate.
 
 **72-hour response promise.** During the seed phase, we **acknowledge substantive reports within 72 hours** on business days. Some matters need more time to untangle; if so, we still send a first note inside that window so you are not left guessing.
+
+## §10 Credits economy (`/how-it-works`)
+
+Canonical copy for the credits explainer. Tune numbers in product only when this section is updated in the same commit.
+
+### §10.0 Opening
+
+A quick trail map for first-time visitors—what a credit is, how it moves, and why we keep money off the path.
+
+### §10.1 What a credit is
+
+One credit is a small unit of neighbor time—roughly **twenty minutes** of focused, in-person help. It is **not** a dollar and **not** a contract. Sessions are priced in whole credits so expectations stay legible.
+
+### §10.2 How to earn
+
+- **Teach a session** that both parties mark complete; learner confirmation and (when shipped) simple ratings help the ledger stay honest.
+- **Get rated** after sessions (when ratings ship); good-faith feedback keeps the loop trustworthy.
+- **Time-banked loop:** the skills you teach become credits someone else spends, so curiosity circulates instead of cash.
+- **Free-seed allocation:** during the seed phase, eligible accounts receive starter credits so newcomers can try Dabble before their first teach (see §10.5).
+
+### §10.3 How to spend
+
+| Shape | Credits |
+|-------|---------|
+| Tip (small favor, a few minutes) | 1 |
+| Short session (hands-on demo length) | 3 |
+| Walk-with (longer neighborhood session) | 6 |
+
+### §10.4 Why credits instead of money
+
+- **Legal simplicity:** fewer gray zones than charging strangers for ad-hoc services through profiles.
+- **Community culture:** swaps curiosity for transaction optics.
+- **Access:** people who could not hire a private tutor for an hour can still join a neighborly exchange.
+
+### §10.5 Free seed phase
+
+While we are **under 10,000 members**, every **new member** receives **three starter credits** so you can book a short session before you teach your first skill. The cap keeps the loop generous during early growth.
+
+### §10.6 Example math (inline explainer)
+
+Teach a 1-hour fly-casting lesson → earn 3 credits → spend them on a drywall-patching lesson or a sourdough class.

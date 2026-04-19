@@ -30,6 +30,9 @@ export function SiteHeader() {
           <Link href="/about" className={navLinkClass}>
             About
           </Link>
+          <Link href="/how-it-works" className={navLinkClass}>
+            How it works
+          </Link>
           <Link href="/safety" className={navLinkClass}>
             Safety
           </Link>
@@ -74,6 +77,9 @@ export function SiteHeader() {
             </Link>
             <Link href="/about" className="py-1" onClick={() => setMenuOpen(false)}>
               About
+            </Link>
+            <Link href="/how-it-works" className="py-1" onClick={() => setMenuOpen(false)}>
+              How it works
             </Link>
             <Link href="/safety" className="py-1" onClick={() => setMenuOpen(false)}>
               Safety
