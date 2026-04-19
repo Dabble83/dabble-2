@@ -12,6 +12,7 @@ import {
   EXPLORE_CATEGORY_IDS,
   pinColorForCategory,
 } from "@/src/lib/exploreCategories";
+import { isMapsEnabled } from "@/lib/flags";
 import type { DiscoverableProfile, ExploreCategoryId } from "@/src/lib/exploreTypes";
 
 function parseCategoriesFromParams(sp: URLSearchParams): ExploreCategoryId[] {
@@ -217,7 +218,7 @@ function ExplorePageInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const mapsEnabled = process.env.NEXT_PUBLIC_ENABLE_MAPS === "true";
+  const mapsEnabled = isMapsEnabled();
   const mapsBrowserKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapSplitLayout = mapsEnabled && Boolean(mapsBrowserKey);
 

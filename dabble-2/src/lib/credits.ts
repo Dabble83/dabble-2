@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { isFreeSeedPhase } from "@/lib/flags";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
 export type CreditsResult = { ok: true } | { ok: false; error: string };
@@ -107,11 +108,6 @@ export async function spend(
   });
 }
 
-function seedPhaseEnabled(): boolean {
-  const v = process.env.NEXT_PUBLIC_FREE_SEED_PHASE;
-  return v === "true" || v === "1";
-}
-
 const SEED_MEMBER_CAP = 10_000;
 const SEED_CREDITS = 3;
 
@@ -169,7 +165,7 @@ export async function sessionPayTeacher(
 }
 
 export async function maybeGrantSeedSignupCredits(userId: string): Promise<CreditsResult> {
-  if (!seedPhaseEnabled()) {
+  if (!isFreeSeedPhase()) {
     return { ok: true };
   }
 

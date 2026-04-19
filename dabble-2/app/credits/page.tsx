@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { isCreditsEnabled } from "@/lib/flags";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 
 type BalancePayload = {
@@ -77,6 +78,11 @@ function CreditsPageInner() {
     let cancelled = false;
 
     void (async () => {
+      if (!isCreditsEnabled()) {
+        setRedirecting(false);
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       setError(null);
       const supabase = getSupabaseClient();
@@ -183,6 +189,17 @@ function CreditsPageInner() {
       setLoadMoreLoading(false);
     }
   };
+
+  if (!isCreditsEnabled()) {
+    return (
+      <div className="ui-container py-16 md:py-20">
+        <p className="font-sans text-[var(--text-secondary)]">Credits are not enabled on this deployment.</p>
+        <Link href="/" className="mt-4 inline-block font-sans text-sm font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
+          Back home
+        </Link>
+      </div>
+    );
+  }
 
   if (redirecting) {
     return (

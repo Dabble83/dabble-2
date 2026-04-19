@@ -28,6 +28,18 @@ const DOCUMENTED = [
     warnIfMissing: false,
   },
   {
+    key: "NEXT_PUBLIC_ENABLE_CREDITS",
+    tier: "PUBLIC",
+    phase: "Credits UI + ledger (omit or true; false hides)",
+    warnIfMissing: false,
+  },
+  {
+    key: "NEXT_PUBLIC_ENABLE_AI",
+    tier: "PUBLIC",
+    phase: "AI-assisted features",
+    warnIfMissing: false,
+  },
+  {
     key: "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
     tier: "PUBLIC",
     phase: "Maps",
@@ -97,13 +109,6 @@ function isSet(key) {
   return typeof v === "string" && v.length > 0;
 }
 
-function isTruthyEnv(key) {
-  const raw = process.env[key];
-  if (!raw) return false;
-  const normalized = raw.trim().toLowerCase();
-  return normalized === "true" || normalized === "1" || normalized === "yes";
-}
-
 function main() {
   loadEnvLocal();
 
@@ -137,7 +142,8 @@ function main() {
   }
 
   // Conditional configuration warnings.
-  if (isTruthyEnv("NEXT_PUBLIC_ENABLE_MAPS") && !isSet("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")) {
+  // Keep in sync with `lib/flags.ts` `isMapsEnabled()` (literal "true" only).
+  if (process.env.NEXT_PUBLIC_ENABLE_MAPS === "true" && !isSet("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")) {
     warnings.push("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY (required when maps are enabled)");
   }
 

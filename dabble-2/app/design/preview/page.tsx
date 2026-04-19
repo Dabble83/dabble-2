@@ -8,7 +8,7 @@ export const metadata = {
 export default function DesignPreviewPage() {
   return (
     <div className="py-16">
-      <main className="ui-container space-y-10">
+      <div className="ui-container space-y-10">
         <header className="space-y-3">
           <p className="ui-label">Gate C approval surface</p>
           <h1 className="ui-heading text-5xl">Dabble 2.0 Design Preview</h1>
@@ -65,7 +65,7 @@ export default function DesignPreviewPage() {
             </p>
           </Card>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

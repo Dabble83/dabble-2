@@ -14,7 +14,7 @@ export default function Home() {
           <div className="space-y-8">
             <p className="ui-label">A gentle place to learn and share</p>
             <h1 className="ui-heading max-w-xl text-4xl leading-[1.08] text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
-              Skills travel best when they walk next door
+              Learn something new from the block next door
             </h1>
             <p className="max-w-lg font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               Dabble connects neighbors who want to teach what they love with neighbors who are

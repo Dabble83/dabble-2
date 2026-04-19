@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { startTransition, useEffect, useState } from "react";
+import { isCreditsEnabled } from "@/lib/flags";
 import { useAuthSession } from "@/src/hooks/useAuthSession";
 
 /** §2.3 outdoor sage — compact pill for header */
@@ -67,6 +68,8 @@ export function CreditBalanceBadge() {
   }
 
   if (!session) return null;
+
+  if (!isCreditsEnabled()) return null;
 
   const label =
     credits != null && !fetchError ? String(credits) : fetchError ? "—" : "…";
