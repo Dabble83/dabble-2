@@ -1,7 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import Link from "next/link";
+import { DevAxeReporter } from "@/app/components/DevAxeReporter";
+import { SkipToMain } from "@/app/components/SkipToMain";
 import { SiteHeader } from "@/app/components/SiteHeader";
+import { getMetadataBase } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,9 +23,37 @@ const lora = Lora({
   display: "swap",
 });
 
+const defaultDescription =
+  "Meet neighbors who teach what they love and try something new—bread, bikes, music, repair, and more. Small credits, calm meetups, no marketplace hustle.";
+
+export const viewport: Viewport = {
+  themeColor: "#f4f0e6",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "Dabble 2.0",
-  description: "Warm local skill exchange — editorial community platform",
+  metadataBase: getMetadataBase(),
+  title: {
+    default: "Dabble — local skills, shared kindly",
+    template: "%s · Dabble",
+  },
+  description: defaultDescription,
+  applicationName: "Dabble",
+  formatDetection: { telephone: false },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Dabble",
+    title: "Dabble — local skills, shared kindly",
+    description: defaultDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dabble — local skills, shared kindly",
+    description: defaultDescription,
+  },
 };
 
 export default function RootLayout({
@@ -36,18 +67,33 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[var(--background)] text-[var(--text-primary)]">
+        <SkipToMain />
         <div className="flex min-h-full flex-col">
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
           <footer className="border-t border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_60%,var(--background))]">
-            <div className="ui-container flex flex-col gap-2 py-10 font-sans text-sm text-[var(--text-tertiary)] md:flex-row md:items-center md:justify-between">
-              <span>Dabble — neighbors learning together.</span>
-              <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
-                About this prototype
-              </Link>
+            <div className="ui-container flex flex-col gap-2 py-10 font-sans text-sm text-[var(--text-secondary)] md:flex-row md:items-center md:justify-between">
+              <span>Dabble — local skills, shared kindly.</span>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  About
+                </Link>
+                <Link href="/how-it-works" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  How it works
+                </Link>
+                <Link href="/safety" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  Safety
+                </Link>
+                <Link href="/guidelines" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
+                  Guidelines
+                </Link>
+              </div>
             </div>
           </footer>
         </div>
+        {process.env.NODE_ENV === "development" ? <DevAxeReporter /> : null}
       </body>
     </html>
   );

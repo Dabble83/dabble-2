@@ -26,16 +26,26 @@ export function Button({
 
 export function Card({
   title,
+  titleId,
+  titleLevel = 3,
   children,
   className = "",
 }: {
   title?: string;
+  titleId?: string;
+  /** Use `2` when this card is a direct section under the page `h1` (fixes heading order for a11y). */
+  titleLevel?: 2 | 3;
   children: ReactNode;
   className?: string;
 }) {
+  const HeadingTag = titleLevel === 2 ? "h2" : "h3";
   return (
     <section className={`ui-card p-6 ${className}`}>
-      {title ? <h3 className="ui-heading mb-4 font-serif text-2xl">{title}</h3> : null}
+      {title ? (
+        <HeadingTag id={titleId} className="ui-heading mb-4 font-serif text-2xl">
+          {title}
+        </HeadingTag>
+      ) : null}
       {children}
     </section>
   );

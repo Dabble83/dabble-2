@@ -10,17 +10,21 @@ type MapAdapterShellProps = {
   /** Sidebar: filters + profile list */
   children: ReactNode;
   onSelectProfile?: (profile: DiscoverableProfile) => void;
+  /** On small screens: when false (default), list is shown; when true, map is shown. Desktop always shows both. */
+  mobileShowMap?: boolean;
 };
 
 /**
  * When maps are enabled and a browser key exists: desktop = sidebar (40%) left,
- * map (60%) right, both full viewport height. Otherwise list-only.
+ * map (60%) right, both full viewport height. On small screens, list is default
+ * unless `mobileShowMap` is true.
  */
 export function MapAdapterShell({
   enabled,
   points,
   children,
   onSelectProfile,
+  mobileShowMap = false,
 }: MapAdapterShellProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const showMap = enabled && Boolean(apiKey);
@@ -54,10 +58,18 @@ export function MapAdapterShell({
 
   return (
     <div className="flex min-h-0 flex-col gap-6 lg:min-h-[calc(100dvh-8rem)] lg:flex-row lg:gap-0">
-      <div className="order-2 flex min-h-0 w-full flex-col lg:order-1 lg:w-[40%] lg:max-w-[40%] lg:border-r lg:border-[var(--border)] lg:pr-6">
+      <div
+        className={`order-1 flex min-h-0 w-full flex-col lg:order-1 lg:w-[40%] lg:max-w-[40%] lg:border-r lg:border-[var(--border)] lg:pr-6 ${
+          mobileShowMap ? "max-lg:hidden" : ""
+        }`}
+      >
         <div className="min-h-0 flex-1 overflow-y-auto pr-1">{children}</div>
       </div>
-      <div className="order-1 min-h-0 w-full lg:order-2 lg:flex-1 lg:min-w-0 lg:pl-6">
+      <div
+        className={`order-2 w-full min-h-[min(70dvh,28rem)] lg:order-2 lg:min-h-[calc(100dvh-8rem)] lg:flex-1 lg:min-w-0 lg:pl-6 ${
+          mobileShowMap ? "" : "max-lg:hidden"
+        }`}
+      >
         <ExploreMap profiles={points} onSelectProfile={onSelectProfile} />
       </div>
     </div>

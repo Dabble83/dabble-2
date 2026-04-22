@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroIllustration } from "@/app/components/HeroIllustration";
+
+export const metadata: Metadata = {
+  description:
+    "Learn something new from the block next door — Dabble connects neighbors who teach with neighbors who are curious. Clear profiles, small credits, calm meetups.",
+  alternates: { canonical: "/" },
+};
 
 const primaryCta =
   "inline-flex items-center justify-center rounded-lg border border-[var(--brand-border)] bg-[var(--brand)] px-8 py-3 font-sans text-base font-semibold text-white transition-colors hover:bg-[var(--brand-hover)]";
@@ -14,7 +21,7 @@ export default function Home() {
           <div className="space-y-8">
             <p className="ui-label">A gentle place to learn and share</p>
             <h1 className="ui-heading max-w-xl text-4xl leading-[1.08] text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
-              Skills travel best when they walk next door
+              Learn something new from the block next door
             </h1>
             <p className="max-w-lg font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               Dabble connects neighbors who want to teach what they love with neighbors who are
@@ -42,6 +49,29 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="credits-strip-heading"
+        className="mt-16 border-y border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_70%,var(--background))] md:mt-24"
+      >
+        <div className="ui-container flex flex-col gap-4 py-10 md:flex-row md:items-center md:justify-between md:py-12">
+          <div className="max-w-2xl space-y-2">
+            <p id="credits-strip-heading" className="ui-label">
+              Credits, not cash
+            </p>
+            <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              Neighbor time moves in small credits—about twenty minutes each—so you can teach, learn, and tip without
+              turning the block into a marketplace.
+            </p>
+          </div>
+          <Link
+            href="/how-it-works"
+            className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[var(--brand-border)] bg-[var(--brand)] px-6 py-3 font-sans text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-hover)] md:px-8"
+          >
+            How credits work
+          </Link>
         </div>
       </section>
     </div>

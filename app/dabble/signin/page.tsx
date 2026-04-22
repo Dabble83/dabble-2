@@ -72,7 +72,15 @@ export default function SignInPage() {
               />
             </label>
             <label className="block space-y-2">
-              <span className="ui-label">Password</span>
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="ui-label">Password</span>
+                <Link
+                  href="/dabble/forgot-password"
+                  className="shrink-0 font-sans text-xs font-medium text-[var(--brand-text)] underline-offset-4 hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <Input
                 type="password"
                 placeholder="Your password"

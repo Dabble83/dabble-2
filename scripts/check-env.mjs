@@ -28,15 +28,39 @@ const DOCUMENTED = [
     warnIfMissing: false,
   },
   {
+    key: "NEXT_PUBLIC_ENABLE_CREDITS",
+    tier: "PUBLIC",
+    phase: "Credits UI + ledger (omit or true; false hides)",
+    warnIfMissing: false,
+  },
+  {
+    key: "NEXT_PUBLIC_ENABLE_AI",
+    tier: "PUBLIC",
+    phase: "AI-assisted features",
+    warnIfMissing: false,
+  },
+  {
     key: "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
     tier: "PUBLIC",
     phase: "Maps",
     warnIfMissing: false,
   },
   {
+    key: "NEXT_PUBLIC_FREE_SEED_PHASE",
+    tier: "PUBLIC",
+    phase: "Credits — grant 3 starter credits on first profile while under 10k members (RFC 002)",
+    warnIfMissing: false,
+  },
+  {
     key: "GOOGLE_MAPS_SERVER_KEY",
     tier: "SERVER_ONLY",
     phase: "Maps / geocode",
+    warnIfMissing: false,
+  },
+  {
+    key: "NEXT_PUBLIC_SITE_URL",
+    tier: "PUBLIC",
+    phase: "Canonical origin for metadata, sitemap, and profile meta fetches",
     warnIfMissing: false,
   },
   {
@@ -91,13 +115,6 @@ function isSet(key) {
   return typeof v === "string" && v.length > 0;
 }
 
-function isTruthyEnv(key) {
-  const raw = process.env[key];
-  if (!raw) return false;
-  const normalized = raw.trim().toLowerCase();
-  return normalized === "true" || normalized === "1" || normalized === "yes";
-}
-
 function main() {
   loadEnvLocal();
 
@@ -131,7 +148,8 @@ function main() {
   }
 
   // Conditional configuration warnings.
-  if (isTruthyEnv("NEXT_PUBLIC_ENABLE_MAPS") && !isSet("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")) {
+  // Keep in sync with `lib/flags.ts` `isMapsEnabled()` (literal "true" only).
+  if (process.env.NEXT_PUBLIC_ENABLE_MAPS === "true" && !isSet("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")) {
     warnings.push("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY (required when maps are enabled)");
   }
 
