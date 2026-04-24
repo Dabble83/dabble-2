@@ -9,7 +9,9 @@
     "lint": "eslint . && node scripts/copy-guard.mjs",
     "check-env": "node scripts/check-env.mjs",
     "preflight": "npm run check-env && npm run lint",
-    "ready": "npm run check-env && npm run lint && npm run build"
+    "ready": "npm run check-env && npm run lint && npm run build",
+    "cursor:send": "node scripts/cursor-send.mjs",
+    "cursor:send:dry": "node scripts/cursor-send.mjs --dry-run"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
