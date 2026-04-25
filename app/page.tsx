@@ -4,7 +4,7 @@ import { HeroIllustration } from "@/app/components/HeroIllustration";
 
 export const metadata: Metadata = {
   description:
-    "Learn something new from the block next door — Dabble connects neighbors who teach with neighbors who are curious. Clear profiles, small credits, calm meetups.",
+    "Try something new, wherever you are — Dabble connects neighbors who teach with neighbors who are curious. Clear profiles, small credits, calm meetups.",
   alternates: { canonical: "/" },
 };
 
@@ -21,7 +21,7 @@ export default function Home() {
           <div className="space-y-8">
             <p className="ui-label">A gentle place to learn and share</p>
             <h1 className="ui-heading max-w-xl text-4xl leading-[1.08] text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
-              Learn something new from the block next door
+              Try something new, wherever you are.
             </h1>
             <p className="max-w-lg font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               Dabble connects neighbors who want to teach what they love with neighbors who are
