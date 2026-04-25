@@ -43,10 +43,6 @@ export default function Home() {
           <div className="flex justify-center lg:justify-end">
             <div className="w-full max-w-[26rem] rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[0_24px_60px_-24px_rgba(42,61,44,0.12)]">
               <HeroIllustration />
-              <p className="mt-6 text-center font-serif text-sm italic text-[var(--text-secondary)]">
-                Illustration: homes, paths, and a small exchange — the shape of a block that looks
-                out for one another.
-              </p>
             </div>
           </div>
         </div>
