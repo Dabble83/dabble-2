@@ -213,9 +213,9 @@ function CreditsPageInner() {
     <div className="ui-container space-y-10 py-16 md:space-y-12 md:py-20">
       <header className="max-w-3xl space-y-3">
         <p className="ui-label">Credits</p>
-        <h1 className="ui-heading text-4xl text-[var(--text-primary)] md:text-5xl">Your neighbor time</h1>
+        <h1 className="ui-heading text-4xl text-[var(--text-primary)] md:text-5xl">Your Dabbler time</h1>
         <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)]">
-          Whole credits, short sessions, no cash on the path. Numbers here match what you can book and earn.
+          Whole credits, short sessions, no cash. The numbers here match what you can book and earn.
         </p>
       </header>
 
@@ -255,7 +255,7 @@ function CreditsPageInner() {
           {entries.length === 0 && !error ? (
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-6 py-10 text-center md:px-10">
               <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-                You have 3 credits to start. Offer a lesson or book one to see activity here.
+                You have 6 starter credits to begin with. Offer a session or book one to see activity here.
               </p>
             </div>
           ) : null}
@@ -356,7 +356,7 @@ function CreditsPageInner() {
       <section className="max-w-3xl rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
         <h2 className="ui-heading text-lg text-[var(--text-primary)]">How credits work</h2>
         <p className="mt-3 font-sans text-sm leading-relaxed text-[var(--text-secondary)]">
-          One credit is about twenty minutes of neighborly help. Tips, short sessions, and walk-withs each cost a
+          One credit is about twenty minutes of Dabbler time. Tips, short sessions, and walk-withs each cost a
           small number of credits so expectations stay clear. The full trail map lives on How it works.
         </p>
         <Link

@@ -88,13 +88,13 @@ function serverFilteredEmptyHeadline(
   const lane = categoryLanePhrase(cats);
   if (lane) {
     return hasOrigin
-      ? `No one nearby teaching ${lane} yet.`
-      : `No one teaching ${lane} yet.`;
+      ? `No Dabblers nearby teaching ${lane} yet.`
+      : `No Dabblers teaching ${lane} yet.`;
   }
-  if (teachingNow && hasOrigin) return "No one nearby teaching right now yet.";
-  if (teachingNow) return "No one teaching right now yet.";
-  if (hasOrigin) return "No one nearby yet.";
-  return "No discoverable profiles match these filters yet.";
+  if (teachingNow && hasOrigin) return "No Dabblers nearby teaching right now.";
+  if (teachingNow) return "No Dabblers teaching right now.";
+  if (hasOrigin) return "No Dabblers nearby yet.";
+  return "No Dabblers match these filters yet.";
 }
 
 function ExploreCardSkeleton() {
@@ -166,7 +166,7 @@ function ExploreProfileCard({
   featured?: boolean;
   highlighted?: boolean;
 }) {
-  const name = dabbler.display_name || "Neighbor";
+  const name = dabbler.display_name || "Dabbler";
   const handle = dabbler.username ? `@${dabbler.username}` : "";
   const place = dabbler.location_label || "Neighborhood not set";
   const enriched = enrichDiscoverableProfile(dabbler);
@@ -375,7 +375,7 @@ function ExplorePageInner() {
           setError(
             isServerError
               ? "The server had trouble finishing that request. Your filters stay as they are—try again in a moment."
-              : body.error || "We could not load neighbors just then.",
+              : body.error || "We couldn't load Dabblers just then.",
           );
           setProfiles([]);
           setLoading(false);
@@ -532,8 +532,8 @@ function ExplorePageInner() {
         </div>
         {!loading && !error && profiles.length > 0 ? (
           <p className="mt-4 font-sans text-xs text-[var(--text-tertiary)]">
-            Showing {filteredProfiles.length} of {profiles.length} profiles (URL filters apply server-side; search
-            and neighborhood refine this page).
+            Showing {filteredProfiles.length} of {profiles.length} Dabblers (URL filters apply server-side; search
+            and area refine this page).
           </p>
         ) : null}
       </div>
@@ -587,9 +587,9 @@ function ExplorePageInner() {
       {!loading && !error && profiles.length === 0 && !activeUrlFilters ? (
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-6 py-10 text-center md:px-10 md:py-12">
           <ExploreEmptyIllustration />
-          <h2 className="ui-heading mt-8 text-2xl text-[var(--text-primary)] md:text-3xl">No neighbors here yet</h2>
+          <h2 className="ui-heading mt-8 text-2xl text-[var(--text-primary)] md:text-3xl">No Dabblers here yet</h2>
           <p className="mt-4 font-sans text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-            Complete profile setup and turn on discoverability to appear on Explore—or be the first in your area to
+            Finish your profile and turn on discoverability to appear on Explore — or be the first in your area to
             share a skill.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -608,7 +608,7 @@ function ExplorePageInner() {
           <ExploreEmptyIllustration />
           <h2 className="ui-heading mt-8 text-2xl text-[var(--text-primary)] md:text-3xl">Nothing matches here</h2>
           <p className="mt-4 font-sans text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-            Try a different search, choose &quot;Everywhere&quot; for neighborhood, or loosen filters in the bar
+            Try a different search, choose &quot;Everywhere&quot; for area, or loosen filters in the bar
             above.
           </p>
         </div>
@@ -638,10 +638,10 @@ function ExplorePageInner() {
       <section className="ui-container space-y-12">
         <header className="max-w-3xl space-y-4">
           <p className="ui-label">Explore</p>
-          <h1 className="ui-heading text-4xl md:text-5xl">Neighbors worth meeting</h1>
+          <h1 className="ui-heading text-4xl md:text-5xl">Find Dabblers near your</h1>
           <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-            Browse at your own pace. Each card is a small portrait — what someone shares, what they hope to learn, and
-            where they are in the neighborhood.
+            Browse at your own pace. Each profile card shows you what a Dabbler can share, what they&apos;re curious
+            to learn, and where they are in the area.
           </p>
         </header>
 

@@ -91,7 +91,7 @@ export default function UpdatePasswordPage() {
     <AuthShell>
       <div className="w-full max-w-md">
         <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
-          Almost there — pick a new password you have not used elsewhere.
+          Almost there — pick a new password you haven&rsquo;t used elsewhere.
         </p>
         <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
           <div className="mb-6 border-b border-[var(--border)] pb-6">

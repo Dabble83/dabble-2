@@ -5,18 +5,18 @@ import { Card } from "@/app/components/ui";
 export const metadata: Metadata = {
   title: "Safety",
   description:
-    "Four-tier safety model for Dabble meetups — from passing curiosity to longer sessions — plus guardrails, credits (not cash), and how we think about risk at human pace.",
+    "A four-tier safety model for Dabble meetups — from passing curiosity to longer sessions — plus guardrails, credits (not cash), and how we think about risk.",
   alternates: { canonical: "/safety" },
 };
 
 const intro =
-  "Dabble routes exchange through credits and time-boxed curiosity, not cash for services. That reduces transactional liability and keeps meetups in a skilled-amateur frame: neighbors sharing know-how, not hired professionals or gig marketplaces.";
+  "Dabble routes exchange through credits and time-boxed curiosity — not cash for services. That keeps meetups in a skilled-amateur frame: Dabblers sharing know-how, not hired professionals or gig marketplaces.";
 
 const tiers: { id: string; title: string; lead: string; examples: string[] }[] = [
   {
     id: "tier-1",
     title: "Tier 1 — Curiosity in passing",
-    lead: "Short, informal moments without scheduling pressure.",
+    lead: "Short, informal moments — no scheduling pressure, no commitment beyond “nice to meet you.”",
     examples: [
       "Showing how to tie a bowline once while rigging a line at a public dock.",
       "Pointing out three edible mushrooms on an organized woods walk where the host group sets safety rules.",
@@ -35,8 +35,8 @@ const tiers: { id: string; title: string; lead: string; examples: string[] }[] =
   },
   {
     id: "tier-3",
-    title: "Tier 3 — Continued practice with the same neighbor",
-    lead: "Follow-ups after a Tier 2 session, still bounded and still aligned with Dabble’s no-cash / no-gigs posture.",
+    title: "Tier 3 — Continued practice with the same Dabbler",
+    lead: "Follow-ups after a Tier 2 session, still bounded and still aligned with Dabble’s no-cash, no-gigs posture.",
     examples: [
       "A second public session on the same topic because the first met both people’s boundaries.",
       "A small neighborhood circle (few people) hosted in a rented room or yard where everyone opts in.",
@@ -45,7 +45,7 @@ const tiers: { id: string; title: string; lead: string; examples: string[] }[] =
   {
     id: "tier-4",
     title: "Tier 4 — Outside what Dabble coordinates",
-    lead: "These are not coordinated through Dabble’s product surface; people may choose them privately, but the platform does not schedule or supervise them.",
+    lead: "Things Dabblers may choose privately, but the platform doesn’t schedule or supervise.",
     examples: [
       "Solo work inside strangers’ private homes as a first meeting.",
       "Recurring dependent care, childcare without guardians present, or medical services.",
@@ -66,7 +66,7 @@ const checklist = [
   "Tell someone you trust where you are going and how long you expect to be.",
   "Keep the session short so expectations stay small; align with seed-phase credit norms when published.",
   "Stay in skilled-amateur territory; defer to licensed professionals for regulated work.",
-  "Prefer in-app messaging until you are comfortable; avoid posting phone numbers, email, or home address on profiles.",
+  "Prefer in-app messaging until you are comfortable; keep phone numbers, email, and home addresses off your public profile.",
   "Leave if anything feels unsafe; report concerns to safety@dabble.it.com.",
 ];
 
@@ -76,7 +76,7 @@ export default function SafetyPage() {
       <header className="max-w-3xl space-y-4">
         <p className="ui-label">Safety & trust</p>
         <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">
-          How we keep Dabble calm and low-risk
+          How we keep Dabble grounded and low-risk
         </h1>
         <p className="font-sans text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">{intro}</p>
       </header>

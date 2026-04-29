@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "Credits, not cash: what a credit is, how you earn and spend them, and why we use this model during the free seed phase.",
+    "Credits, not cash: what a Dabble credit is, how you earn and spend it, and how the swap empowers, lowers costs, and deepens experiences.",
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -23,8 +23,8 @@ function Section({ id, title, children }: { id: string; title: string; children:
 export function CreditMath() {
   return (
     <p className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-4 font-sans text-base leading-relaxed text-[var(--text-primary)] shadow-[0_8px_30px_-18px_rgba(42,61,44,0.12)]">
-      Teach a 1-hour fly-casting lesson → earn 3 credits → spend them on a drywall-patching lesson or a sourdough
-      class.
+      Teach a one-hour fly-casting lesson → earn 3 credits → spend them on a drywall-patching demo
+      or a sourdough class.
     </p>
   );
 }
@@ -32,7 +32,7 @@ export function CreditMath() {
 const spendRows: { shape: string; credits: string }[] = [
   { shape: "Tip (small favor, a few minutes)", credits: "1" },
   { shape: "Short session (hands-on demo length)", credits: "3" },
-  { shape: "Walk-with (longer neighborhood session)", credits: "6" },
+  { shape: "Walk-with (longer session in your area)", credits: "6" },
 ];
 
 export default function HowItWorksPage() {
@@ -42,37 +42,42 @@ export default function HowItWorksPage() {
         <p className="ui-label">Credits</p>
         <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">How Dabble works</h1>
         <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-          A quick trail map for first-time visitors—what a credit is, how it moves, and why we keep money off the path.
+          A short trail map for first-time Dabblers. What a credit is, how it moves, and how the
+          swap deepens what you already know.
         </p>
       </header>
 
       <div className="space-y-0">
         <Section id="what" title="What a credit is">
           <p>
-            One credit is a small unit of neighbor time—roughly <strong>twenty minutes</strong> of focused, in-person
-            help. It is <strong>not</strong> a dollar and <strong>not</strong> a contract. Sessions are priced in whole
-            credits so expectations stay legible.
+            One credit is a small unit of Dabbler time — roughly <strong>twenty minutes</strong> of
+            focused, in-person help. It is <strong>not</strong> a dollar and <strong>not</strong> a
+            contract. Sessions are priced in whole credits so expectations stay clear.
           </p>
         </Section>
 
         <Section id="earn" title="How to earn">
           <ul className="list-disc space-y-2 pl-5">
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Teach a session</strong> that both parties
-              mark complete; learner confirmation and (when shipped) simple ratings help the ledger stay honest.
+              <strong className="font-semibold text-[var(--text-primary)]">Teach a session</strong>{" "}
+              that both Dabblers mark complete; learner confirmation and (when complete) simple
+              ratings keep the ledger honest.
             </li>
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Get rated</strong> after sessions (when
-              ratings ship); good-faith feedback keeps the loop trustworthy.
+              <strong className="font-semibold text-[var(--text-primary)]">Get rated</strong> after
+              sessions (when ratings are given); good-faith feedback keeps the loop trustworthy.
             </li>
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Time-banked loop:</strong> the skills you
-              teach become credits someone else spends, so curiosity circulates instead of cash.
+              <strong className="font-semibold text-[var(--text-primary)]">A swap loop:</strong>{" "}
+              the talent and skills you share become credits someone else spends, so curiosity
+              circulates.
             </li>
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Free-seed allocation:</strong> during the
-              seed phase, eligible accounts receive starter credits so newcomers can try Dabble before their first
-              teach (see below).
+              <strong className="font-semibold text-[var(--text-primary)]">
+                Free allocation during pilot:
+              </strong>{" "}
+              during the introductory phase of Dabble, eligible Dabblers receive starter credits so
+              newcomers can try a session before their first teach (see below).
             </li>
           </ul>
         </Section>
@@ -98,28 +103,31 @@ export default function HowItWorksPage() {
           </div>
         </Section>
 
-        <Section id="why" title="Why credits instead of money">
+        <Section id="why" title="Why credits, not money">
           <ul className="list-disc space-y-2 pl-5">
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Legal simplicity:</strong> fewer gray zones
-              than charging strangers for ad-hoc services through profiles.
+              <strong className="font-semibold text-[var(--text-primary)]">Legal simplicity:</strong>{" "}
+              fewer gray zones than charging strangers for ad-hoc services through profiles.
             </li>
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Community culture:</strong> swaps curiosity
-              for transaction optics.
+              <strong className="font-semibold text-[var(--text-primary)]">Community first:</strong>{" "}
+              an exchange of talent, skills, ideas, and knowledge and a way to deepen the experience
+              of a place.
             </li>
             <li>
-              <strong className="font-semibold text-[var(--text-primary)]">Access:</strong> people who could not hire a
-              private tutor for an hour can still join a neighborly exchange.
+              <strong className="font-semibold text-[var(--text-primary)]">Access:</strong> Dabblers
+              who could not hire a private tutor can still take part in the swap, lowering costs
+              while deepening experiences.
             </li>
           </ul>
         </Section>
 
-        <Section id="seed" title="Free seed phase">
+        <Section id="seed" title="Free introductory phase">
           <p>
-            While we are <strong>under 10,000 members</strong>, every <strong>new member</strong> receives{" "}
-            <strong>three starter credits</strong> so you can book a short session before you teach your first skill.
-            The cap keeps the loop generous during early growth.
+            While the community is <strong>under 1,000 Dabblers</strong>, every{" "}
+            <strong>new member</strong> receives <strong>six starter credits</strong> so you can
+            book a short session before you teach your first skill. The cap keeps the swap generous
+            while we&rsquo;re getting started.
           </p>
         </Section>
 

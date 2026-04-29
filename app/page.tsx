@@ -4,7 +4,7 @@ import { HeroIllustration } from "@/app/components/HeroIllustration";
 
 export const metadata: Metadata = {
   description:
-    "Try something new, wherever you are — Dabble connects neighbors who teach with neighbors who are curious. Clear profiles, small credits, calm meetups.",
+    "Try something new, wherever you are — Dabble connects enthusiasts who teach what they love with explorers who are curious to learn.",
   alternates: { canonical: "/" },
 };
 
@@ -19,25 +19,26 @@ export default function Home() {
       <section className="ui-container">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-8">
-            <p className="ui-label">A gentle place to learn and share</p>
+            <p className="ui-label">A place to learn and share</p>
             <h1 className="ui-heading max-w-xl text-4xl leading-[1.08] text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
               Try something new, wherever you are.
             </h1>
             <p className="max-w-lg font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-              Dabble connects neighbors who want to teach what they love with neighbors who are
-              curious to try something new — bread, bikes, music, repair, and everything in between.
+              Dabble connects enthusiasts who want to teach what they love with explorers who are
+              curious to try something new — kayaking, climbing, fly-fishing, birding, baking, music,
+              home improvement and everything in between.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <Link href="/dabble/signup" className={primaryCta}>
                 Start your profile
               </Link>
               <Link href="/explore" className={secondaryCta}>
-                Browse neighbors
+                Browse Dabblers
               </Link>
             </div>
             <p className="max-w-md font-sans text-sm leading-relaxed text-[var(--text-tertiary)]">
-              No hustle, no leaderboard — just clear profiles, calm layouts, and room to say what
-              you offer and what you hope to learn.
+              No hustle, no leaderboard — just clear profiles and room to say what you can teach
+              and what you&rsquo;d like to learn.
             </p>
           </div>
           <div className="flex justify-center lg:justify-end">
@@ -55,11 +56,11 @@ export default function Home() {
         <div className="ui-container flex flex-col gap-4 py-10 md:flex-row md:items-center md:justify-between md:py-12">
           <div className="max-w-2xl space-y-2">
             <p id="credits-strip-heading" className="ui-label">
-              Credits, not cash
+              A swap built to empower
             </p>
             <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-              Neighbor time moves in small credits—about twenty minutes each—so you can teach, learn, and tip without
-              turning the block into a marketplace.
+              Dabblers&rsquo; time moves in small credits — about twenty minutes each — so you can
+              teach, learn, and tip through the exchange of talent, skills, ideas, and knowledge.
             </p>
           </div>
           <Link

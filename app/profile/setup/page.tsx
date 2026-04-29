@@ -371,9 +371,9 @@ export default function ProfileSetupPage() {
       <section className="ui-container max-w-3xl space-y-10">
         <header className="space-y-3">
           <p className="ui-label">Profile setup</p>
-          <h1 className="ui-heading text-4xl md:text-5xl">Introduce yourself to the block</h1>
+          <h1 className="ui-heading text-4xl md:text-5xl">Introduce yourself to the swap</h1>
           <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)]">
-            Three short steps — enough structure to feel welcoming, enough space to sound like you.
+            Three short steps — enough structure to feel welcoming, enough room to sound like you.
           </p>
         </header>
 
@@ -434,7 +434,7 @@ export default function ProfileSetupPage() {
                 <label className="block space-y-2 md:col-span-2">
                   <span className="ui-label">Display name</span>
                   <Input
-                    placeholder="How neighbors will greet you"
+                    placeholder="How other Dabblers will know you"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     required
@@ -451,7 +451,7 @@ export default function ProfileSetupPage() {
                 <label className="block space-y-2">
                   <span className="ui-label">Neighborhood</span>
                   <Input
-                    placeholder="Park Slope, Brooklyn"
+                    placeholder="City or area — Park Slope, Hudson Valley, Northeast Portland"
                     value={locationLabel}
                     onChange={(e) => setLocationLabel(e.target.value)}
                     required
@@ -467,7 +467,7 @@ export default function ProfileSetupPage() {
                 <label className="block space-y-2">
                   <span className="ui-label">What you are curious about</span>
                   <Textarea
-                    placeholder="A few sentences about what you would love to try with a neighbor..."
+                    placeholder="A few sentences about what you'd love to try with another Dabbler — kayaking, baking, repair, music, anything (This may change based on where you’re going! Keep updating it!)"
                     value={interestsIntro}
                     onChange={(e) => setInterestsIntro(e.target.value)}
                     rows={4}
@@ -476,7 +476,7 @@ export default function ProfileSetupPage() {
                 <label className="block space-y-2">
                   <span className="ui-label">What you enjoy sharing</span>
                   <Textarea
-                    placeholder="What do you like teaching, showing, or doing alongside someone else?"
+                    placeholder="What do you enjoy teaching, showing, or doing alongside someone else?"
                     value={skillsIntro}
                     onChange={(e) => setSkillsIntro(e.target.value)}
                     rows={4}
@@ -485,7 +485,7 @@ export default function ProfileSetupPage() {
                 <label className="block space-y-2">
                   <span className="ui-label">Short bio (optional)</span>
                   <Textarea
-                    placeholder="A line or two for your public profile — who you are on the block."
+                    placeholder="A line or two for your public profile — who you are as a Dabbler."
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     rows={3}
@@ -563,8 +563,8 @@ export default function ProfileSetupPage() {
                     onChange={(e) => setIsDiscoverable(e.target.checked)}
                   />
                   <span>
-                    Let neighbors find me in Explore. You can turn this off anytime — your profile
-                    stays yours.
+                    Let other Dabblers find me on Explore. You can turn this off any time — your
+                    profile stays yours.
                   </span>
                 </label>
                 <label className="flex items-start gap-4 font-serif text-base leading-relaxed text-[var(--text-secondary)]">

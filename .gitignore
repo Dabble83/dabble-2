@@ -43,3 +43,10 @@ next-env.d.ts
 
 # cursor-send local send log
 docs/cursor-queue/.cursor-queue.log
+
+# content edits in flight (don't commit half-edited Word docs;
+# regenerate /content-export/pages/ from manifest.json with `npm run content:export`)
+/content-export/edits-inbox/*
+!/content-export/edits-inbox/.gitkeep
+next.config.tmp.mjs
+~$*.docx

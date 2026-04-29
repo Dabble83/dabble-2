@@ -24,7 +24,7 @@ const lora = Lora({
 });
 
 const defaultDescription =
-  "Meet neighbors who teach what they love and try something new—bread, bikes, music, repair, and more. Small credits, calm meetups, no marketplace hustle.";
+  "Meet Dabblers who teach what they love and try something new — kayaking, climbing, fly-fishing, birding, baking, music, home improvement and everything in between. Small credits, calm meetups, no marketplace hustle.";
 
 export const viewport: Viewport = {
   themeColor: "#f4f0e6",
@@ -36,7 +36,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
   title: {
-    default: "Dabble — local skills, shared kindly",
+    default: "Dabble — local talent, swapped between Dabblers",
     template: "%s · Dabble",
   },
   description: defaultDescription,
@@ -46,12 +46,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Dabble",
-    title: "Dabble — local skills, shared kindly",
+    title: "Dabble — local talent, swapped between Dabblers",
     description: defaultDescription,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dabble — local skills, shared kindly",
+    title: "Dabble — local talent, swapped between Dabblers",
     description: defaultDescription,
   },
 };
@@ -75,7 +75,7 @@ export default function RootLayout({
           </main>
           <footer className="border-t border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_60%,var(--background))]">
             <div className="ui-container flex flex-col gap-2 py-10 font-sans text-sm text-[var(--text-secondary)] md:flex-row md:items-center md:justify-between">
-              <span>Dabble — local skills, shared kindly.</span>
+              <span>Dabble — local talent, swapped between Dabblers.</span>
               <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/about" className="text-[var(--text-secondary)] underline-offset-4 hover:underline">
                   About

@@ -48,13 +48,13 @@ export default function SignInPage() {
     <AuthShell>
       <div className="w-full max-w-md">
         <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
-          Welcome back. Your block saved you a seat.
+          Welcome back! Let&rsquo;s start dabbling.
         </p>
         <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
           <div className="mb-6 border-b border-[var(--border)] pb-6">
             <h1 className="ui-heading text-3xl">Sign in</h1>
             <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
-              Use the email and password you chose when you joined.
+              Use the email and password you chose when you joined Dabble.
             </p>
           </div>
           {loading ? (
@@ -95,9 +95,9 @@ export default function SignInPage() {
             {message ? <p className="font-sans text-sm text-red-600">{message}</p> : null}
           </form>
           <p className="mt-6 text-center font-sans text-sm text-[var(--text-secondary)]">
-            New here?{" "}
+            New to Dabble?{" "}
             <Link href="/dabble/signup" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
-              Create an account
+              Create your profile
             </Link>
           </p>
         </Card>

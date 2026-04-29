@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Dabble — local skills, shared kindly";
+export const alt = "Dabble — local talent, swapped between Dabblers";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -42,7 +42,7 @@ export default function OgDefaultImage() {
             fontWeight: 500,
           }}
         >
-          Local skills, shared kindly
+          Local talent, swapped between Dabblers
         </div>
         <div
           style={{

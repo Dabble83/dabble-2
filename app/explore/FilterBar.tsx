@@ -35,7 +35,7 @@ export function FilterBar({
         <div>
           <p className="ui-label mb-2">Categories</p>
           <p className="mb-3 font-sans text-xs text-[var(--text-tertiary)]">
-            Tap to narrow who appears — leave empty to see every lane.
+            Tap to narrow who appears — leave empty to see every kind of Dabbler.
           </p>
           <div className="flex flex-wrap gap-2">
             {EXPLORE_CATEGORIES.map((c) => {
@@ -95,7 +95,7 @@ export function FilterBar({
             checked={teachingNow}
             onChange={(e) => onTeachingNowChange(e.target.checked)}
           />
-          <span>Teaching now — show neighbors whose availability sounds open soon (today / tonight / this week).</span>
+          <span>Teaching now — show Dabblers whose availability sounds open soon (now, today, tonight, this week).</span>
         </label>
 
         <div className="flex flex-wrap gap-3">

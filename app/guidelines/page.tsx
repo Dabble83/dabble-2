@@ -5,45 +5,45 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Community Guidelines",
   description:
-    "Who we welcome, honest skill claims, safe meetups, credits integrity, and how reporting works — at a walking pace.",
+    "At Dabble we welcome, honest skill claims, safe meetups, credits integrity.",
   alternates: { canonical: "/guidelines" },
 };
 
 const respectWelcome =
-  "Neighbors and curious visitors who treat others with patience and dignity—across backgrounds, ages, and skill levels. We like the trail when everyone can breathe.";
+  "Dabblers and curious visitors who treat each other with patience and dignity — across backgrounds, ages, and skill levels. The swap works best when everyone’s current abilities and boundaries are respected.";
 
 const respectZero =
-  "Harassment, hate, slurs, threats, intimidation, stalking, unwanted sexual attention, or coordinated pile-ons. We remove people who break the trail rules.";
+  "Harassment, hate, slurs, threats, intimidation, stalking, unwanted sexual attention, or coordinated pile-ons. People who break the trail rules don’t stay in the Dabble community.";
 
 const honestBullets = [
   "Say what you have done, how often, and in what setting.",
   "If you are not a certified instructor, do not imply licenses, insurance, union cards, or endorsements you do not have.",
-  "If someone needs regulated work (electrical behind walls, medical decisions, legal advice), kindly point them toward a licensed professional.",
+  "If someone needs regulated work, e.g. electrical behind walls, medical decisions, legal advice — point them kindly toward a licensed professional.",
 ];
 
 const safeMeetups = [
   "Meet in a public place the first time.",
   "Tell someone you trust where you are going and how long you expect to be.",
-  "Keep the session short so expectations stay small; align with seed-phase credit norms when published.",
+  "Keep the session short so expectations stay small.",
   "Stay in skilled-amateur territory; defer to licensed professionals for regulated work.",
-  "Prefer in-app messaging until you are comfortable; avoid posting phone numbers, email, or home address on profiles.",
-  "Leave if anything feels unsafe; report concerns to safety@dabble.it.com.",
+  "Prefer in-app messaging until you are comfortable; keep phone numbers, email, and home addresses off your public profile.",
+  "Leave if anything feels unsafe.",
 ];
 
 const creditsBullets = [
-  "No selling credits for cash or trading credits off-platform in ways that recreate a gig economy.",
-  "No ghost sessions or collusion to farm credits—if a meetup did not happen, it did not happen.",
-  "Keep exchanges small, honest, and aligned with the seed-phase credit story when published.",
+  "No selling credits for cash or trading credits off-platform in ways that produce a gig economy — the swap is the point.",
+  "No ghost sessions or collusion to farm credits. If a meetup didn’t happen, it didn’t happen.",
+  "Keep exchanges honest, fun and mutually beneficial.",
 ];
 
 const reportingHow =
-  "Email safety@dabble.it.com with who was involved, when it happened, and what occurred—stick to facts you are comfortable sharing. In-product reporting will arrive later; email is the path for now.";
+  "Email safety@dabble.it.com with who was involved, when it happened, and what occurred — stick to facts you are comfortable sharing. In-product reporting will arrive later; email is the path for now.";
 
 const reportingNext =
-  "We triage, may pause or mute accounts while we review, and follow up with the parties involved when appropriate.";
+  "We triage, may pause or mute accounts while we review, and follow up with the Dabblers involved when it helps.";
 
 const reportingPromise =
-  "During the seed phase, we acknowledge substantive reports within 72 hours on business days. Some matters need more time to untangle; if so, we still send a first note inside that window so you are not left guessing.";
+  "During the seed phase we acknowledge substantive reports within 72 hours on business days. Some matters take longer to untangle; if so, we still send a first note inside that window so you are not left guessing.";
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
@@ -63,7 +63,7 @@ export default function GuidelinesPage() {
         <p className="ui-label">Community</p>
         <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">Community guidelines</h1>
         <p className="font-serif text-lg italic leading-relaxed text-[var(--text-secondary)] md:text-xl">
-          The trail is better when we walk it together—calmly, honestly, and with room for beginners.
+          Dabble works because it is a community of trust and honesty and with room for beginners.
         </p>
       </header>
 
@@ -81,8 +81,10 @@ export default function GuidelinesPage() {
 
         <Section id="honest-skills" title="Honest skill claims">
           <p>
-            Dabble is built around <strong className="font-semibold text-[var(--text-primary)]">skilled amateurs</strong>{" "}
-            sharing what they have actually practiced—not around pretending to be something you are not.
+            Dabble is built on{" "}
+            <strong className="font-semibold text-[var(--text-primary)]">skilled amateurs</strong>{" "}
+            sharing what they have actually practiced &mdash; talent, skills, ideas, and knowledge
+            &mdash; not on pretending to be something they are not.
           </p>
           <ul className="list-disc space-y-2 pl-5">
             {honestBullets.map((item) => (
@@ -93,10 +95,10 @@ export default function GuidelinesPage() {
 
         <Section id="safe-meetups" title="Safe meetups">
           <p>
-            First meets stay <strong className="font-semibold text-[var(--text-primary)]">public</strong>,{" "}
+            First meets stay{" "}
+            <strong className="font-semibold text-[var(--text-primary)]">public</strong>,{" "}
             <strong className="font-semibold text-[var(--text-primary)]">short</strong>, and{" "}
-            <strong className="font-semibold text-[var(--text-primary)]">easy to leave</strong>. Same checklist as our
-            safety page (Master Plan §12.6):
+            <strong className="font-semibold text-[var(--text-primary)]">easy to leave</strong>.
           </p>
           <ul className="list-disc space-y-2 pl-5">
             {safeMeetups.map((item) => (
@@ -104,11 +106,11 @@ export default function GuidelinesPage() {
             ))}
           </ul>
           <p>
-            For the broader safety model—including tiers and out-of-scope lists—visit{" "}
+            For the broader safety model&mdash;including tiers and out-of-scope lists&mdash;visit{" "}
             <Link href="/safety" className="font-semibold text-[var(--brand-text)] underline-offset-4 hover:underline">
               /safety
-            </Link>{" "}
-            (Master Plan §12).
+            </Link>
+            .
           </p>
         </Section>
 
@@ -132,14 +134,6 @@ export default function GuidelinesPage() {
           <p>
             <span className="font-semibold text-[var(--text-primary)]">72-hour response promise. </span>
             {reportingPromise}
-          </p>
-          <p>
-            <Link
-              href="mailto:safety@dabble.it.com"
-              className="font-semibold text-[var(--brand-text)] underline-offset-4 hover:underline"
-            >
-              safety@dabble.it.com
-            </Link>
           </p>
         </Section>
       </div>

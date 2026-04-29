@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "That page is not on the map — head home or explore neighbors on Dabble.",
+  description: "That page is not on the map — head home or browse Dabblers.",
   robots: { index: false, follow: true },
 };
 
@@ -13,7 +13,7 @@ export default function NotFound() {
       <p className="ui-label">404</p>
       <h1 className="ui-heading mt-3 text-4xl text-[var(--text-primary)] md:text-5xl">This trail dead-ends</h1>
       <p className="mx-auto mt-4 max-w-md font-serif text-lg text-[var(--text-secondary)]">
-        The page you wanted is not here. Try the home map or Explore to find neighbors.
+        The page you wanted is not here. Head home or browse Dabblers to pick up the trail.
       </p>
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         <Link

@@ -1,0 +1,3291 @@
+{
+  "version": 1,
+  "note": "Source of truth that maps editable Word-doc fields back to source code. Generated and consumed by scripts/content-export.mjs. The 'current' text here mirrors what's in the JSX as of the last sync. Do not edit by hand — edit the .docx files in content-export/pages/ and let the apply step update both this manifest and the JSX.",
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "url": "/",
+      "source_file": "app/page.tsx",
+      "description": "Landing page — hero, primary CTAs, and the credits-not-cash strip.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "blurb": "Used for the browser tab, search engines, and social previews. The browser tab title for / falls back to the site default.",
+          "fields": [
+            {
+              "id": "home.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "Try something new, wherever you are — Dabble connects enthusiasts who teach what they love with explorers who are curious to learn."
+            }
+          ]
+        },
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "home.hero.eyebrow",
+              "label": "Eyebrow (small label above the big heading)",
+              "type": "plain",
+              "current": "A place to learn and share"
+            },
+            {
+              "id": "home.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Try something new, wherever you are."
+            },
+            {
+              "id": "home.hero.lead",
+              "label": "Lead paragraph (subhead under the big heading)",
+              "type": "plain",
+              "current": "Dabble connects enthusiasts who want to teach what they love with explorers who are curious to try something new — kayaking, climbing, fly-fishing, birding, baking, music, home improvement and everything in between."
+            },
+            {
+              "id": "home.hero.cta_primary",
+              "label": "Primary button — text",
+              "type": "plain",
+              "current": "Start your profile"
+            },
+            {
+              "id": "home.hero.cta_secondary",
+              "label": "Secondary button — text",
+              "type": "plain",
+              "current": "Browse Dabblers"
+            },
+            {
+              "id": "home.hero.tertiary",
+              "label": "Smaller paragraph beneath the buttons",
+              "type": "plain",
+              "current": "No hustle, no leaderboard — just clear profiles and room to say what you can teach and what you'd like to learn."
+            }
+          ]
+        },
+        {
+          "name": "Credits strip",
+          "blurb": "The full-width band below the hero linking to How it works.",
+          "fields": [
+            {
+              "id": "home.credits.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "A swap built to empower"
+            },
+            {
+              "id": "home.credits.lead",
+              "label": "Strip paragraph",
+              "type": "plain",
+              "current": "Dabblers' time moves in small credits — about twenty minutes each — so you can teach, learn, and tip through the exchange of talent, skills, ideas, and knowledge."
+            },
+            {
+              "id": "home.credits.cta",
+              "label": "Strip button — text",
+              "type": "plain",
+              "current": "How credits work"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "url": "/about",
+      "source_file": "app/about/page.tsx",
+      "description": "About Dabble — mission, values, team.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "blurb": "Used for the browser tab, search engines, and social previews. Not visible on the page itself.",
+          "fields": [
+            {
+              "id": "about.metadata.title",
+              "label": "Browser tab title",
+              "type": "plain",
+              "current": "About"
+            },
+            {
+              "id": "about.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "Dabble swaps talent, skills, ideas, and knowledge between Dabblers — low-stakes in-person learning without the gig-marketplace frame. Curiosity is portable."
+            }
+          ]
+        },
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "about.hero.eyebrow",
+              "label": "Eyebrow (small label above the big heading)",
+              "type": "plain",
+              "current": "About Dabble"
+            },
+            {
+              "id": "about.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Wherever you are"
+            },
+            {
+              "id": "about.hero.lead",
+              "label": "Lead paragraph (subhead under the big heading)",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "— a home block, a trailhead parking lot, or a new city for the weekend — the question stays the same: who nearby will trade a little honest curiosity?"
+                }
+              ]
+            },
+            {
+              "id": "about.hero.mission",
+              "label": "Mission paragraph",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Mission.",
+                  "bold": true
+                },
+                {
+                  "text": " Make low-stakes, in-person skill swaps feel natural — "
+                },
+                {
+                  "text": "Dabblers first",
+                  "bold": true
+                },
+                {
+                  "text": ", with room for "
+                },
+                {
+                  "text": "traveling serendipity",
+                  "bold": true
+                },
+                {
+                  "text": " when a moment lines up. Not a gig marketplace, not a course catalog — a calm path from “I wonder how that works” to “we tried it together.”"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Curiosity is portable",
+          "fields": [
+            {
+              "id": "about.portable.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Curiosity is portable"
+            },
+            {
+              "id": "about.portable.p1",
+              "label": "Paragraph 1",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "You pack questions the way you pack a jacket. The reflex to ask “could someone show me?” travels with you. Dabble balances "
+                },
+                {
+                  "text": "roots and roam",
+                  "bold": true
+                },
+                {
+                  "text": ": repeat faces on familiar sidewalks, and the odd perfect afternoon — kayakers rigging boats in Golden, a stoop conversation about drywall in the Bronx, a fly-cast lesson on a borrowed riffle — without turning every hello into a transaction."
+                }
+              ]
+            },
+            {
+              "id": "about.portable.p2",
+              "label": "Paragraph 2",
+              "type": "plain",
+              "current": "Dabble began on snow: a ski trip with my wife, a fly rod I did not quite know how to use, and the kindness of someone who slowed down long enough to show me the cast. It was not a lesson package — just humans passing a skill hand to hand."
+            }
+          ]
+        },
+        {
+          "name": "What we steer by",
+          "blurb": "The four value cards in a 2×2 grid.",
+          "fields": [
+            {
+              "id": "about.values.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "What we steer by"
+            },
+            {
+              "id": "about.values.curiosity.name",
+              "label": "Value 1 — name (shown bold, with a period after)",
+              "type": "plain",
+              "current": "Curiosity"
+            },
+            {
+              "id": "about.values.curiosity.blurb",
+              "label": "Value 1 — blurb",
+              "type": "plain",
+              "current": "Questions worth asking out loud, at human pace."
+            },
+            {
+              "id": "about.values.calm.name",
+              "label": "Value 2 — name",
+              "type": "plain",
+              "current": "Calm"
+            },
+            {
+              "id": "about.values.calm.blurb",
+              "label": "Value 2 — blurb",
+              "type": "plain",
+              "current": "No hustle, no leaderboard — room to be a beginner and to take your time."
+            },
+            {
+              "id": "about.values.care.name",
+              "label": "Value 3 — name",
+              "type": "plain",
+              "current": "Care"
+            },
+            {
+              "id": "about.values.care.blurb",
+              "label": "Value 3 — blurb",
+              "type": "plain",
+              "current": "Safety, honesty, and respect for boundaries set the pace."
+            },
+            {
+              "id": "about.values.credit.name",
+              "label": "Value 4 — name",
+              "type": "plain",
+              "current": "Credits, not cash"
+            },
+            {
+              "id": "about.values.credit.blurb",
+              "label": "Value 4 — blurb",
+              "type": "plain",
+              "current": "Small units of Dabbler time so you can teach, learn, and tip — empowering exchange without pricing strangers like gigs."
+            },
+            {
+              "id": "about.values.footer",
+              "label": "Footer note (with link to How it works)",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "How credits move in practice: "
+                },
+                {
+                  "text": "How Dabble works",
+                  "link": "/how-it-works"
+                },
+                {
+                  "text": "."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Who is building this",
+          "fields": [
+            {
+              "id": "about.team.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Who is building this"
+            },
+            {
+              "id": "about.team.p1",
+              "label": "Paragraph",
+              "type": "plain",
+              "current": "A small team that believes local trust scales better than growth hacks. We are shipping carefully, listening to early Dabblers, and keeping the product as human as the meetups it is meant to support."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "how-it-works",
+      "title": "How it works",
+      "url": "/how-it-works",
+      "source_file": "app/how-it-works/page.tsx",
+      "description": "Trail map for new visitors — what a credit is, how it moves, and why we keep money off the path.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "fields": [
+            {
+              "id": "how_it_works.metadata.title",
+              "label": "Browser tab title",
+              "type": "plain",
+              "current": "How it works"
+            },
+            {
+              "id": "how_it_works.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "Credits, not cash: what a Dabble credit is, how you earn and spend it, and how the swap empowers, lowers costs, and deepens experiences."
+            }
+          ]
+        },
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "how_it_works.hero.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Credits"
+            },
+            {
+              "id": "how_it_works.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "How Dabble works"
+            },
+            {
+              "id": "how_it_works.hero.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "A short trail map for first-time Dabblers — what a credit is, how it moves, and how the swap deepens what you already know."
+            }
+          ]
+        },
+        {
+          "name": "What a credit is",
+          "fields": [
+            {
+              "id": "how_it_works.what.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "What a credit is"
+            },
+            {
+              "id": "how_it_works.what.body",
+              "label": "Paragraph",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "One credit is a small unit of Dabbler time — roughly "
+                },
+                {
+                  "text": "twenty minutes",
+                  "bold": true
+                },
+                {
+                  "text": " of focused, in-person help. It is "
+                },
+                {
+                  "text": "not",
+                  "bold": true
+                },
+                {
+                  "text": " a dollar and "
+                },
+                {
+                  "text": "not",
+                  "bold": true
+                },
+                {
+                  "text": " a contract. Sessions are priced in whole credits so expectations stay clear."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "How to earn",
+          "fields": [
+            {
+              "id": "how_it_works.earn.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "How to earn"
+            },
+            {
+              "id": "how_it_works.earn.bullet1",
+              "label": "Bullet 1",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Teach a session",
+                  "bold": true
+                },
+                {
+                  "text": " that both Dabblers mark complete; learner confirmation and (when shipped) simple ratings keep the ledger honest."
+                }
+              ]
+            },
+            {
+              "id": "how_it_works.earn.bullet2",
+              "label": "Bullet 2",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Get rated",
+                  "bold": true
+                },
+                {
+                  "text": " after sessions (when ratings ship); good-faith feedback keeps the loop trustworthy."
+                }
+              ]
+            },
+            {
+              "id": "how_it_works.earn.bullet3",
+              "label": "Bullet 3",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "A swap loop:",
+                  "bold": true
+                },
+                {
+                  "text": " the talent and skills you share become credits someone else spends, so curiosity circulates instead of cash."
+                }
+              ]
+            },
+            {
+              "id": "how_it_works.earn.bullet4",
+              "label": "Bullet 4",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Free-seed allocation:",
+                  "bold": true
+                },
+                {
+                  "text": " during the seed phase, eligible Dabblers receive starter credits so newcomers can try a session before their first teach (see below)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "How to spend",
+          "blurb": "Heading and the three rows in the pricing table.",
+          "fields": [
+            {
+              "id": "how_it_works.spend.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "How to spend"
+            },
+            {
+              "id": "how_it_works.spend.row1.shape",
+              "label": "Row 1 — shape",
+              "type": "plain",
+              "current": "Tip (small favor, a few minutes)"
+            },
+            {
+              "id": "how_it_works.spend.row1.credits",
+              "label": "Row 1 — credits",
+              "type": "plain",
+              "current": "1"
+            },
+            {
+              "id": "how_it_works.spend.row2.shape",
+              "label": "Row 2 — shape",
+              "type": "plain",
+              "current": "Short session (hands-on demo length)"
+            },
+            {
+              "id": "how_it_works.spend.row2.credits",
+              "label": "Row 2 — credits",
+              "type": "plain",
+              "current": "3"
+            },
+            {
+              "id": "how_it_works.spend.row3.shape",
+              "label": "Row 3 — shape",
+              "type": "plain",
+              "current": "Walk-with (longer session in your area)"
+            },
+            {
+              "id": "how_it_works.spend.row3.credits",
+              "label": "Row 3 — credits",
+              "type": "plain",
+              "current": "6"
+            }
+          ]
+        },
+        {
+          "name": "Why credits instead of money",
+          "fields": [
+            {
+              "id": "how_it_works.why.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Why credits, not money"
+            },
+            {
+              "id": "how_it_works.why.bullet1",
+              "label": "Bullet 1",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Legal simplicity:",
+                  "bold": true
+                },
+                {
+                  "text": " fewer gray zones than charging strangers for ad-hoc services through profiles."
+                }
+              ]
+            },
+            {
+              "id": "how_it_works.why.bullet2",
+              "label": "Bullet 2",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Community first:",
+                  "bold": true
+                },
+                {
+                  "text": " an exchange of talent, skills, ideas, and knowledge — not transaction optics."
+                }
+              ]
+            },
+            {
+              "id": "how_it_works.why.bullet3",
+              "label": "Bullet 3",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Access:",
+                  "bold": true
+                },
+                {
+                  "text": " Dabblers who could not hire a private tutor can still take part in the swap, lowering costs while deepening experiences."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Free seed phase",
+          "fields": [
+            {
+              "id": "how_it_works.seed.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Free seed phase"
+            },
+            {
+              "id": "how_it_works.seed.body",
+              "label": "Paragraph",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "While the community is "
+                },
+                {
+                  "text": "under 10,000 Dabblers",
+                  "bold": true
+                },
+                {
+                  "text": ", every "
+                },
+                {
+                  "text": "new member",
+                  "bold": true
+                },
+                {
+                  "text": " receives "
+                },
+                {
+                  "text": "three starter credits",
+                  "bold": true
+                },
+                {
+                  "text": " so you can book a short session before you teach your first skill. The cap keeps the swap generous during early growth."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "See the math once",
+          "fields": [
+            {
+              "id": "how_it_works.math.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "See the math once"
+            },
+            {
+              "id": "how_it_works.math.body",
+              "label": "Worked example (the highlighted card)",
+              "type": "plain",
+              "current": "Teach a one-hour fly-casting lesson → earn 3 credits → spend them on a drywall-patching demo or a sourdough class."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "guidelines",
+      "title": "Community guidelines",
+      "url": "/guidelines",
+      "source_file": "app/guidelines/page.tsx",
+      "description": "Who we welcome, honest skill claims, safe meetups, credits integrity, and how reporting works.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "fields": [
+            {
+              "id": "guidelines.metadata.title",
+              "label": "Browser tab title",
+              "type": "plain",
+              "current": "Community Guidelines"
+            },
+            {
+              "id": "guidelines.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "Who we welcome, honest skill claims, safe meetups, credits integrity, and how reporting works — at the pace of a real conversation."
+            }
+          ]
+        },
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "guidelines.hero.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Community"
+            },
+            {
+              "id": "guidelines.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Community guidelines"
+            },
+            {
+              "id": "guidelines.hero.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "Dabble works because we walk the trail together — honestly, with care, and with room for beginners."
+            }
+          ]
+        },
+        {
+          "name": "Respect",
+          "fields": [
+            {
+              "id": "guidelines.respect.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Respect"
+            },
+            {
+              "id": "guidelines.respect.welcome",
+              "label": "Who we welcome (paragraph)",
+              "type": "plain",
+              "current": "Dabblers and curious visitors who treat each other with patience and dignity — across backgrounds, ages, and skill levels. The swap works best when everyone can breathe."
+            },
+            {
+              "id": "guidelines.respect.zero",
+              "label": "Zero tolerance (paragraph)",
+              "type": "plain",
+              "current": "Harassment, hate, slurs, threats, intimidation, stalking, unwanted sexual attention, or coordinated pile-ons. People who break the trail rules don't stay on it."
+            }
+          ]
+        },
+        {
+          "name": "Honest skill claims",
+          "fields": [
+            {
+              "id": "guidelines.honest.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Honest skill claims"
+            },
+            {
+              "id": "guidelines.honest.intro",
+              "label": "Intro paragraph",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "Dabble is built on "
+                },
+                {
+                  "text": "skilled amateurs",
+                  "bold": true
+                },
+                {
+                  "text": " sharing what they have actually practiced — talent, skills, ideas, and knowledge — not on pretending to be something you are not."
+                }
+              ]
+            },
+            {
+              "id": "guidelines.honest.bullet1",
+              "label": "Bullet 1",
+              "type": "plain",
+              "current": "Say what you have done, how often, and in what setting."
+            },
+            {
+              "id": "guidelines.honest.bullet2",
+              "label": "Bullet 2",
+              "type": "plain",
+              "current": "If you are not a certified instructor, do not imply licenses, insurance, union cards, or endorsements you do not have."
+            },
+            {
+              "id": "guidelines.honest.bullet3",
+              "label": "Bullet 3",
+              "type": "plain",
+              "current": "If someone needs regulated work — electrical behind walls, medical decisions, legal advice — point them kindly toward a licensed professional."
+            }
+          ]
+        },
+        {
+          "name": "Safe meetups",
+          "fields": [
+            {
+              "id": "guidelines.safe.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Safe meetups"
+            },
+            {
+              "id": "guidelines.safe.intro",
+              "label": "Intro paragraph",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "First meets stay "
+                },
+                {
+                  "text": "public",
+                  "bold": true
+                },
+                {
+                  "text": ", "
+                },
+                {
+                  "text": "short",
+                  "bold": true
+                },
+                {
+                  "text": ", and "
+                },
+                {
+                  "text": "easy to leave",
+                  "bold": true
+                },
+                {
+                  "text": ". The same checklist as the safety page (Master Plan §12.6):"
+                }
+              ]
+            },
+            {
+              "id": "guidelines.safe.bullet1",
+              "label": "Bullet 1",
+              "type": "plain",
+              "current": "Meet in a public place the first time."
+            },
+            {
+              "id": "guidelines.safe.bullet2",
+              "label": "Bullet 2",
+              "type": "plain",
+              "current": "Tell someone you trust where you are going and how long you expect to be."
+            },
+            {
+              "id": "guidelines.safe.bullet3",
+              "label": "Bullet 3",
+              "type": "plain",
+              "current": "Keep the session short so expectations stay small; align with seed-phase credit norms when published."
+            },
+            {
+              "id": "guidelines.safe.bullet4",
+              "label": "Bullet 4",
+              "type": "plain",
+              "current": "Stay in skilled-amateur territory; defer to licensed professionals for regulated work."
+            },
+            {
+              "id": "guidelines.safe.bullet5",
+              "label": "Bullet 5",
+              "type": "plain",
+              "current": "Prefer in-app messaging until you are comfortable; keep phone numbers, email, and home addresses off your public profile."
+            },
+            {
+              "id": "guidelines.safe.bullet6",
+              "label": "Bullet 6",
+              "type": "plain",
+              "current": "Leave if anything feels unsafe; report concerns to safety@dabble.it.com."
+            },
+            {
+              "id": "guidelines.safe.footer",
+              "label": "Closing paragraph (with link to /safety)",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "For the broader safety model—including tiers and out-of-scope lists—visit "
+                },
+                {
+                  "text": "/safety",
+                  "link": "/safety",
+                  "bold": true
+                },
+                {
+                  "text": " (Master Plan §12)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Credits integrity",
+          "fields": [
+            {
+              "id": "guidelines.credits.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Credits integrity"
+            },
+            {
+              "id": "guidelines.credits.bullet1",
+              "label": "Bullet 1",
+              "type": "plain",
+              "current": "No selling credits for cash or trading credits off-platform in ways that recreate a gig economy — the swap is the point."
+            },
+            {
+              "id": "guidelines.credits.bullet2",
+              "label": "Bullet 2",
+              "type": "plain",
+              "current": "No ghost sessions or collusion to farm credits — if a meetup didn't happen, it didn't happen."
+            },
+            {
+              "id": "guidelines.credits.bullet3",
+              "label": "Bullet 3",
+              "type": "plain",
+              "current": "Keep exchanges honest, in human scale, and aligned with the seed-phase credit story while it is in place."
+            }
+          ]
+        },
+        {
+          "name": "Reporting",
+          "fields": [
+            {
+              "id": "guidelines.reporting.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Reporting"
+            },
+            {
+              "id": "guidelines.reporting.how",
+              "label": "How to report (paragraph)",
+              "type": "plain",
+              "current": "Email safety@dabble.it.com with who was involved, when it happened, and what occurred — stick to facts you are comfortable sharing. In-product reporting will arrive later; email is the path for now."
+            },
+            {
+              "id": "guidelines.reporting.next",
+              "label": "What happens next (paragraph)",
+              "type": "plain",
+              "current": "We triage, may pause or mute accounts while we review, and follow up with the Dabblers involved when it helps."
+            },
+            {
+              "id": "guidelines.reporting.promise",
+              "label": "72-hour response promise (paragraph)",
+              "type": "plain",
+              "current": "During the seed phase we acknowledge substantive reports within 72 hours on business days. Some matters take longer to untangle; if so, we still send a first note inside that window so you are not left guessing."
+            },
+            {
+              "id": "guidelines.reporting.email_link",
+              "label": "Closing email link",
+              "type": "rich",
+              "runs": [
+                {
+                  "text": "safety@dabble.it.com",
+                  "link": "mailto:safety@dabble.it.com",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "safety",
+      "title": "Safety",
+      "url": "/safety",
+      "source_file": "app/safety/page.tsx",
+      "description": "Four-tier safety model, what we never host, and the safe-meetup checklist.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "fields": [
+            {
+              "id": "safety.metadata.title",
+              "label": "Browser tab title",
+              "type": "plain",
+              "current": "Safety"
+            },
+            {
+              "id": "safety.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "A four-tier safety model for Dabble meetups — from passing curiosity to longer sessions — plus guardrails, credits (not cash), and how we think about risk."
+            }
+          ]
+        },
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "safety.hero.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Safety & trust"
+            },
+            {
+              "id": "safety.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "How we keep Dabble grounded and low-risk"
+            },
+            {
+              "id": "safety.hero.intro",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "Dabble routes exchange through credits and time-boxed curiosity — not cash for services. That keeps meetups in a skilled-amateur frame: Dabblers sharing know-how, not hired professionals or gig marketplaces."
+            }
+          ]
+        },
+        {
+          "name": "Four-tier framework",
+          "blurb": "Section heading, intro line, then four cards (Tier 1–4).",
+          "fields": [
+            {
+              "id": "safety.tiers.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Four-tier framework"
+            },
+            {
+              "id": "safety.tiers.intro",
+              "label": "Intro line",
+              "type": "plain",
+              "current": "Tiers and examples follow Master Plan §12.1–§12.4."
+            },
+            {
+              "id": "safety.tier_1.title",
+              "label": "Tier 1 — title",
+              "type": "plain",
+              "current": "Tier 1 — Curiosity in passing"
+            },
+            {
+              "id": "safety.tier_1.lead",
+              "label": "Tier 1 — lead",
+              "type": "plain",
+              "current": "Short, informal moments — no scheduling pressure, no commitment beyond “nice to meet you.”"
+            },
+            {
+              "id": "safety.tier_1.example1",
+              "label": "Tier 1 — example 1",
+              "type": "plain",
+              "current": "Showing how to tie a bowline once while rigging a line at a public dock."
+            },
+            {
+              "id": "safety.tier_1.example2",
+              "label": "Tier 1 — example 2",
+              "type": "plain",
+              "current": "Pointing out three edible mushrooms on an organized woods walk where the host group sets safety rules."
+            },
+            {
+              "id": "safety.tier_1.example3",
+              "label": "Tier 1 — example 3",
+              "type": "plain",
+              "current": "Explaining one breaker reset step while a neighbor watches their own panel."
+            },
+            {
+              "id": "safety.tier_2.title",
+              "label": "Tier 2 — title",
+              "type": "plain",
+              "current": "Tier 2 — Deliberate public session"
+            },
+            {
+              "id": "safety.tier_2.lead",
+              "label": "Tier 2 — lead",
+              "type": "plain",
+              "current": "A planned exchange in a public or community setting, kept short."
+            },
+            {
+              "id": "safety.tier_2.example1",
+              "label": "Tier 2 — example 1",
+              "type": "plain",
+              "current": "Forty minutes at a library table folding sourdough basics side by side."
+            },
+            {
+              "id": "safety.tier_2.example2",
+              "label": "Tier 2 — example 2",
+              "type": "plain",
+              "current": "Helping someone swap brake pads at a farmers-market bike booth hosted by a local collective."
+            },
+            {
+              "id": "safety.tier_2.example3",
+              "label": "Tier 2 — example 3",
+              "type": "plain",
+              "current": "Paddle-float practice at a staffed public beach where venue rules govern life jackets."
+            },
+            {
+              "id": "safety.tier_3.title",
+              "label": "Tier 3 — title",
+              "type": "plain",
+              "current": "Tier 3 — Continued practice with the same Dabbler"
+            },
+            {
+              "id": "safety.tier_3.lead",
+              "label": "Tier 3 — lead",
+              "type": "plain",
+              "current": "Follow-ups after a Tier 2 session, still bounded and still aligned with Dabble's no-cash, no-gigs posture."
+            },
+            {
+              "id": "safety.tier_3.example1",
+              "label": "Tier 3 — example 1",
+              "type": "plain",
+              "current": "A second public session on the same topic because the first met both people’s boundaries."
+            },
+            {
+              "id": "safety.tier_3.example2",
+              "label": "Tier 3 — example 2",
+              "type": "plain",
+              "current": "A small neighborhood circle (few people) hosted in a rented room or yard where everyone opts in."
+            },
+            {
+              "id": "safety.tier_4.title",
+              "label": "Tier 4 — title",
+              "type": "plain",
+              "current": "Tier 4 — Outside what Dabble coordinates"
+            },
+            {
+              "id": "safety.tier_4.lead",
+              "label": "Tier 4 — lead",
+              "type": "plain",
+              "current": "Things Dabblers may choose privately, but the platform doesn't schedule or supervise."
+            },
+            {
+              "id": "safety.tier_4.example1",
+              "label": "Tier 4 — example 1",
+              "type": "plain",
+              "current": "Solo work inside strangers’ private homes as a first meeting."
+            },
+            {
+              "id": "safety.tier_4.example2",
+              "label": "Tier 4 — example 2",
+              "type": "plain",
+              "current": "Recurring dependent care, childcare without guardians present, or medical services."
+            },
+            {
+              "id": "safety.tier_4.example3",
+              "label": "Tier 4 — example 3",
+              "type": "plain",
+              "current": "Anything that implies professional licensing, insurance, or background checks Dabble does not verify."
+            }
+          ]
+        },
+        {
+          "name": "What we never host",
+          "fields": [
+            {
+              "id": "safety.never.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "What we never host"
+            },
+            {
+              "id": "safety.never.intro",
+              "label": "Intro line",
+              "type": "plain",
+              "current": "Out-of-scope list from Master Plan §12.5."
+            },
+            {
+              "id": "safety.never.bullet1",
+              "label": "Bullet 1",
+              "type": "plain",
+              "current": "Marketplace listings, cash tips solicited through profiles, urgency mechanics, leaderboards, or other product non-goals (payments, hustles, churn prompts)."
+            },
+            {
+              "id": "safety.never.bullet2",
+              "label": "Bullet 2",
+              "type": "plain",
+              "current": "Sexual solicitation, dating, or escorting framed as “sessions.”"
+            },
+            {
+              "id": "safety.never.bullet3",
+              "label": "Bullet 3",
+              "type": "plain",
+              "current": "Medical diagnosis, prescription advice, supervised withdrawal, or crisis mental-health treatment carried through Dabble chat."
+            },
+            {
+              "id": "safety.never.bullet4",
+              "label": "Bullet 4",
+              "type": "plain",
+              "current": "Weapons training aimed at harm, evasion of law, or instructions for illegal conduct wherever the participants are."
+            }
+          ]
+        },
+        {
+          "name": "Meeting for the first time",
+          "fields": [
+            {
+              "id": "safety.checklist.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Meeting for the first time"
+            },
+            {
+              "id": "safety.checklist.intro",
+              "label": "Intro line",
+              "type": "plain",
+              "current": "Safe-meetup checklist from Master Plan §12.6."
+            },
+            {
+              "id": "safety.checklist.bullet1",
+              "label": "Bullet 1",
+              "type": "plain",
+              "current": "Meet in a public place the first time."
+            },
+            {
+              "id": "safety.checklist.bullet2",
+              "label": "Bullet 2",
+              "type": "plain",
+              "current": "Tell someone you trust where you are going and how long you expect to be."
+            },
+            {
+              "id": "safety.checklist.bullet3",
+              "label": "Bullet 3",
+              "type": "plain",
+              "current": "Keep the session short so expectations stay small; align with seed-phase credit norms when published."
+            },
+            {
+              "id": "safety.checklist.bullet4",
+              "label": "Bullet 4",
+              "type": "plain",
+              "current": "Stay in skilled-amateur territory; defer to licensed professionals for regulated work."
+            },
+            {
+              "id": "safety.checklist.bullet5",
+              "label": "Bullet 5",
+              "type": "plain",
+              "current": "Prefer in-app messaging until you are comfortable; keep phone numbers, email, and home addresses off your public profile."
+            },
+            {
+              "id": "safety.checklist.bullet6",
+              "label": "Bullet 6",
+              "type": "plain",
+              "current": "Leave if anything feels unsafe; report concerns to safety@dabble.it.com."
+            }
+          ]
+        },
+        {
+          "name": "Footer",
+          "fields": [
+            {
+              "id": "safety.footer.report_link_text",
+              "label": "Footer link text",
+              "type": "plain",
+              "current": "Report a concern"
+            },
+            {
+              "id": "safety.footer.report_email",
+              "label": "Footer email (after the link)",
+              "type": "plain",
+              "current": "safety@dabble.it.com"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "explore",
+      "title": "Explore",
+      "url": "/explore",
+      "source_file": "app/explore/page.tsx",
+      "description": "Neighbor browsing — header, search/filter labels, empty states, and error messages.",
+      "sections": [
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "explore.hero.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Explore"
+            },
+            {
+              "id": "explore.hero.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Dabblers worth meeting"
+            },
+            {
+              "id": "explore.hero.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "Browse at your own pace. Each card is a small portrait — what a Dabbler can share, what they're curious to learn, and where they are in the area."
+            }
+          ]
+        },
+        {
+          "name": "Search & filters",
+          "blurb": "Labels and helper text for the search row and filter controls.",
+          "fields": [
+            {
+              "id": "explore.search.label",
+              "label": "Search field label",
+              "type": "plain",
+              "current": "Search"
+            },
+            {
+              "id": "explore.search.placeholder",
+              "label": "Search field placeholder",
+              "type": "plain",
+              "current": "Name, skill, or curiosity"
+            },
+            {
+              "id": "explore.neighborhood.label",
+              "label": "Neighborhood select label",
+              "type": "plain",
+              "current": "Neighborhood"
+            },
+            {
+              "id": "explore.neighborhood.everywhere",
+              "label": "Neighborhood — “Everywhere” option",
+              "type": "plain",
+              "current": "Everywhere"
+            },
+            {
+              "id": "explore.filterbar.categories_label",
+              "label": "FilterBar — Categories label",
+              "type": "plain",
+              "current": "Categories"
+            },
+            {
+              "id": "explore.filterbar.categories_helper",
+              "label": "FilterBar — Categories helper",
+              "type": "plain",
+              "current": "Tap to narrow who appears — leave empty to see every kind of Dabbler."
+            },
+            {
+              "id": "explore.filterbar.distance_label",
+              "label": "FilterBar — distance label",
+              "type": "plain",
+              "current": "Distance (1–50 km)"
+            },
+            {
+              "id": "explore.filterbar.distance_no_origin_suffix",
+              "label": "FilterBar — distance label suffix when no location set",
+              "type": "plain",
+              "current": " — set your location first"
+            },
+            {
+              "id": "explore.filterbar.distance_helper_with_origin_template",
+              "label": "FilterBar — distance helper (with location). Use {km} where the number should appear.",
+              "type": "plain",
+              "current": "Within about {km} km of you."
+            },
+            {
+              "id": "explore.filterbar.distance_helper_no_origin",
+              "label": "FilterBar — distance helper (no location)",
+              "type": "plain",
+              "current": "We use your rough location only for this filter — nothing is stored on the URL beyond coordinates you approve."
+            },
+            {
+              "id": "explore.filterbar.teaching_now",
+              "label": "FilterBar — “Teaching now” checkbox text",
+              "type": "plain",
+              "current": "Teaching now — show Dabblers whose availability sounds open soon (today, tonight, this week)."
+            },
+            {
+              "id": "explore.filterbar.use_location",
+              "label": "FilterBar — “Use my location” button",
+              "type": "plain",
+              "current": "Use my location"
+            },
+            {
+              "id": "explore.filterbar.locating",
+              "label": "FilterBar — locating state",
+              "type": "plain",
+              "current": "Locating…"
+            },
+            {
+              "id": "explore.mobile.filters_button",
+              "label": "Mobile — Filters button label",
+              "type": "plain",
+              "current": "Filters"
+            },
+            {
+              "id": "explore.mobile.filters_sheet_title",
+              "label": "Mobile — Filters sheet title",
+              "type": "plain",
+              "current": "Filters"
+            },
+            {
+              "id": "explore.mobile.filters_done",
+              "label": "Mobile — Filters sheet “Done” button",
+              "type": "plain",
+              "current": "Done"
+            },
+            {
+              "id": "explore.mobile.show_on_map",
+              "label": "Mobile — “Show on map” button",
+              "type": "plain",
+              "current": "Show on map"
+            },
+            {
+              "id": "explore.mobile.show_list",
+              "label": "Mobile — “Show list” button",
+              "type": "plain",
+              "current": "Show list"
+            },
+            {
+              "id": "explore.mobile.map_view",
+              "label": "Mobile — “Map view” label",
+              "type": "plain",
+              "current": "Map view"
+            },
+            {
+              "id": "explore.mobile.list_view",
+              "label": "Mobile — “List view” label",
+              "type": "plain",
+              "current": "List view"
+            }
+          ]
+        },
+        {
+          "name": "Map loading",
+          "fields": [
+            {
+              "id": "explore.map.loading",
+              "label": "Map area while loading",
+              "type": "plain",
+              "current": "Loading map…"
+            }
+          ]
+        },
+        {
+          "name": "Profile cards",
+          "fields": [
+            {
+              "id": "explore.card.offers_label",
+              "label": "Card — Offers label",
+              "type": "plain",
+              "current": "Offers"
+            },
+            {
+              "id": "explore.card.wants_label",
+              "label": "Card — Wants to learn label",
+              "type": "plain",
+              "current": "Wants to learn"
+            },
+            {
+              "id": "explore.card.view_profile",
+              "label": "Card — View profile link",
+              "type": "plain",
+              "current": "View profile"
+            },
+            {
+              "id": "explore.card.empty_value",
+              "label": "Card — placeholder when offers or wants are empty",
+              "type": "plain",
+              "current": "—"
+            },
+            {
+              "id": "explore.card.unknown_neighborhood",
+              "label": "Card — when no neighborhood is set",
+              "type": "plain",
+              "current": "Neighborhood not set"
+            },
+            {
+              "id": "explore.card.unknown_name",
+              "label": "Card — fallback name",
+              "type": "plain",
+              "current": "Dabbler"
+            },
+            {
+              "id": "explore.results.summary_template",
+              "label": "Results count line. Use {shown}, {total}.",
+              "type": "plain",
+              "current": "Showing {shown} of {total} Dabblers (URL filters apply server-side; search and area refine this page)."
+            }
+          ]
+        },
+        {
+          "name": "Empty states",
+          "blurb": "Headlines and helper text for the various “nothing here” cases.",
+          "fields": [
+            {
+              "id": "explore.empty.no_filters_heading",
+              "label": "No discoverable profiles, no filters — heading",
+              "type": "plain",
+              "current": "No Dabblers here yet"
+            },
+            {
+              "id": "explore.empty.no_filters_body",
+              "label": "No discoverable profiles, no filters — body",
+              "type": "plain",
+              "current": "Finish your profile and turn on discoverability to appear on Explore — or be the first in your area to share a skill."
+            },
+            {
+              "id": "explore.empty.cta_setup",
+              "label": "Empty-state CTA — “Set up your profile” button",
+              "type": "plain",
+              "current": "Set up your profile"
+            },
+            {
+              "id": "explore.empty.with_filters_be_first",
+              "label": "Filtered empty state — “Be the first?” line",
+              "type": "plain",
+              "current": "Be the first?"
+            },
+            {
+              "id": "explore.empty.filtered_lane_with_origin_template",
+              "label": "Filtered empty (lane + location). Use {lane}.",
+              "type": "plain",
+              "current": "No Dabblers nearby teaching {lane} yet."
+            },
+            {
+              "id": "explore.empty.filtered_lane_template",
+              "label": "Filtered empty (lane only). Use {lane}.",
+              "type": "plain",
+              "current": "No Dabblers teaching {lane} yet."
+            },
+            {
+              "id": "explore.empty.teaching_now_with_origin",
+              "label": "Filtered empty (teaching now + location)",
+              "type": "plain",
+              "current": "No Dabblers nearby teaching right now."
+            },
+            {
+              "id": "explore.empty.teaching_now",
+              "label": "Filtered empty (teaching now)",
+              "type": "plain",
+              "current": "No Dabblers teaching right now."
+            },
+            {
+              "id": "explore.empty.with_origin",
+              "label": "Filtered empty (location only)",
+              "type": "plain",
+              "current": "No Dabblers nearby yet."
+            },
+            {
+              "id": "explore.empty.generic_filtered",
+              "label": "Filtered empty (other)",
+              "type": "plain",
+              "current": "No Dabblers match these filters yet."
+            },
+            {
+              "id": "explore.empty.no_match_heading",
+              "label": "Search/neighborhood narrowed everyone out — heading",
+              "type": "plain",
+              "current": "Nothing matches here"
+            },
+            {
+              "id": "explore.empty.no_match_body",
+              "label": "Search/neighborhood narrowed everyone out — body",
+              "type": "plain",
+              "current": "Try a different search, choose “Everywhere” for area, or loosen filters in the bar above."
+            }
+          ]
+        },
+        {
+          "name": "Errors",
+          "fields": [
+            {
+              "id": "explore.error.server_heading",
+              "label": "5xx error — heading",
+              "type": "plain",
+              "current": "Something paused on our side."
+            },
+            {
+              "id": "explore.error.client_heading",
+              "label": "Other error — heading",
+              "type": "plain",
+              "current": "This page couldn’t finish loading."
+            },
+            {
+              "id": "explore.error.server_body",
+              "label": "5xx error — body",
+              "type": "plain",
+              "current": "The server had trouble finishing that request. Your filters stay as they are—try again in a moment."
+            },
+            {
+              "id": "explore.error.fetch_fallback",
+              "label": "Other error — fallback body when API gives no message",
+              "type": "plain",
+              "current": "We couldn't load Dabblers just then."
+            },
+            {
+              "id": "explore.error.network",
+              "label": "Network error — body",
+              "type": "plain",
+              "current": "We could not reach the network. Check your connection, then try again."
+            },
+            {
+              "id": "explore.error.retry",
+              "label": "Retry button",
+              "type": "plain",
+              "current": "Retry"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "signin",
+      "title": "Sign in",
+      "url": "/dabble/signin",
+      "source_file": "app/dabble/signin/page.tsx",
+      "description": "Sign-in form copy, errors, and helper text.",
+      "sections": [
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "signin.tagline",
+              "label": "Tagline above the card",
+              "type": "plain",
+              "current": "Welcome back. Your seat at the swap is still warm."
+            },
+            {
+              "id": "signin.heading",
+              "label": "Card heading",
+              "type": "plain",
+              "current": "Sign in"
+            },
+            {
+              "id": "signin.helper",
+              "label": "Card helper text",
+              "type": "plain",
+              "current": "Use the email and password you chose when you joined Dabble."
+            }
+          ]
+        },
+        {
+          "name": "Form fields",
+          "fields": [
+            {
+              "id": "signin.email_label",
+              "label": "Email label",
+              "type": "plain",
+              "current": "Email"
+            },
+            {
+              "id": "signin.email_placeholder",
+              "label": "Email placeholder",
+              "type": "plain",
+              "current": "you@example.com"
+            },
+            {
+              "id": "signin.password_label",
+              "label": "Password label",
+              "type": "plain",
+              "current": "Password"
+            },
+            {
+              "id": "signin.password_placeholder",
+              "label": "Password placeholder",
+              "type": "plain",
+              "current": "Your password"
+            },
+            {
+              "id": "signin.forgot_link",
+              "label": "Forgot password link",
+              "type": "plain",
+              "current": "Forgot password?"
+            },
+            {
+              "id": "signin.submit",
+              "label": "Submit button",
+              "type": "plain",
+              "current": "Continue"
+            },
+            {
+              "id": "signin.submitting",
+              "label": "Submit button (while signing in)",
+              "type": "plain",
+              "current": "Signing in..."
+            }
+          ]
+        },
+        {
+          "name": "Statuses & footer",
+          "fields": [
+            {
+              "id": "signin.checking_session",
+              "label": "Checking-session status",
+              "type": "plain",
+              "current": "Checking session..."
+            },
+            {
+              "id": "signin.error_supabase_missing",
+              "label": "Error — Supabase env missing",
+              "type": "plain",
+              "current": "Supabase public env vars are missing."
+            },
+            {
+              "id": "signin.footer_prompt",
+              "label": "Footer prompt before “Create an account”",
+              "type": "plain",
+              "current": "New to Dabble?"
+            },
+            {
+              "id": "signin.footer_link",
+              "label": "Footer link text",
+              "type": "plain",
+              "current": "Create your profile"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "signup",
+      "title": "Sign up",
+      "url": "/dabble/signup",
+      "source_file": "app/dabble/signup/page.tsx",
+      "description": "Sign-up form, three-step quiz, and the welcome card.",
+      "sections": [
+        {
+          "name": "Account creation",
+          "fields": [
+            {
+              "id": "signup.tagline",
+              "label": "Tagline above the card",
+              "type": "plain",
+              "current": "Join as a Dabbler, not a user ID."
+            },
+            {
+              "id": "signup.heading",
+              "label": "Card heading",
+              "type": "plain",
+              "current": "Create your space"
+            },
+            {
+              "id": "signup.helper",
+              "label": "Card helper text",
+              "type": "plain",
+              "current": "Then a quick three-step trail map — what you're curious about, what you can teach, and where you're based."
+            },
+            {
+              "id": "signup.display_name_label",
+              "label": "Display name label",
+              "type": "plain",
+              "current": "Display name"
+            },
+            {
+              "id": "signup.display_name_placeholder",
+              "label": "Display name placeholder",
+              "type": "plain",
+              "current": "How other Dabblers will know you"
+            },
+            {
+              "id": "signup.email_label",
+              "label": "Email label",
+              "type": "plain",
+              "current": "Email"
+            },
+            {
+              "id": "signup.email_placeholder",
+              "label": "Email placeholder",
+              "type": "plain",
+              "current": "you@example.com"
+            },
+            {
+              "id": "signup.password_label",
+              "label": "Password label",
+              "type": "plain",
+              "current": "Password"
+            },
+            {
+              "id": "signup.password_placeholder",
+              "label": "Password placeholder",
+              "type": "plain",
+              "current": "Create a password"
+            },
+            {
+              "id": "signup.submit",
+              "label": "Submit button",
+              "type": "plain",
+              "current": "Create account"
+            },
+            {
+              "id": "signup.submitting",
+              "label": "Submit button (while creating)",
+              "type": "plain",
+              "current": "Creating..."
+            },
+            {
+              "id": "signup.footer_prompt",
+              "label": "Footer prompt before “Sign in”",
+              "type": "plain",
+              "current": "Already have an account?"
+            },
+            {
+              "id": "signup.footer_link",
+              "label": "Footer link text",
+              "type": "plain",
+              "current": "Sign in"
+            }
+          ]
+        },
+        {
+          "name": "Three-step quiz",
+          "fields": [
+            {
+              "id": "signup.quiz.step1_label",
+              "label": "Step 1 — heading",
+              "type": "plain",
+              "current": "Curious about"
+            },
+            {
+              "id": "signup.quiz.step2_label",
+              "label": "Step 2 — heading",
+              "type": "plain",
+              "current": "Can teach"
+            },
+            {
+              "id": "signup.quiz.step3_label",
+              "label": "Step 3 — heading",
+              "type": "plain",
+              "current": "Where you’re based"
+            },
+            {
+              "id": "signup.quiz.skip",
+              "label": "Skip-for-now link",
+              "type": "plain",
+              "current": "Skip for now"
+            },
+            {
+              "id": "signup.quiz.step_progress_template",
+              "label": "Step progress label. Use {n} for current step.",
+              "type": "plain",
+              "current": "Step {n} of 3"
+            },
+            {
+              "id": "signup.quiz.step1_helper",
+              "label": "Step 1 — helper text",
+              "type": "plain",
+              "current": "Pick anything that sparks you — tap to add or remove."
+            },
+            {
+              "id": "signup.quiz.step2_helper",
+              "label": "Step 2 — helper text",
+              "type": "plain",
+              "current": "What can you share with another Dabbler in a short, friendly session?"
+            },
+            {
+              "id": "signup.quiz.step3_helper",
+              "label": "Step 3 — helper text",
+              "type": "plain",
+              "current": "A rough area is enough for the map; your exact address stays off your public profile until you choose otherwise."
+            },
+            {
+              "id": "signup.quiz.location_label",
+              "label": "Step 3 — “City or region” label",
+              "type": "plain",
+              "current": "City or region"
+            },
+            {
+              "id": "signup.quiz.location_placeholder",
+              "label": "Step 3 — location placeholder",
+              "type": "plain",
+              "current": "e.g. Northeast Portland, Hudson Valley"
+            },
+            {
+              "id": "signup.quiz.pin_helper",
+              "label": "Step 3 — approximate-pin helper",
+              "type": "plain",
+              "current": "Approximate map pin (optional). Coordinates stay private on Explore until you turn on exact location in settings."
+            },
+            {
+              "id": "signup.quiz.use_location",
+              "label": "Step 3 — “Use my approximate location” button",
+              "type": "plain",
+              "current": "Use my approximate location"
+            },
+            {
+              "id": "signup.quiz.locating",
+              "label": "Step 3 — locating state",
+              "type": "plain",
+              "current": "Locating…"
+            },
+            {
+              "id": "signup.quiz.next",
+              "label": "Quiz — “Next” button",
+              "type": "plain",
+              "current": "Next"
+            },
+            {
+              "id": "signup.quiz.back",
+              "label": "Quiz — “Back” button",
+              "type": "plain",
+              "current": "Back"
+            },
+            {
+              "id": "signup.quiz.finish",
+              "label": "Quiz — “Finish” button (last step)",
+              "type": "plain",
+              "current": "Finish"
+            },
+            {
+              "id": "signup.quiz.saving",
+              "label": "Quiz — saving state",
+              "type": "plain",
+              "current": "Saving…"
+            }
+          ]
+        },
+        {
+          "name": "Welcome card",
+          "fields": [
+            {
+              "id": "signup.welcome.heading",
+              "label": "Welcome heading",
+              "type": "plain",
+              "current": "You're in"
+            },
+            {
+              "id": "signup.welcome.body",
+              "label": "Welcome body",
+              "type": "plain",
+              "current": "You've got 3 starter credits — here's how Dabble works."
+            },
+            {
+              "id": "signup.welcome.cta_primary",
+              "label": "Primary button",
+              "type": "plain",
+              "current": "How Dabble works"
+            },
+            {
+              "id": "signup.welcome.cta_secondary",
+              "label": "Secondary button",
+              "type": "plain",
+              "current": "Finish my profile"
+            },
+            {
+              "id": "signup.welcome.cta_tertiary",
+              "label": "“Browse Explore” link",
+              "type": "plain",
+              "current": "Browse Dabblers"
+            }
+          ]
+        },
+        {
+          "name": "Errors & info messages",
+          "fields": [
+            {
+              "id": "signup.error.no_geolocation",
+              "label": "Geolocation unavailable",
+              "type": "plain",
+              "current": "Location isn’t available in this browser."
+            },
+            {
+              "id": "signup.error.geolocation_failed",
+              "label": "Geolocation failed",
+              "type": "plain",
+              "current": "Could not read your location. You can still type a city or neighborhood below."
+            },
+            {
+              "id": "signup.error.session_expired",
+              "label": "Session expired",
+              "type": "plain",
+              "current": "Session expired. Please sign in again."
+            },
+            {
+              "id": "signup.error.location_required",
+              "label": "Need location to save quiz",
+              "type": "plain",
+              "current": "Add a city or area, or drop an approximate pin."
+            },
+            {
+              "id": "signup.error.profile_save_fallback",
+              "label": "Profile save fallback",
+              "type": "plain",
+              "current": "Could not save your profile."
+            },
+            {
+              "id": "signup.error.profile_setup_failed",
+              "label": "Profile setup failed after sign-up",
+              "type": "plain",
+              "current": "Account created, but profile setup failed. You can continue or sign in later."
+            },
+            {
+              "id": "signup.error.network",
+              "label": "Network error while saving",
+              "type": "plain",
+              "current": "Network error while saving."
+            },
+            {
+              "id": "signup.info.email_confirm",
+              "label": "After sign-up — confirm your email message",
+              "type": "plain",
+              "current": "Account created. Check your inbox to confirm, then sign in."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "forgot-password",
+      "title": "Forgot password",
+      "url": "/dabble/forgot-password",
+      "source_file": "app/dabble/forgot-password/page.tsx",
+      "description": "Password-reset request page.",
+      "sections": [
+        {
+          "name": "Hero & form",
+          "fields": [
+            {
+              "id": "forgot.tagline",
+              "label": "Tagline above the card",
+              "type": "plain",
+              "current": "It happens. We'll send you a link to choose a new password."
+            },
+            {
+              "id": "forgot.heading",
+              "label": "Card heading",
+              "type": "plain",
+              "current": "Forgot password"
+            },
+            {
+              "id": "forgot.helper",
+              "label": "Card helper text",
+              "type": "plain",
+              "current": "Enter the email for your account. If it matches an account, you will get a reset link shortly."
+            },
+            {
+              "id": "forgot.email_label",
+              "label": "Email label",
+              "type": "plain",
+              "current": "Email"
+            },
+            {
+              "id": "forgot.email_placeholder",
+              "label": "Email placeholder",
+              "type": "plain",
+              "current": "you@example.com"
+            },
+            {
+              "id": "forgot.submit",
+              "label": "Submit button",
+              "type": "plain",
+              "current": "Send reset link"
+            },
+            {
+              "id": "forgot.submitting",
+              "label": "Submit button (sending)",
+              "type": "plain",
+              "current": "Sending link..."
+            }
+          ]
+        },
+        {
+          "name": "Sent confirmation",
+          "fields": [
+            {
+              "id": "forgot.sent_body",
+              "label": "Confirmation body after sending",
+              "type": "plain",
+              "current": "Check your inbox (and spam) for an email from us. The link expires after a while for security."
+            },
+            {
+              "id": "forgot.sent_back_button",
+              "label": "Back-to-sign-in button",
+              "type": "plain",
+              "current": "Back to sign in"
+            }
+          ]
+        },
+        {
+          "name": "Footer",
+          "fields": [
+            {
+              "id": "forgot.footer_prompt",
+              "label": "Footer prompt",
+              "type": "plain",
+              "current": "Remembered it?"
+            },
+            {
+              "id": "forgot.footer_link",
+              "label": "Footer link",
+              "type": "plain",
+              "current": "Sign in"
+            },
+            {
+              "id": "forgot.checking_session",
+              "label": "Checking-session status",
+              "type": "plain",
+              "current": "Checking session..."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "update-password",
+      "title": "Set new password",
+      "url": "/dabble/update-password",
+      "source_file": "app/dabble/update-password/page.tsx",
+      "description": "Password reset landing page (after the email link).",
+      "sections": [
+        {
+          "name": "Hero & form",
+          "fields": [
+            {
+              "id": "update_password.tagline",
+              "label": "Tagline above the card",
+              "type": "plain",
+              "current": "Almost there — pick a new password you haven't used elsewhere."
+            },
+            {
+              "id": "update_password.heading",
+              "label": "Card heading",
+              "type": "plain",
+              "current": "Set new password"
+            },
+            {
+              "id": "update_password.helper",
+              "label": "Card helper text",
+              "type": "plain",
+              "current": "Use the link from your email to reach this page. After you save, you will stay signed in."
+            },
+            {
+              "id": "update_password.new_label",
+              "label": "New password label",
+              "type": "plain",
+              "current": "New password"
+            },
+            {
+              "id": "update_password.new_placeholder",
+              "label": "New password placeholder",
+              "type": "plain",
+              "current": "At least 8 characters"
+            },
+            {
+              "id": "update_password.confirm_label",
+              "label": "Confirm password label",
+              "type": "plain",
+              "current": "Confirm password"
+            },
+            {
+              "id": "update_password.confirm_placeholder",
+              "label": "Confirm password placeholder",
+              "type": "plain",
+              "current": "Repeat password"
+            },
+            {
+              "id": "update_password.submit",
+              "label": "Submit button",
+              "type": "plain",
+              "current": "Save password"
+            },
+            {
+              "id": "update_password.submitting",
+              "label": "Submit button (saving)",
+              "type": "plain",
+              "current": "Saving..."
+            }
+          ]
+        },
+        {
+          "name": "Gate states",
+          "fields": [
+            {
+              "id": "update_password.gate.pending",
+              "label": "Confirming the reset link",
+              "type": "plain",
+              "current": "Confirming your reset link..."
+            },
+            {
+              "id": "update_password.gate.closed_body",
+              "label": "Link expired body",
+              "type": "plain",
+              "current": "This link is invalid or has expired. Request a fresh reset email and try again."
+            },
+            {
+              "id": "update_password.gate.request_new",
+              "label": "Request-new-link button",
+              "type": "plain",
+              "current": "Request new link"
+            },
+            {
+              "id": "update_password.gate.signin_link",
+              "label": "Back to sign in (link)",
+              "type": "plain",
+              "current": "Back to sign in"
+            }
+          ]
+        },
+        {
+          "name": "Validation",
+          "fields": [
+            {
+              "id": "update_password.error.too_short",
+              "label": "Too-short password",
+              "type": "plain",
+              "current": "Use at least 8 characters."
+            },
+            {
+              "id": "update_password.error.mismatch",
+              "label": "Passwords do not match",
+              "type": "plain",
+              "current": "Passwords do not match."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "profile",
+      "title": "Profile (router)",
+      "url": "/profile",
+      "source_file": "app/profile/page.tsx",
+      "description": "Tiny waiting page that routes signed-in members to either /profile/setup or their public profile.",
+      "sections": [
+        {
+          "name": "Visible copy",
+          "fields": [
+            {
+              "id": "profile.heading",
+              "label": "Heading",
+              "type": "plain",
+              "current": "Profile"
+            },
+            {
+              "id": "profile.status_initial",
+              "label": "Initial status while checking session",
+              "type": "plain",
+              "current": "Checking session..."
+            },
+            {
+              "id": "profile.status_loading",
+              "label": "Loading-profile status",
+              "type": "plain",
+              "current": "Loading profile..."
+            },
+            {
+              "id": "profile.error_fallback",
+              "label": "Fallback error message",
+              "type": "plain",
+              "current": "Unable to load your profile."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "profile-setup",
+      "title": "Profile setup",
+      "url": "/profile/setup",
+      "source_file": "app/profile/setup/page.tsx",
+      "description": "Three-step setup wizard — Basics, Story & skills, Discoverability.",
+      "sections": [
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "profile_setup.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Profile setup"
+            },
+            {
+              "id": "profile_setup.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Introduce yourself to the swap"
+            },
+            {
+              "id": "profile_setup.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "Three short steps — enough structure to feel welcoming, enough room to sound like you."
+            }
+          ]
+        },
+        {
+          "name": "Step labels",
+          "fields": [
+            {
+              "id": "profile_setup.step1.label",
+              "label": "Step 1 — label",
+              "type": "plain",
+              "current": "Basics"
+            },
+            {
+              "id": "profile_setup.step1.description",
+              "label": "Step 1 — description",
+              "type": "plain",
+              "current": "Name and place"
+            },
+            {
+              "id": "profile_setup.step2.label",
+              "label": "Step 2 — label",
+              "type": "plain",
+              "current": "Story & skills"
+            },
+            {
+              "id": "profile_setup.step2.description",
+              "label": "Step 2 — description",
+              "type": "plain",
+              "current": "What you share and seek"
+            },
+            {
+              "id": "profile_setup.step3.label",
+              "label": "Step 3 — label",
+              "type": "plain",
+              "current": "Discoverability"
+            },
+            {
+              "id": "profile_setup.step3.description",
+              "label": "Step 3 — description",
+              "type": "plain",
+              "current": "Who can find you"
+            },
+            {
+              "id": "profile_setup.progress.step_template",
+              "label": "Progress label template. Use {n}, {total}.",
+              "type": "plain",
+              "current": "Step {n} of {total}"
+            },
+            {
+              "id": "profile_setup.progress.completion_template",
+              "label": "Completion percent line. Use {pct}.",
+              "type": "plain",
+              "current": "About {pct}% complete (basics, offers, and wants)"
+            }
+          ]
+        },
+        {
+          "name": "Save status",
+          "fields": [
+            {
+              "id": "profile_setup.save.saving",
+              "label": "Saving",
+              "type": "plain",
+              "current": "Saving your changes…"
+            },
+            {
+              "id": "profile_setup.save.saved",
+              "label": "Saved",
+              "type": "plain",
+              "current": "All changes saved — you can keep editing."
+            },
+            {
+              "id": "profile_setup.save.error",
+              "label": "Save error",
+              "type": "plain",
+              "current": "That save did not stick. Fix any message above and try again."
+            }
+          ]
+        },
+        {
+          "name": "Step 1 — Basics",
+          "fields": [
+            {
+              "id": "profile_setup.basics.display_name_label",
+              "label": "Display name label",
+              "type": "plain",
+              "current": "Display name"
+            },
+            {
+              "id": "profile_setup.basics.display_name_placeholder",
+              "label": "Display name placeholder",
+              "type": "plain",
+              "current": "How other Dabblers will know you"
+            },
+            {
+              "id": "profile_setup.basics.username_label",
+              "label": "Username label",
+              "type": "plain",
+              "current": "Username"
+            },
+            {
+              "id": "profile_setup.basics.username_placeholder",
+              "label": "Username placeholder",
+              "type": "plain",
+              "current": "your_username"
+            },
+            {
+              "id": "profile_setup.basics.neighborhood_label",
+              "label": "Neighborhood label",
+              "type": "plain",
+              "current": "Neighborhood"
+            },
+            {
+              "id": "profile_setup.basics.neighborhood_placeholder",
+              "label": "Neighborhood placeholder",
+              "type": "plain",
+              "current": "City or area — Park Slope, Hudson Valley, Northeast Portland"
+            }
+          ]
+        },
+        {
+          "name": "Step 2 — Story & skills",
+          "fields": [
+            {
+              "id": "profile_setup.story.curious_label",
+              "label": "What you are curious about — label",
+              "type": "plain",
+              "current": "What you are curious about"
+            },
+            {
+              "id": "profile_setup.story.curious_placeholder",
+              "label": "What you are curious about — placeholder",
+              "type": "plain",
+              "current": "A few sentences about what you'd love to try with another Dabbler — kayaking, baking, repair, music, anything."
+            },
+            {
+              "id": "profile_setup.story.share_label",
+              "label": "What you enjoy sharing — label",
+              "type": "plain",
+              "current": "What you enjoy sharing"
+            },
+            {
+              "id": "profile_setup.story.share_placeholder",
+              "label": "What you enjoy sharing — placeholder",
+              "type": "plain",
+              "current": "What do you enjoy teaching, showing, or doing alongside someone else?"
+            },
+            {
+              "id": "profile_setup.story.bio_label",
+              "label": "Short bio — label",
+              "type": "plain",
+              "current": "Short bio (optional)"
+            },
+            {
+              "id": "profile_setup.story.bio_placeholder",
+              "label": "Short bio — placeholder",
+              "type": "plain",
+              "current": "A line or two for your public profile — who you are as a Dabbler."
+            },
+            {
+              "id": "profile_setup.story.skill_level_label",
+              "label": "Skill level — label",
+              "type": "plain",
+              "current": "How you would describe your skill level"
+            },
+            {
+              "id": "profile_setup.story.skill_level_placeholder",
+              "label": "Skill level — placeholder",
+              "type": "plain",
+              "current": "One line for your public profile — honest, humble, specific."
+            },
+            {
+              "id": "profile_setup.story.availability_label",
+              "label": "Availability — label",
+              "type": "plain",
+              "current": "When you are usually free"
+            },
+            {
+              "id": "profile_setup.story.availability_placeholder",
+              "label": "Availability — placeholder",
+              "type": "plain",
+              "current": "Weekday evenings, Saturday mornings, etc."
+            },
+            {
+              "id": "profile_setup.story.starter_ideas_label",
+              "label": "Starter “Ideas to borrow” label",
+              "type": "plain",
+              "current": "Ideas to borrow"
+            },
+            {
+              "id": "profile_setup.story.starter_idea1",
+              "label": "Starter idea 1",
+              "type": "plain",
+              "current": "Cooking"
+            },
+            {
+              "id": "profile_setup.story.starter_idea2",
+              "label": "Starter idea 2",
+              "type": "plain",
+              "current": "Home repair"
+            },
+            {
+              "id": "profile_setup.story.starter_idea3",
+              "label": "Starter idea 3",
+              "type": "plain",
+              "current": "Cycling"
+            },
+            {
+              "id": "profile_setup.story.starter_idea4",
+              "label": "Starter idea 4",
+              "type": "plain",
+              "current": "Gardening"
+            },
+            {
+              "id": "profile_setup.story.teach_label",
+              "label": "I can teach — label",
+              "type": "plain",
+              "current": "I can teach"
+            },
+            {
+              "id": "profile_setup.story.teach_description",
+              "label": "I can teach — description",
+              "type": "plain",
+              "current": "Press Enter after each skill or hobby."
+            },
+            {
+              "id": "profile_setup.story.teach_placeholder",
+              "label": "I can teach — placeholder",
+              "type": "plain",
+              "current": "e.g. Sourdough"
+            },
+            {
+              "id": "profile_setup.story.learn_label",
+              "label": "I'd love to learn — label",
+              "type": "plain",
+              "current": "I'd love to learn"
+            },
+            {
+              "id": "profile_setup.story.learn_description",
+              "label": "I'd love to learn — description",
+              "type": "plain",
+              "current": "Small tags read best in Explore."
+            },
+            {
+              "id": "profile_setup.story.learn_placeholder",
+              "label": "I'd love to learn — placeholder",
+              "type": "plain",
+              "current": "e.g. Bike tune-ups"
+            }
+          ]
+        },
+        {
+          "name": "Step 3 — Discoverability",
+          "fields": [
+            {
+              "id": "profile_setup.disc.discoverable_text",
+              "label": "Discoverable checkbox text",
+              "type": "plain",
+              "current": "Let other Dabblers find me on Explore. You can turn this off any time — your profile stays yours."
+            },
+            {
+              "id": "profile_setup.disc.exact_location_text",
+              "label": "Exact-location checkbox text",
+              "type": "plain",
+              "current": "Show my precise pin on the map when Explore has maps on. If you leave this off, only your neighborhood label travels with your profile."
+            },
+            {
+              "id": "profile_setup.disc.travel_label",
+              "label": "Travel radius label",
+              "type": "plain",
+              "current": "How far you will meet (0–50 km)"
+            },
+            {
+              "id": "profile_setup.disc.travel_zero",
+              "label": "Helper when radius is 0",
+              "type": "plain",
+              "current": "No extra travel beyond your area label."
+            },
+            {
+              "id": "profile_setup.disc.travel_helper_template",
+              "label": "Helper when radius > 0. Use {km}.",
+              "type": "plain",
+              "current": "About {km} km."
+            }
+          ]
+        },
+        {
+          "name": "Buttons & messages",
+          "fields": [
+            {
+              "id": "profile_setup.button.back",
+              "label": "Back button",
+              "type": "plain",
+              "current": "Back"
+            },
+            {
+              "id": "profile_setup.button.next",
+              "label": "Save & continue button",
+              "type": "plain",
+              "current": "Save & continue"
+            },
+            {
+              "id": "profile_setup.button.save",
+              "label": "Save profile button (last step)",
+              "type": "plain",
+              "current": "Save profile"
+            },
+            {
+              "id": "profile_setup.button.saving",
+              "label": "Saving button label",
+              "type": "plain",
+              "current": "Saving..."
+            },
+            {
+              "id": "profile_setup.message.loading",
+              "label": "Loading profile message",
+              "type": "plain",
+              "current": "Loading your profile..."
+            },
+            {
+              "id": "profile_setup.message.retry",
+              "label": "Retry button",
+              "type": "plain",
+              "current": "Retry"
+            },
+            {
+              "id": "profile_setup.message.saved_complete",
+              "label": "Saved (no missing fields)",
+              "type": "plain",
+              "current": "Profile saved."
+            },
+            {
+              "id": "profile_setup.message.saved_partial_template",
+              "label": "Saved (with missing fields). Use {missing}.",
+              "type": "plain",
+              "current": "Saved. To complete your profile, add: {missing}."
+            },
+            {
+              "id": "profile_setup.message.missing_template",
+              "label": "Validation summary. Use {missing}.",
+              "type": "plain",
+              "current": "Missing: {missing}"
+            },
+            {
+              "id": "profile_setup.error.session_token_missing",
+              "label": "Error — session token missing",
+              "type": "plain",
+              "current": "Session token missing. Please sign in again."
+            },
+            {
+              "id": "profile_setup.error.network_loading",
+              "label": "Error — network while loading",
+              "type": "plain",
+              "current": "Network error while loading profile data."
+            },
+            {
+              "id": "profile_setup.error.network_saving",
+              "label": "Error — network while saving",
+              "type": "plain",
+              "current": "Network error while saving profile."
+            },
+            {
+              "id": "profile_setup.error.unable_to_load",
+              "label": "Error — unable to load existing profile",
+              "type": "plain",
+              "current": "Unable to load your existing profile."
+            },
+            {
+              "id": "profile_setup.error.unable_to_save",
+              "label": "Error — unable to save profile",
+              "type": "plain",
+              "current": "Unable to save profile."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "public-profile",
+      "title": "Public profile",
+      "url": "/profile/[username]",
+      "source_file": "app/profile/[username]/PublicProfileClient.tsx",
+      "description": "Each member's public profile — header, card titles, fallback bio, placeholder testimonials, sessions sheet.",
+      "sections": [
+        {
+          "name": "Header",
+          "fields": [
+            {
+              "id": "public_profile.fallback_name",
+              "label": "Fallback when no display name is set",
+              "type": "plain",
+              "current": "Dabbler"
+            },
+            {
+              "id": "public_profile.fallback_area",
+              "label": "Fallback when no neighborhood is set",
+              "type": "plain",
+              "current": "Area not set"
+            },
+            {
+              "id": "public_profile.fallback_bio",
+              "label": "Fallback bio shown when no experience note exists",
+              "type": "plain",
+              "current": "Curious, glad you stopped by — say what you'd like to try together."
+            }
+          ]
+        },
+        {
+          "name": "Card titles",
+          "fields": [
+            {
+              "id": "public_profile.cards.teaches",
+              "label": "Teaches card title",
+              "type": "plain",
+              "current": "Teaches"
+            },
+            {
+              "id": "public_profile.cards.curious",
+              "label": "Curious about card title",
+              "type": "plain",
+              "current": "Curious about"
+            },
+            {
+              "id": "public_profile.cards.availability",
+              "label": "Availability card title",
+              "type": "plain",
+              "current": "Availability"
+            },
+            {
+              "id": "public_profile.cards.testimonials",
+              "label": "Testimonials card title",
+              "type": "plain",
+              "current": "Testimonials"
+            },
+            {
+              "id": "public_profile.cards.about",
+              "label": "About card title",
+              "type": "plain",
+              "current": "About"
+            },
+            {
+              "id": "public_profile.cards.curious_intro",
+              "label": "“Curious in their own words” card title",
+              "type": "plain",
+              "current": "Curious in their own words"
+            },
+            {
+              "id": "public_profile.cards.share_intro",
+              "label": "“Happy to share” card title",
+              "type": "plain",
+              "current": "Happy to share"
+            },
+            {
+              "id": "public_profile.cards.empty_tags",
+              "label": "Tag list when nothing is listed",
+              "type": "plain",
+              "current": "Nothing listed yet."
+            }
+          ]
+        },
+        {
+          "name": "Testimonials placeholders",
+          "fields": [
+            {
+              "id": "public_profile.testimonials.intro",
+              "label": "Intro line above testimonials",
+              "type": "plain",
+              "current": "After you swap a session, kind words can land here. For now, placeholders keep the space warm."
+            },
+            {
+              "id": "public_profile.testimonials.placeholder1_quote",
+              "label": "Placeholder 1 — quote",
+              "type": "plain",
+              "current": "“We're saving a spot here for kind words after real meetups — nothing performative, just honest.”"
+            },
+            {
+              "id": "public_profile.testimonials.placeholder1_footer",
+              "label": "Placeholder 1 — footer",
+              "type": "plain",
+              "current": "Placeholder · testimonials ship with Wave 6"
+            },
+            {
+              "id": "public_profile.testimonials.placeholder2_quote",
+              "label": "Placeholder 2 — quote",
+              "type": "plain",
+              "current": "“Dabble keeps the swap grounded: short sessions, public first meets, room for beginners.”"
+            },
+            {
+              "id": "public_profile.testimonials.placeholder2_footer",
+              "label": "Placeholder 2 — footer",
+              "type": "plain",
+              "current": "Placeholder · trail-guide tone"
+            }
+          ]
+        },
+        {
+          "name": "Actions & status",
+          "fields": [
+            {
+              "id": "public_profile.actions.propose",
+              "label": "Propose-a-session button",
+              "type": "plain",
+              "current": "Propose a session"
+            },
+            {
+              "id": "public_profile.actions.your_credits",
+              "label": "“Your credits” label",
+              "type": "plain",
+              "current": "Your credits"
+            },
+            {
+              "id": "public_profile.actions.credits_suffix_template",
+              "label": "Credits tag. Use {n}.",
+              "type": "plain",
+              "current": "{n} credits"
+            },
+            {
+              "id": "public_profile.status.loading",
+              "label": "Loading state",
+              "type": "plain",
+              "current": "Loading profile..."
+            },
+            {
+              "id": "public_profile.error.not_found",
+              "label": "Error — not found",
+              "type": "plain",
+              "current": "This Dabbler couldn't be found."
+            },
+            {
+              "id": "public_profile.error.unable_to_load",
+              "label": "Error — unable to load",
+              "type": "plain",
+              "current": "Unable to load this profile."
+            },
+            {
+              "id": "public_profile.error.network",
+              "label": "Error — network",
+              "type": "plain",
+              "current": "Network error while loading this profile."
+            },
+            {
+              "id": "public_profile.error.retry",
+              "label": "Retry button",
+              "type": "plain",
+              "current": "Retry"
+            }
+          ]
+        },
+        {
+          "name": "Sessions sheet",
+          "fields": [
+            {
+              "id": "public_profile.sessions.title",
+              "label": "Sheet title",
+              "type": "plain",
+              "current": "Sessions coming soon"
+            },
+            {
+              "id": "public_profile.sessions.body",
+              "label": "Sheet body",
+              "type": "plain",
+              "current": "Proposals and scheduling will arrive in Wave 6. Until then, say hello in person when paths cross, or keep your curiosity in the notes on your profile."
+            },
+            {
+              "id": "public_profile.sessions.close",
+              "label": "Close button",
+              "type": "plain",
+              "current": "Close"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "credits",
+      "title": "Credits",
+      "url": "/credits",
+      "source_file": "app/credits/page.tsx",
+      "description": "Personal credits balance and activity ledger.",
+      "sections": [
+        {
+          "name": "Hero",
+          "fields": [
+            {
+              "id": "credits.eyebrow",
+              "label": "Eyebrow",
+              "type": "plain",
+              "current": "Credits"
+            },
+            {
+              "id": "credits.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "Your Dabbler time"
+            },
+            {
+              "id": "credits.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "Whole credits, short sessions, no cash on the path. The numbers here match what you can book and earn."
+            }
+          ]
+        },
+        {
+          "name": "Balance card",
+          "fields": [
+            {
+              "id": "credits.balance.heading",
+              "label": "Balance heading",
+              "type": "plain",
+              "current": "Balance"
+            },
+            {
+              "id": "credits.balance.available_label",
+              "label": "Available label",
+              "type": "plain",
+              "current": "Available to book"
+            },
+            {
+              "id": "credits.balance.unit",
+              "label": "Unit (after the big number)",
+              "type": "plain",
+              "current": "credits"
+            },
+            {
+              "id": "credits.balance.held_template",
+              "label": "Held credits line. Use {n}.",
+              "type": "plain",
+              "current": "{n} on hold for pending sessions"
+            },
+            {
+              "id": "credits.balance.last_movement_template",
+              "label": "Last movement line. Use {when}.",
+              "type": "plain",
+              "current": "Last movement {when}"
+            }
+          ]
+        },
+        {
+          "name": "Activity table",
+          "fields": [
+            {
+              "id": "credits.activity.heading",
+              "label": "Section heading",
+              "type": "plain",
+              "current": "Activity"
+            },
+            {
+              "id": "credits.activity.empty_body",
+              "label": "Empty-state body when ledger has no entries",
+              "type": "plain",
+              "current": "You have 3 starter credits to begin with. Offer a session or book one to see activity here."
+            },
+            {
+              "id": "credits.activity.error_body",
+              "label": "Body when activity fails to load (but balance loaded)",
+              "type": "plain",
+              "current": "Activity history is not available right now. If your balance loaded above, try refreshing the page in a moment."
+            },
+            {
+              "id": "credits.activity.col_date",
+              "label": "Column — Date",
+              "type": "plain",
+              "current": "Date"
+            },
+            {
+              "id": "credits.activity.col_event",
+              "label": "Column — Event",
+              "type": "plain",
+              "current": "Event"
+            },
+            {
+              "id": "credits.activity.col_delta",
+              "label": "Column — Delta",
+              "type": "plain",
+              "current": "Delta"
+            },
+            {
+              "id": "credits.activity.col_balance",
+              "label": "Column — Balance after",
+              "type": "plain",
+              "current": "Balance after"
+            },
+            {
+              "id": "credits.activity.col_session",
+              "label": "Column — Session",
+              "type": "plain",
+              "current": "Session"
+            },
+            {
+              "id": "credits.activity.session_view",
+              "label": "Session — “View” link",
+              "type": "plain",
+              "current": "View"
+            },
+            {
+              "id": "credits.activity.session_none",
+              "label": "Session — placeholder when no link",
+              "type": "plain",
+              "current": "—"
+            },
+            {
+              "id": "credits.activity.load_more",
+              "label": "Load older activity button",
+              "type": "plain",
+              "current": "Load older activity"
+            },
+            {
+              "id": "credits.activity.load_more_loading",
+              "label": "Load older activity — loading state",
+              "type": "plain",
+              "current": "Loading…"
+            },
+            {
+              "id": "credits.activity.load_more_helper_template",
+              "label": "Helper after load-more (use {shown}, {total})",
+              "type": "plain",
+              "current": "“Balance after” reflects loaded rows ({shown} of {total})."
+            }
+          ]
+        },
+        {
+          "name": "Reason labels",
+          "blurb": "Friendly names shown in the Event column for each ledger reason.",
+          "fields": [
+            {
+              "id": "credits.reason.seed_signup",
+              "label": "seed_signup",
+              "type": "plain",
+              "current": "Starter credits"
+            },
+            {
+              "id": "credits.reason.session_settle",
+              "label": "session_settle",
+              "type": "plain",
+              "current": "Session settled"
+            },
+            {
+              "id": "credits.reason.session_bonus_rating",
+              "label": "session_bonus_rating",
+              "type": "plain",
+              "current": "Quality bonus"
+            },
+            {
+              "id": "credits.reason.refund",
+              "label": "refund",
+              "type": "plain",
+              "current": "Refund"
+            },
+            {
+              "id": "credits.reason.admin_adjustment",
+              "label": "admin_adjustment",
+              "type": "plain",
+              "current": "Adjustment"
+            }
+          ]
+        },
+        {
+          "name": "How credits work footer",
+          "fields": [
+            {
+              "id": "credits.footer.heading",
+              "label": "Footer heading",
+              "type": "plain",
+              "current": "How credits work"
+            },
+            {
+              "id": "credits.footer.body",
+              "label": "Footer paragraph",
+              "type": "plain",
+              "current": "One credit is about twenty minutes of Dabbler time. Tips, short sessions, and walk-withs each cost a small number of credits so expectations stay clear. The full trail map lives on How it works."
+            },
+            {
+              "id": "credits.footer.link",
+              "label": "Read How it works link",
+              "type": "plain",
+              "current": "Read How it works"
+            }
+          ]
+        },
+        {
+          "name": "Statuses & errors",
+          "fields": [
+            {
+              "id": "credits.status.checking_session",
+              "label": "Checking session",
+              "type": "plain",
+              "current": "Checking session…"
+            },
+            {
+              "id": "credits.status.loading",
+              "label": "Loading credits",
+              "type": "plain",
+              "current": "Loading credits…"
+            },
+            {
+              "id": "credits.status.disabled",
+              "label": "Credits disabled message",
+              "type": "plain",
+              "current": "Credits are not enabled on this deployment."
+            },
+            {
+              "id": "credits.status.back_home",
+              "label": "Back home link",
+              "type": "plain",
+              "current": "Back home"
+            },
+            {
+              "id": "credits.error.config",
+              "label": "Error — app config",
+              "type": "plain",
+              "current": "App configuration is incomplete."
+            },
+            {
+              "id": "credits.error.balance",
+              "label": "Error — balance load",
+              "type": "plain",
+              "current": "Could not load balance."
+            },
+            {
+              "id": "credits.error.history",
+              "label": "Error — activity history load",
+              "type": "plain",
+              "current": "Could not load activity history."
+            },
+            {
+              "id": "credits.error.network",
+              "label": "Error — network while loading",
+              "type": "plain",
+              "current": "Network error while loading credits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "not-found",
+      "title": "Page not found",
+      "url": "/404",
+      "source_file": "app/not-found.tsx",
+      "description": "404 page shown when a URL does not exist.",
+      "sections": [
+        {
+          "name": "Browser & search",
+          "fields": [
+            {
+              "id": "not_found.metadata.title",
+              "label": "Browser tab title",
+              "type": "plain",
+              "current": "Page not found"
+            },
+            {
+              "id": "not_found.metadata.description",
+              "label": "SEO + social description",
+              "type": "plain",
+              "current": "That page is not on the map — head home or browse Dabblers."
+            }
+          ]
+        },
+        {
+          "name": "Body",
+          "fields": [
+            {
+              "id": "not_found.eyebrow",
+              "label": "Eyebrow (404)",
+              "type": "plain",
+              "current": "404"
+            },
+            {
+              "id": "not_found.heading",
+              "label": "Big heading",
+              "type": "plain",
+              "current": "This trail dead-ends"
+            },
+            {
+              "id": "not_found.lead",
+              "label": "Lead paragraph",
+              "type": "plain",
+              "current": "The page you wanted is not here. Head home or browse Dabblers to pick up the trail."
+            },
+            {
+              "id": "not_found.cta_home",
+              "label": "Home button",
+              "type": "plain",
+              "current": "Home"
+            },
+            {
+              "id": "not_found.cta_explore",
+              "label": "Explore button",
+              "type": "plain",
+              "current": "Explore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "site-chrome",
+      "title": "Site chrome (header, footer, defaults)",
+      "url": "(every page)",
+      "source_file": "app/layout.tsx, app/components/SiteHeader.tsx, app/components/AuthNav.tsx, app/opengraph-image.tsx",
+      "description": "Things that show on every page: site title, header nav, footer, default SEO description, the Open Graph placeholder.",
+      "sections": [
+        {
+          "name": "Site defaults",
+          "blurb": "Used by the browser tab when a page does not set its own title, and by social previews.",
+          "fields": [
+            {
+              "id": "site.metadata.default_title",
+              "label": "Default browser tab title",
+              "type": "plain",
+              "current": "Dabble — local talent, swapped between Dabblers"
+            },
+            {
+              "id": "site.metadata.title_template",
+              "label": "Browser tab title template (used when a page sets its own title). Use {page} where the page title goes.",
+              "type": "plain",
+              "current": "{page} · Dabble"
+            },
+            {
+              "id": "site.metadata.default_description",
+              "label": "Default SEO + social description",
+              "type": "plain",
+              "current": "Meet Dabblers who teach what they love and try something new — kayaking, climbing, fly-fishing, birding, baking, music, home improvement and everything in between. Small credits, calm meetups, no marketplace hustle."
+            },
+            {
+              "id": "site.metadata.og_title",
+              "label": "Open Graph / Twitter card title",
+              "type": "plain",
+              "current": "Dabble — local talent, swapped between Dabblers"
+            },
+            {
+              "id": "site.metadata.og_alt",
+              "label": "Open Graph image alt text",
+              "type": "plain",
+              "current": "Dabble — local talent, swapped between Dabblers"
+            }
+          ]
+        },
+        {
+          "name": "Header",
+          "blurb": "The top navigation bar shown on every page.",
+          "fields": [
+            {
+              "id": "site.header.brand",
+              "label": "Wordmark / brand name",
+              "type": "plain",
+              "current": "Dabble"
+            },
+            {
+              "id": "site.header.nav_explore",
+              "label": "Nav — Explore",
+              "type": "plain",
+              "current": "Explore"
+            },
+            {
+              "id": "site.header.nav_about",
+              "label": "Nav — About",
+              "type": "plain",
+              "current": "About"
+            },
+            {
+              "id": "site.header.nav_how_it_works",
+              "label": "Nav — How it works",
+              "type": "plain",
+              "current": "How it works"
+            },
+            {
+              "id": "site.header.nav_safety",
+              "label": "Nav — Safety",
+              "type": "plain",
+              "current": "Safety"
+            },
+            {
+              "id": "site.header.nav_guidelines",
+              "label": "Nav — Guidelines",
+              "type": "plain",
+              "current": "Guidelines"
+            },
+            {
+              "id": "site.header.cta_join",
+              "label": "Join button",
+              "type": "plain",
+              "current": "Join"
+            },
+            {
+              "id": "site.header.menu_open_label",
+              "label": "Mobile menu — open label (for screen readers)",
+              "type": "plain",
+              "current": "Open menu"
+            },
+            {
+              "id": "site.header.menu_close_label",
+              "label": "Mobile menu — close label (for screen readers)",
+              "type": "plain",
+              "current": "Close menu"
+            }
+          ]
+        },
+        {
+          "name": "Auth nav (header)",
+          "blurb": "The bit of the header that changes depending on whether you are signed in.",
+          "fields": [
+            {
+              "id": "site.authnav.session_loading",
+              "label": "Loading state (“Session...”)",
+              "type": "plain",
+              "current": "Session..."
+            },
+            {
+              "id": "site.authnav.signin_link",
+              "label": "When signed out — link",
+              "type": "plain",
+              "current": "Sign in"
+            },
+            {
+              "id": "site.authnav.my_profile_link",
+              "label": "When signed in — “My profile” link",
+              "type": "plain",
+              "current": "My profile"
+            },
+            {
+              "id": "site.authnav.signout_button",
+              "label": "When signed in — Sign out button",
+              "type": "plain",
+              "current": "Sign out"
+            }
+          ]
+        },
+        {
+          "name": "Footer",
+          "fields": [
+            {
+              "id": "site.footer.tagline",
+              "label": "Footer tagline",
+              "type": "plain",
+              "current": "Dabble — local talent, swapped between Dabblers."
+            },
+            {
+              "id": "site.footer.nav_about",
+              "label": "Footer link — About",
+              "type": "plain",
+              "current": "About"
+            },
+            {
+              "id": "site.footer.nav_how_it_works",
+              "label": "Footer link — How it works",
+              "type": "plain",
+              "current": "How it works"
+            },
+            {
+              "id": "site.footer.nav_safety",
+              "label": "Footer link — Safety",
+              "type": "plain",
+              "current": "Safety"
+            },
+            {
+              "id": "site.footer.nav_guidelines",
+              "label": "Footer link — Guidelines",
+              "type": "plain",
+              "current": "Guidelines"
+            }
+          ]
+        },
+        {
+          "name": "Open Graph image (placeholder)",
+          "blurb": "The image that appears when Dabble is shared on social media. The current image is a placeholder generated from the text below.",
+          "fields": [
+            {
+              "id": "site.og.brand",
+              "label": "OG image — wordmark",
+              "type": "plain",
+              "current": "Dabble"
+            },
+            {
+              "id": "site.og.subtitle",
+              "label": "OG image — subtitle",
+              "type": "plain",
+              "current": "Local talent, swapped between Dabblers"
+            },
+            {
+              "id": "site.og.placeholder_note",
+              "label": "OG image — placeholder note",
+              "type": "plain",
+              "current": "Placeholder OG — replace with branded image"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

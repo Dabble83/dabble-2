@@ -46,12 +46,12 @@ function publicLocationLine(
 
 const placeholderTestimonials: { quote: string; footer: string }[] = [
   {
-    quote: "“We are saving a spot here for kind words after real meetups — nothing performative, just honest.”",
-    footer: "Placeholder · testimonials ship with Wave 6",
+    quote: "“We're saving a spot here for kind words after real meetups. Nothing performative, just honest.”",
+    footer: "",
   },
   {
-    quote: "“Dabble keeps the trail calm: short sessions, public first meets, room for beginners.”",
-    footer: "Placeholder · trail-guide tone",
+    quote: "“Dabble keeps the swap grounded: short sessions, public first meets, room for beginners.”",
+    footer: "",
   },
 ];
 
@@ -81,7 +81,7 @@ export default function PublicProfilePage() {
 
       if (response.status === 404) {
         setProfile(null);
-        setError(body.error || "This dabbler could not be found.");
+        setError(body.error || "This Dabbler couldn't be found.");
         setLoading(false);
         return;
       }
@@ -167,7 +167,7 @@ export default function PublicProfilePage() {
   }, [profile?.id]);
 
   const fallback = fallbackProfiles[username];
-  const displayName = profile?.display_name || fallback?.name || "Neighbor";
+  const displayName = profile?.display_name || fallback?.name || "Dabbler";
   const teaches = profile?.skills_offered ?? profile?.skills ?? fallback?.offers ?? [];
   const curious = profile?.skills_curious ?? profile?.interests ?? fallback?.wants ?? [];
   const locationLine = publicLocationLine(profile, fallback?.neighborhood ?? "", viewerIsOwner);
@@ -209,7 +209,7 @@ export default function PublicProfilePage() {
                 </p>
               ) : (
                 <p className="max-w-2xl font-serif text-base leading-relaxed text-[var(--text-secondary)] md:text-lg">
-                  Curious, calm, and glad you stopped by — say what you would like to try together.
+                  Curious, glad you stopped by — say what you&rsquo;d like to try together.
                 </p>
               )}
             </div>
@@ -249,11 +249,11 @@ export default function PublicProfilePage() {
 
         <Card title="Testimonials" titleLevel={2}>
           <p className="mb-6 font-sans text-sm leading-relaxed text-[var(--text-secondary)]">
-            After you swap a session, kind words can land here — for now, placeholders keep the space warm.
+            After you swap a session leave some kind words and advice for others.
           </p>
           <ul className="grid gap-4 md:grid-cols-2">
-            {placeholderTestimonials.map((t) => (
-              <li key={t.footer}>
+            {placeholderTestimonials.map((t, i) => (
+              <li key={i}>
                 <TestimonialCard quote={t.quote} footer={t.footer} />
               </li>
             ))}
@@ -324,7 +324,7 @@ export default function PublicProfilePage() {
           >
             <Card title="Sessions coming soon" titleId="session-sheet-title" titleLevel={2} className="max-w-md">
               <p className="font-serif text-base leading-relaxed text-[var(--text-secondary)]">
-                Proposals and scheduling will arrive in Wave 6. Until then, say hello in person when paths cross, or
+                Proposals and scheduling will arrive. Until then, say hello in person when paths cross, or
                 keep your curiosity in the notes on your profile.
               </p>
               <div className="mt-6">

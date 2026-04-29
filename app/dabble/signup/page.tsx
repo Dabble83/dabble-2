@@ -81,7 +81,7 @@ export default function SignUpPage() {
       return false;
     }
     if (!locationLabel.trim() && (approxLat == null || approxLng == null)) {
-      setMessage("Add a city or neighborhood, or drop an approximate pin.");
+      setMessage("Add a city or area, or drop an approximate pin.");
       return false;
     }
 
@@ -179,7 +179,7 @@ export default function SignUpPage() {
       return;
     }
 
-    setMessage("Account created. Check your email to confirm, then sign in.");
+    setMessage("Account created. Check your inbox to confirm, then sign in.");
     router.push("/dabble/signin");
   };
 
@@ -209,7 +209,7 @@ export default function SignUpPage() {
           <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
             <h1 className="ui-heading text-3xl">You&apos;re in</h1>
             <p className="mt-4 font-serif text-lg leading-relaxed text-[var(--text-secondary)]">
-              You&apos;ve got 3 credits to start — here&apos;s how Dabble works
+              You&apos;ve got 3 starter credits — here&apos;s how Dabble works.
             </p>
             <div className="mt-8 flex flex-col gap-3">
               <Link
@@ -224,7 +224,7 @@ export default function SignUpPage() {
             </div>
             <p className="mt-6 text-center font-sans text-sm text-[var(--text-tertiary)]">
               <Link href="/explore" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
-                Browse Explore
+                Browse Dabblers
               </Link>
             </p>
           </Card>
@@ -255,8 +255,8 @@ export default function SignUpPage() {
               {quizStep === 0
                 ? "Pick anything that sparks you — tap to add or remove."
                 : quizStep === 1
-                  ? "What could you share with a neighbor in a short, friendly session?"
-                  : "Rough area is enough for the map; exact address stays off your public profile until you choose."}
+                  ? "What can you share with another Dabbler in a short, friendly session?"
+                  : "A rough area is enough for the map; your exact address stays off your public profile until you choose otherwise."}
             </p>
 
             {quizStep <= 1 ? (
@@ -354,13 +354,13 @@ export default function SignUpPage() {
     <AuthShell>
       <div className="w-full max-w-md">
         <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
-          Join as a neighbor, not a user ID.
+          Join as a Dabbler, not a user ID.
         </p>
         <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
           <div className="mb-6 border-b border-[var(--border)] pb-6">
             <h1 className="ui-heading text-3xl">Create your space</h1>
             <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
-              Then a quick three-step trail map — curiosity, teaching, and where you roam.
+              Then a quick three-step trail map — what you&rsquo;re curious about, what you can teach, and where you&rsquo;re based.
             </p>
           </div>
           {loading ? (
@@ -370,7 +370,7 @@ export default function SignUpPage() {
             <label className="block space-y-2">
               <span className="ui-label">Display name</span>
               <Input
-                placeholder="How neighbors will know you"
+                placeholder="How other Dabblers will know you"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 required

@@ -11,7 +11,8 @@
     "preflight": "npm run check-env && npm run lint",
     "ready": "npm run check-env && npm run lint && npm run build",
     "cursor:send": "node scripts/cursor-send.mjs",
-    "cursor:send:dry": "node scripts/cursor-send.mjs --dry-run"
+    "cursor:send:dry": "node scripts/cursor-send.mjs --dry-run",
+    "content:export": "node scripts/content-export.mjs"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
@@ -28,6 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "axe-core": "^4.11.3",
+    "docx": "^9.6.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
