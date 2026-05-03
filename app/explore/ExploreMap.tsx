@@ -97,6 +97,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   const [loadError, setLoadError] = useState<"load_failed" | null>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
 
   const loader = useMemo(() => {
     if (!apiKey) return null;
@@ -123,6 +124,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   useEffect(() => {
     if (!apiKey || !loader) return;
     const mapLoader = loader;
+    const resolvedMapId = mapId || undefined;
 
     let cancelled = false;
 
@@ -132,7 +134,6 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         await mapLoader.load();
         if (cancelled || !containerRef.current) return;
 
-        // AdvancedMarkerElement requires the "marker" library and a mapId
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as any;
 
@@ -147,7 +148,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
             fullscreenControl: false,
             styles: MAP_STYLE,
             backgroundColor: MAP_BG,
-            mapId: "dabble-explore",
+            ...(resolvedMapId ? { mapId: resolvedMapId } : {}),
           });
         }
 
@@ -172,21 +173,26 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         for (const p of withCoords) {
           const enriched = enrichDiscoverableProfile(p);
           const fill = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
-          const marker = new AdvancedMarkerElement({
-            map,
-            position: { lat: p.lat, lng: p.lng },
-            title: p.display_name || p.username,
-            content: createMarkerElement(fill),
-          });
-          marker.addListener("click", () => {
-            openInfo(map, marker, p);
-          });
-          markersRef.current.push(marker);
+          try {
+            const marker = new AdvancedMarkerElement({
+              map,
+              position: { lat: p.lat, lng: p.lng },
+              title: p.display_name || p.username,
+              content: createMarkerElement(fill),
+            });
+            marker.addListener("click", () => {
+              openInfo(map, marker, p);
+            });
+            markersRef.current.push(marker);
+          } catch (markerErr) {
+            console.error("[ExploreMap] marker failed:", markerErr);
+          }
           bounds.extend({ lat: p.lat, lng: p.lng });
         }
 
         map.fitBounds(bounds, 48);
-      } catch {
+      } catch (err) {
+        console.error("[ExploreMap] load failed:", err);
         if (!cancelled) setLoadError("load_failed");
       }
     }
@@ -196,7 +202,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     return () => {
       cancelled = true;
     };
-  }, [apiKey, loader, openInfo, profiles]);
+  }, [apiKey, mapId, loader, openInfo, profiles]);
 
   if (!apiKey) {
     return (
