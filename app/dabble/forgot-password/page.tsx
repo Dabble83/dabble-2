@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -50,6 +51,14 @@ export default function ForgotPasswordPage() {
   return (
     <AuthShell>
       <div className="w-full max-w-md">
+        <div className="relative mb-5 h-28 w-full overflow-hidden rounded-2xl">
+          <Image
+            src="/images/try.png"
+            alt="Two people sharing skills outdoors"
+            fill
+            className="object-cover object-top"
+          />
+        </div>
         <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
           It happens. We&rsquo;ll send you a link to choose a new password.
         </p>

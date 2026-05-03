@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -38,13 +39,23 @@ const spendRows: { shape: string; credits: string }[] = [
 export default function HowItWorksPage() {
   return (
     <div className="ui-container py-16 md:py-20">
-      <header className="max-w-3xl space-y-4 pb-6">
-        <p className="ui-label">Credits</p>
-        <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">How Dabble works</h1>
-        <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-          A short trail map for first-time Dabblers. What a credit is, how it moves, and how the
-          swap deepens what you already know.
-        </p>
+      <header className="flex flex-col gap-6 pb-6 sm:flex-row sm:items-start">
+        <div className="max-w-3xl flex-1 space-y-4">
+          <p className="ui-label">Credits</p>
+          <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">How Dabble works</h1>
+          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+            A short trail map for first-time Dabblers. What a credit is, how it moves, and how the
+            swap deepens what you already know.
+          </p>
+        </div>
+        <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-2xl sm:h-44 sm:w-44" aria-hidden>
+          <Image
+            src="/images/meet.png"
+            alt="Two people meeting to share a skill"
+            fill
+            className="object-cover"
+          />
+        </div>
       </header>
 
       <div className="space-y-0">

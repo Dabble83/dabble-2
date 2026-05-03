@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AuthShell } from "@/app/components/AuthShell";
+import { TermsModal } from "@/app/components/TermsModal";
 import { Button, Card, Input } from "@/app/components/ui";
 import { getSupabaseClient } from "@/src/lib/supabaseClient";
 import { useAuthSession } from "@/src/hooks/useAuthSession";
@@ -25,6 +27,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const [curious, setCurious] = useState<Set<string>>(() => new Set());
   const [teach, setTeach] = useState<Set<string>>(() => new Set());
@@ -206,6 +210,14 @@ export default function SignUpPage() {
     return (
       <AuthShell>
         <div className="w-full max-w-md">
+          <div className="relative mb-6 h-28 w-full overflow-hidden rounded-2xl">
+            <Image
+              src="/images/try.png"
+              alt="Two people sharing skills outdoors"
+              fill
+              className="object-cover"
+            />
+          </div>
           <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
             <h1 className="ui-heading text-3xl">You&apos;re in</h1>
             <p className="mt-4 font-serif text-lg leading-relaxed text-[var(--text-secondary)]">
@@ -237,6 +249,14 @@ export default function SignUpPage() {
     return (
       <AuthShell>
         <div className="w-full max-w-lg">
+          <div className="relative mb-6 h-24 w-full overflow-hidden rounded-2xl">
+            <Image
+              src="/images/try.png"
+              alt="Two people sharing skills outdoors"
+              fill
+              className="object-cover"
+            />
+          </div>
           <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
             <div className="mb-2 flex items-start justify-between gap-4">
               <div>
@@ -352,64 +372,90 @@ export default function SignUpPage() {
 
   return (
     <AuthShell>
-      <div className="w-full max-w-md">
-        <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
-          Join as a Dabbler, not a user ID.
-        </p>
-        <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
-          <div className="mb-6 border-b border-[var(--border)] pb-6">
-            <h1 className="ui-heading text-3xl">Create your space</h1>
-            <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
-              Then a quick three-step trail map — what you&rsquo;re curious about, what you can teach, and where you&rsquo;re based.
-            </p>
+      <TermsModal termsAccepted={termsAccepted} onAccept={() => setTermsAccepted(true)} />
+      <div className="flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
+        <div className="lg:flex-1">
+          <div className="relative h-40 w-full overflow-hidden rounded-2xl lg:hidden">
+            <Image
+              src="/images/try.png"
+              alt="Two people sharing skills outdoors"
+              fill
+              className="object-cover"
+            />
           </div>
-          {loading ? (
-            <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">Checking session...</p>
-          ) : null}
-          <form className="space-y-5" onSubmit={onSubmit}>
-            <label className="block space-y-2">
-              <span className="ui-label">Display name</span>
-              <Input
-                placeholder="How other Dabblers will know you"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                required
-              />
-            </label>
-            <label className="block space-y-2">
-              <span className="ui-label">Email</span>
-              <Input
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </label>
-            <label className="block space-y-2">
-              <span className="ui-label">Password</span>
-              <Input
-                type="password"
-                placeholder="Create a password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </label>
-            <Button type="submit" className="w-full py-3 text-base" disabled={submitting}>
-              {submitting ? "Creating..." : "Create account"}
-            </Button>
-            {message ? (
-              <p className="font-sans text-sm text-[var(--text-secondary)]">{message}</p>
-            ) : null}
-          </form>
-          <p className="mt-6 text-center font-sans text-sm text-[var(--text-secondary)]">
-            Already have an account?{" "}
-            <Link href="/dabble/signin" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
-              Sign in
-            </Link>
+          <div className="relative hidden aspect-[3/4] overflow-hidden rounded-3xl lg:block">
+            <Image
+              src="/images/try.png"
+              alt="Two people sharing skills outdoors"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+        <div className="w-full max-w-md lg:flex-shrink-0">
+          <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
+            Join as a Dabbler, not a user ID.
           </p>
-        </Card>
+          <Card className="border-[var(--border)] shadow-[0_28px_80px_-40px_rgba(42,61,44,0.25)]">
+            <div className="mb-6 border-b border-[var(--border)] pb-6">
+              <h1 className="ui-heading text-3xl">Create your space</h1>
+              <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
+                Then a quick three-step trail map — what you&rsquo;re curious about, what you can teach, and where you&rsquo;re based.
+              </p>
+            </div>
+            {loading ? (
+              <p className="mb-4 font-sans text-sm text-[var(--text-secondary)]">Checking session...</p>
+            ) : null}
+            <form className="space-y-5" onSubmit={onSubmit}>
+              <label className="block space-y-2">
+                <span className="ui-label">Display name</span>
+                <Input
+                  placeholder="How other Dabblers will know you"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  required
+                />
+              </label>
+              <label className="block space-y-2">
+                <span className="ui-label">Email</span>
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+              <label className="block space-y-2">
+                <span className="ui-label">Password</span>
+                <Input
+                  type="password"
+                  placeholder="Create a password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </label>
+              <Button type="submit" className="w-full py-3 text-base" disabled={submitting || !termsAccepted}>
+                {submitting ? "Creating..." : "Create account"}
+              </Button>
+              {!termsAccepted ? (
+                <p className="font-sans text-xs text-[var(--text-tertiary)]">
+                  You must agree to the Terms of Use before creating an account.
+                </p>
+              ) : null}
+              {message ? (
+                <p className="font-sans text-sm text-[var(--text-secondary)]">{message}</p>
+              ) : null}
+            </form>
+            <p className="mt-6 text-center font-sans text-sm text-[var(--text-secondary)]">
+              Already have an account?{" "}
+              <Link href="/dabble/signin" className="font-medium text-[var(--brand-text)] underline-offset-4 hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </Card>
+        </div>
       </div>
     </AuthShell>
   );

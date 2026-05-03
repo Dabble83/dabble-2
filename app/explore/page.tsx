@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import {
 } from "@/src/lib/exploreCategories";
 import type { DiscoverableProfile, ExploreCategoryId } from "@/src/lib/exploreTypes";
 import { isMapsEnabled } from "@/lib/flags";
+import { getSupabaseClient } from "@/src/lib/supabaseClient";
 
 const MapAdapterShell = dynamic(
   () => import("@/app/explore/MapAdapterShell").then((m) => ({ default: m.MapAdapterShell })),
@@ -396,6 +398,46 @@ function ExplorePageInner() {
     };
   }, [fetchKey, queryKey]);
 
+  // Real-time updates: merge new/updated discoverable profiles without a full page refresh
+  useEffect(() => {
+    const supabase = getSupabaseClient();
+    if (!supabase) return;
+
+    const channel = supabase
+      .channel("explore-profiles-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "profiles" },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            const newProfile = payload.new as DiscoverableProfile;
+            if (!newProfile.is_discoverable) return;
+            setProfiles((prev) => {
+              if (prev.some((p) => p.id === newProfile.id)) return prev;
+              return [...prev, newProfile];
+            });
+          } else if (payload.eventType === "UPDATE") {
+            const updated = payload.new as DiscoverableProfile;
+            setProfiles((prev) => {
+              if (!updated.is_discoverable) {
+                return prev.filter((p) => p.id !== updated.id);
+              }
+              const exists = prev.some((p) => p.id === updated.id);
+              if (exists) return prev.map((p) => (p.id === updated.id ? updated : p));
+              return [...prev, updated];
+            });
+          } else if (payload.eventType === "DELETE") {
+            setProfiles((prev) => prev.filter((p) => p.id !== (payload.old as { id: string }).id));
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, []);
+
   const neighborhoods = Array.from(
     new Set(
       profiles
@@ -636,13 +678,23 @@ function ExplorePageInner() {
   return (
     <div className="py-16 md:py-20">
       <section className="ui-container space-y-12">
-        <header className="max-w-3xl space-y-4">
-          <p className="ui-label">Explore</p>
-          <h1 className="ui-heading text-4xl md:text-5xl">Find Dabblers near your</h1>
-          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-            Browse at your own pace. Each profile card shows you what a Dabbler can share, what they&apos;re curious
-            to learn, and where they are in the area.
-          </p>
+        <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
+          <div className="flex-1 space-y-4">
+            <p className="ui-label">Explore</p>
+            <h1 className="ui-heading text-4xl md:text-5xl">Find Dabblers near your</h1>
+            <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              Browse at your own pace. Each profile card shows you what a Dabbler can share, what they&apos;re curious
+              to learn, and where they are in the area.
+            </p>
+          </div>
+          <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-2xl sm:h-44 sm:w-44" aria-hidden>
+            <Image
+              src="/images/explore.png"
+              alt="Two people exploring their neighborhood together"
+              fill
+              className="object-cover"
+            />
+          </div>
         </header>
 
         <MapAdapterShell

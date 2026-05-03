@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { HeroIllustration } from "@/app/components/HeroIllustration";
 
 export const metadata: Metadata = {
   description:
@@ -42,8 +42,15 @@ export default function Home() {
             </p>
           </div>
           <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-[26rem] rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[0_24px_60px_-24px_rgba(42,61,44,0.12)]">
-              <HeroIllustration />
+            <div className="relative w-full max-w-[26rem] overflow-hidden rounded-3xl border border-[var(--border)] shadow-[0_24px_60px_-24px_rgba(42,61,44,0.18)]">
+              <Image
+                src="/images/try.png"
+                alt="Two people sharing skills outdoors"
+                width={416}
+                height={520}
+                priority
+                className="h-auto w-full object-cover"
+              />
             </div>
           </div>
         </div>

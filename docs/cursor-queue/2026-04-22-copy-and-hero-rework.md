@@ -1,9 +1,8 @@
 # Cursor queue — Copy cleanup + hero rework
 
 **Created:** 2026-04-22
-**Goal:** Strip internal design/vibe language from public-facing copy, set new
-hero taglines on the homepage and `/explore`, and replace the line-art hero
-illustration on the homepage with a real image.
+**Updated:** 2026-04-23 — Prompt 1 narrowed to just the H1 + metadata tagline swap (other copy kept as-is). Prompt 4 rewritten around a new hero concept: a hand-drawn pencil illustration of two people swapping skills (fly fishing for drywall). Step 0 added to spell out the image-generation workflow that must run before Prompt 4.
+**Goal:** (1) Swap the landing H1 + metadata to `"Try something new, wherever you are."`. (2) Replace the line-art `HeroIllustration` SVG with a real pencil drawing that conveys a concrete skill exchange. (3) Leave the rest of the copy sweep (Prompts 2–3, 5) for a later pass unless you want to run them too.
 
 Run these prompts in order. Each one is scoped to a single concern so you can
 review and merge (or revert) independently. After all five, run Prompt 6 to
@@ -11,27 +10,75 @@ verify nothing regressed.
 
 ---
 
-## Prompt 1 — Homepage hero copy
+## Step 0 — Generate the hero PNG (human-in-the-loop, NOT a Cursor prompt)
 
-> **Task:** Rework the hero on `app/page.tsx` so the first thing a visitor sees is the tagline **"Try something new, wherever you are."** Strip internal design/vibe language from the copy.
+Prompt 4 replaces the current SVG with a `next/image` tag pointing to a real PNG on disk. That PNG does not yet exist — you need to generate it first using an AI image tool (Midjourney, DALL·E 3, Sora, Flux, Gemini Imagen, Ideogram, etc.) or commission it from an illustrator. Cursor cannot generate images — this step is on you.
+
+### Primary generation prompt (paste into your image tool)
+
+> A hand-drawn graphite pencil illustration on warm off-white paper, showing a friendly, informal skill exchange between two adults standing outdoors on a calm afternoon. Two figures face each other mid-gesture, making soft eye contact, trading tools in the middle of the frame.
 >
-> **Specific changes:**
-> 1. Replace the H1 (currently `"Learn something new from the block next door"`) with `"Try something new, wherever you are."`
-> 2. Delete the `ui-label` line `"A gentle place to learn and share"` — it reads like a design note.
-> 3. Rewrite the intro paragraph under the H1 so it's one plain sentence about what Dabble does — no metaphors, no "calm/gentle/editorial" language. Draft: *"Dabble connects people nearby who want to teach what they love with people who are curious to try something new — bread, bikes, music, repair, and everything in between."*
-> 4. Replace the paragraph starting `"No hustle, no leaderboard — just clear profiles, calm layouts..."` with a plain benefit line — e.g. *"Clear profiles, small credits, no hustle."* Drop `"calm layouts"` specifically; that's a design descriptor, not product copy.
-> 5. Delete the italic caption under the illustration (`"Illustration: homes, paths, and a small exchange..."`). That's literal design criticism in the UI.
-> 6. Keep both CTAs (`Start your profile`, `Browse neighbors`) — but change `"Browse neighbors"` to `"Find Dabblers close by"` to match the new `/explore` tagline.
+> **On the left:** a person in jeans and a paint-flecked work shirt, hair tied back, sleeves rolled, mid-step forward. They are handing a drywall taping knife (a wide flat trowel with a wooden handle) and a small square patch of drywall to the person opposite. A mud pan sits near their feet.
+>
+> **On the right:** a person in a vest and rolled-cuff pants, a small tackle box at their feet, holding out a fly-fishing rod in exchange. The rod is long and tapered with visible line guides, a fly reel on the handle, and a tuft of feathered dry fly dangling from the leader at the tip.
+>
+> Both figures have warm, natural body language — relaxed shoulders, slight smiles, present in the moment. They are not posed; they are mid-exchange.
+>
+> **Medium and style:** pure graphite pencil on textured ivory paper. Loose, confident sketch lines. Visible pencil strokes and soft cross-hatching for shading on clothes and tools. Slight imperfection in the linework — the feel of a real sketchbook drawing, not a digital vector. No color whatsoever — only graphite tones from near-white to soft charcoal. The warmth comes from the paper (ivory, around `#f5ede0`), not from hue. Editorial-magazine illustration style — think The New Yorker, Orion, The Atlantic, New York Review of Books. Warm, human, un-slick.
+>
+> **Composition:** both figures occupy the middle two-thirds of the frame horizontally, with a little breathing room above and below. Background is very minimal — a few loose pencil lines suggesting grass or a wooden porch step underfoot, maybe a faint horizontal line suggesting a river or a wall behind them, deliberately left unfinished like a sketch. No detailed landscape, no buildings, no text.
+>
+> **Format:** 4:3 landscape aspect ratio, at least 1600 × 1200 pixels, crisp high-resolution linework suitable for a website hero.
+>
+> **Avoid:** color, ink outlines, digital vector look, flat cel-shading, cartoon style, anime, 3D render, photographic realism, stock-illustration look, text, writing, signatures, watermarks, logos, harsh black outlines.
+
+### Tool-specific appendages
+
+- **Midjourney v6/v7:** append ` --ar 4:3 --stylize 250 --no color text watermark` and run with `--style raw` if the default adds too much flair.
+- **DALL·E 3 / ChatGPT:** set aspect ratio to **Landscape**, paste the prompt unchanged. Ask for 2–3 variants in one request to compare.
+- **Flux / Ideogram:** paste as-is; both respect detailed natural-language prompts. Flux Dev 1.1 is currently the strongest at pencil-texture realism.
+- **Sora image mode / Gemini Imagen 3:** paste as-is; select 4:3 output if the UI offers it.
+
+### Variations to try if the first pass doesn't land
+
+If the primary prompt produces something too illustrative, too children's-book, or too posed, iterate with these:
+
+- **Tighter crop on the exchange:** swap the composition line to *"Tight half-body composition, cropped at the waist — both pairs of hands clearly visible mid-exchange, the trowel and drywall patch passing in one direction, the fly rod passing in the other, a slight overlap where the tools cross."*
+- **More environmental detail:** swap the composition line to *"The two figures stand at the edge of a slow river — water suggested by a few horizontal pencil strokes behind them, a half-sketched wooden fence or drying rack nearby."*
+- **Softer, looser linework:** append *"even looser, more gestural lines, like a quick life-drawing study — some lines doubled or traced, the mark-making clearly visible."*
+- **Sketchbook-page feel:** append *"the edges of the drawing fade into the paper grain — no clean rectangular border, just a naturally-ending sketch."*
+
+### Post-generation steps
+
+1. Pick the variant you want and download the highest-resolution PNG available.
+2. Save it to `public/design/concepts/Dabble-hero-exchange.png`. (Use this exact filename — Prompt 4 expects it.)
+3. Keep the original AI-tool output file separately for reference / future iteration.
+4. Only after the PNG is saved and you've spot-checked it at ~26rem preview width, run Prompt 4.
+
+---
+
+## Prompt 1 — Homepage tagline swap (narrow)
+
+> **Task:** Swap the landing H1 from `"Learn something new from the block next door"` to `"Try something new, wherever you are."`. Update the page's `metadata.description` so the first clause reflects the new tagline. **Do not touch any other copy on the landing page** — no changes to the `ui-label`, no rewrites of the intro paragraph or the benefit line, no CTA renames, no illustration-caption deletion. A broader copy sweep is intentionally queued separately.
+>
+> **Specific changes in `app/page.tsx`:**
+> 1. Replace the H1 text (currently `"Learn something new from the block next door"`, around line 24) with `"Try something new, wherever you are."` — keep the exact same JSX structure and `className` attributes on the `<h1>`.
+> 2. In the `metadata` export at the top of the file (around line 5–8), replace the description string. Currently it begins `"Learn something new from the block next door —"`. Change that opening clause so it matches the new H1, e.g.:
+>    ```ts
+>    description:
+>      "Try something new, wherever you are — Dabble connects people who want to teach what they love with people who are curious. Clear profiles, small credits, calm meetups.",
+>    ```
+>    Keep the rest of the sentence unchanged from the current description (same "Dabble connects / Clear profiles / calm meetups" wording). Only the opening clause moves.
+> 3. Leave every other line in `app/page.tsx` untouched.
 >
 > **Acceptance:**
 > - `npm run lint` passes
 > - `npm run build` passes
-> - The word "calm" does not appear in `app/page.tsx`
-> - The word "gentle" does not appear in `app/page.tsx`
-> - No illustration caption remains
-> - H1 text matches exactly: `Try something new, wherever you are.`
+> - `grep -n "Learn something new from the block next door" app/page.tsx` returns no hits
+> - `grep -n "Try something new, wherever you are" app/page.tsx` returns exactly two hits (the H1 and the metadata.description)
+> - Diff is under 10 lines total
 >
-> **Guardrails:** per AGENTS.md, small PR, verification commands run, no secrets in NEXT_PUBLIC_*.
+> **Guardrails:** single-concern PR, per AGENTS.md. No secrets in NEXT_PUBLIC_*. Do not run any codemods or formatters that would touch other files.
 
 ---
 
@@ -89,47 +136,63 @@ verify nothing regressed.
 
 ---
 
-## Prompt 4 — Replace homepage hero illustration with a real image
+## Prompt 4 — Replace homepage hero illustration with the pencil drawing
 
-> **Task:** Swap the inline SVG line-art `HeroIllustration` on the homepage for a proper image. Use the existing concept at `public/design/concepts/Dabble-Landing-Concept.png` served via `next/image`, optimized.
+> **Prerequisite:** Step 0 of this queue must be complete. The PNG must already exist at `public/design/concepts/Dabble-hero-exchange.png` — if it doesn't, stop and generate the image first. Do not fall back to an older concept file.
+>
+> **Task:** Swap the inline SVG line-art `HeroIllustration` on the homepage for the new pencil-drawn skill-exchange image, served through `next/image` and pre-compressed to WebP.
 >
 > **Specific changes:**
-> 1. In `app/page.tsx`: remove the `import { HeroIllustration } from "@/app/components/HeroIllustration"` line and replace the `<HeroIllustration />` usage with a `next/image` `<Image>` tag:
+> 1. **Verify the source file exists.** Before editing any code:
+>    ```
+>    ls -lh public/design/concepts/Dabble-hero-exchange.png
+>    ```
+>    If the file is missing or is a zero-byte placeholder, abort this prompt and surface the error. Do not swap in a substitute image.
+> 2. **Read the PNG's intrinsic dimensions** so the `<Image>` width/height are correct (Next.js requires exact ratios for layout stability). Install `sharp` as a dev dep if not already present (`npm i -D sharp`), then:
+>    ```
+>    node -e "require('sharp')('public/design/concepts/Dabble-hero-exchange.png').metadata().then(m => console.log(m.width, m.height))"
+>    ```
+>    Record the two numbers. They feed into step 4.
+> 3. **Pre-compress the PNG to WebP.** Pencil drawings compress very well at high quality; aim for under 300 KB:
+>    ```
+>    npx sharp-cli -i public/design/concepts/Dabble-hero-exchange.png \
+>      -o public/design/concepts/Dabble-hero-exchange.webp \
+>      --resize 1600 \
+>      --webp-quality 85
+>    ```
+>    If the resulting file is over 500 KB, retry with `--webp-quality 78`. Commit both the PNG (master) and the WebP (served) so future passes can re-derive the WebP if quality settings change.
+> 4. **In `app/page.tsx`:** remove the `import { HeroIllustration } from "@/app/components/HeroIllustration"` line and replace the `<HeroIllustration />` usage with a `next/image` `<Image>` tag using the WebP as `src`:
 >    ```tsx
 >    import Image from "next/image";
 >    ...
 >    <Image
->      src="/design/concepts/Dabble-Landing-Concept.png"
->      alt="Two people sharing a skill outdoors, illustrated."
->      width={1200}
->      height={900}
+>      src="/design/concepts/Dabble-hero-exchange.webp"
+>      alt="Pencil drawing of two people swapping skills — one handing over a drywall trowel, the other offering a fly-fishing rod."
+>      width={/* intrinsic px from step 2 */}
+>      height={/* intrinsic px from step 2 */}
 >      priority
 >      sizes="(min-width: 1024px) 26rem, 100vw"
 >      className="h-auto w-full rounded-2xl"
 >    />
 >    ```
->    Pick the actual intrinsic `width` and `height` from the PNG — use `node -e "const s = require('sharp'); s('public/design/concepts/Dabble-Landing-Concept.png').metadata().then(m => console.log(m.width, m.height))"` (install sharp as a dev dep if not present).
-> 2. The landing PNG is ~2.5 MB, which is too heavy. Pre-compress it to WebP at a sensible size:
+>    Use the exact `width` and `height` captured in step 2 (not the resized 1600 — the intrinsic of the source PNG). Next.js computes the layout ratio from these and the `sizes` hint handles responsive selection.
+> 5. **Delete `app/components/HeroIllustration.tsx`** — it's only used on this one page and we're ripping it out. First confirm no other file imports it:
 >    ```
->    npx sharp-cli -i public/design/concepts/Dabble-Landing-Concept.png \
->      -o public/design/concepts/Dabble-Landing-Concept.webp \
->      --resize 1600 \
->      --webp-quality 82
+>    grep -rn "HeroIllustration" app/ lib/ src/
 >    ```
->    Then update the `src` to the `.webp` path. Keep the PNG in the repo for now (it may be referenced elsewhere) but switch the hero to the WebP.
-> 3. Delete `app/components/HeroIllustration.tsx` — it's only used on this one page and we're ripping it out.
-> 4. Confirm no other file imports `HeroIllustration` before deletion (`grep -r HeroIllustration app/` — should return only the page.tsx import we're removing).
-> 5. Update the wrapping card: keep the existing rounded outer container but remove the illustration caption (already planned in Prompt 1; if that prompt ran first, this step is a no-op).
+>    Only the import line in `app/page.tsx` (being removed) should match. If anything else does, stop and surface it rather than deleting.
+> 6. Keep the wrapping `<div className="w-full max-w-[26rem] rounded-3xl border …">` card exactly as-is. The existing italic caption paragraph below the illustration (`"Illustration: homes, paths, and a small exchange…"`) is out of scope for this prompt — leave it for now; it'll be handled by a later copy-sweep prompt.
 >
 > **Acceptance:**
 > - `npm run lint` passes
 > - `npm run build` passes
-> - The homepage renders an actual image (not an SVG line drawing) above the fold on `/`
-> - The WebP source is under 500 KB
-> - No `HeroIllustration` import remains anywhere
-> - `next build` reports no warnings about the image (missing dimensions, etc.)
+> - The homepage renders the pencil drawing (not the SVG line drawing) above the fold on `/`
+> - The WebP served to browsers is under 500 KB (hard cap; under 300 KB preferred)
+> - No `HeroIllustration` import remains anywhere in the repo
+> - `next build` reports no warnings about the image — in particular no "missing width/height" or "aspect ratio mismatch" warnings
+> - Lighthouse performance on `/` desktop does not regress by more than 3 points vs. pre-change
 >
-> **Guardrails:** don't add unnecessary npm deps beyond `sharp` (and only if needed for compression). Don't touch `next.config.ts` image domains — the image is local.
+> **Guardrails:** don't add npm deps beyond `sharp` and `sharp-cli`. Don't modify `next.config.ts` — the image is a local asset. Don't touch the `<HeroIllustration>`'s parent card layout; changing card dimensions is a separate concern. Don't inline the image as a base64 data URI; keep it a real file.
 
 ---
 

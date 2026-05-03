@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import Link from "next/link";
 
@@ -59,12 +60,22 @@ function Section({ id, title, children }: { id: string; title: string; children:
 export default function GuidelinesPage() {
   return (
     <div className="ui-container py-16 md:py-20">
-      <header className="max-w-3xl space-y-4 pb-4">
-        <p className="ui-label">Community</p>
-        <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">Community guidelines</h1>
-        <p className="font-serif text-lg italic leading-relaxed text-[var(--text-secondary)] md:text-xl">
-          Dabble works because it is a community of trust and honesty and with room for beginners.
-        </p>
+      <header className="flex flex-col gap-6 pb-4 sm:flex-row sm:items-start">
+        <div className="max-w-3xl flex-1 space-y-4">
+          <p className="ui-label">Community</p>
+          <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl">Community guidelines</h1>
+          <p className="font-serif text-lg italic leading-relaxed text-[var(--text-secondary)] md:text-xl">
+            Dabble works because it is a community of trust and honesty and with room for beginners.
+          </p>
+        </div>
+        <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-2xl sm:h-44 sm:w-44" aria-hidden>
+          <Image
+            src="/images/share.png"
+            alt="Two people sharing knowledge in the community"
+            fill
+            className="object-cover"
+          />
+        </div>
       </header>
 
       <div className="space-y-0">

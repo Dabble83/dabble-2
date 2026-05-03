@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -22,24 +23,34 @@ export default function AboutPage() {
   return (
     <div className="py-16 md:py-20">
       <article className="ui-container max-w-3xl space-y-12">
-        <header className="space-y-5">
-          <p className="ui-label">About Dabble</p>
-          <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl lg:text-[2.75rem]">
-            Wherever you are
-          </h1>
-          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-            — a home block, a trailhead parking lot, or a new city for the weekend — the question
-            stays the same: who nearby will trade a little honest curiosity?
-          </p>
-          <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-            <span className="font-semibold text-[var(--text-primary)]">Mission.</span> Make
-            low-stakes, in-person skill swaps —{" "}
-            <span className="font-semibold text-[var(--text-primary)]">Dabblers first</span>, with
-            room for{" "}
-            <span className="font-semibold text-[var(--text-primary)]">traveling serendipity</span>{" "}
-            when a moment lines up. Not a gig marketplace, not a course catalog — a fun path from
-            &ldquo;I wonder how that works&rdquo; to &ldquo;we tried it together.&rdquo;
-          </p>
+        <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
+          <div className="flex-1 space-y-5">
+            <p className="ui-label">About Dabble</p>
+            <h1 className="ui-heading text-3xl text-[var(--text-primary)] md:text-4xl lg:text-[2.75rem]">
+              Wherever you are
+            </h1>
+            <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              — a home block, a trailhead parking lot, or a new city for the weekend — the question
+              stays the same: who nearby will trade a little honest curiosity?
+            </p>
+            <p className="font-serif text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              <span className="font-semibold text-[var(--text-primary)]">Mission.</span> Make
+              low-stakes, in-person skill swaps —{" "}
+              <span className="font-semibold text-[var(--text-primary)]">Dabblers first</span>, with
+              room for{" "}
+              <span className="font-semibold text-[var(--text-primary)]">traveling serendipity</span>{" "}
+              when a moment lines up. Not a gig marketplace, not a course catalog — a fun path from
+              &ldquo;I wonder how that works&rdquo; to &ldquo;we tried it together.&rdquo;
+            </p>
+          </div>
+          <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-2xl sm:h-44 sm:w-44" aria-hidden>
+            <Image
+              src="/images/meet.png"
+              alt="Two people meeting to share a skill"
+              fill
+              className="object-cover"
+            />
+          </div>
         </header>
 
         <section aria-labelledby="portable-heading" className="space-y-4 border-t border-[var(--border)] pt-10">

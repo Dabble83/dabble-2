@@ -71,15 +71,16 @@ function buildInfoContent(p: DiscoverableProfile): HTMLElement {
   return wrap;
 }
 
-function markerIconFor(fill: string): google.maps.Symbol {
-  return {
-    path: google.maps.SymbolPath.CIRCLE,
-    scale: 9,
-    fillColor: fill,
-    fillOpacity: 1,
-    strokeColor: "#fffcf7",
-    strokeWeight: 2,
-  };
+function createMarkerElement(fill: string): HTMLElement {
+  const el = document.createElement("div");
+  el.style.width = "18px";
+  el.style.height = "18px";
+  el.style.borderRadius = "50%";
+  el.style.backgroundColor = fill;
+  el.style.border = "2px solid #fffcf7";
+  el.style.boxShadow = "0 2px 8px rgba(0,0,0,0.28)";
+  el.style.cursor = "pointer";
+  return el;
 }
 
 type ExploreMapProps = {
@@ -90,7 +91,8 @@ type ExploreMapProps = {
 export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
-  const markersRef = useRef<google.maps.Marker[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const markersRef = useRef<any[]>([]);
   const infoRef = useRef<google.maps.InfoWindow | null>(null);
   const [loadError, setLoadError] = useState<"load_failed" | null>(null);
 
@@ -101,12 +103,13 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     return new Loader({
       apiKey,
       version: "weekly",
-      libraries: ["maps"],
+      libraries: ["maps", "marker"],
     });
   }, [apiKey]);
 
   const openInfo = useCallback(
-    (map: google.maps.Map, marker: google.maps.Marker, p: DiscoverableProfile) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (map: google.maps.Map, marker: any, p: DiscoverableProfile) => {
       onSelectProfile?.(p);
       if (!infoRef.current) {
         infoRef.current = new google.maps.InfoWindow();
@@ -129,6 +132,10 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         await mapLoader.load();
         if (cancelled || !containerRef.current) return;
 
+        // AdvancedMarkerElement requires the "marker" library and a mapId
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as any;
+
         if (!mapRef.current) {
           mapRef.current = new google.maps.Map(containerRef.current, {
             center: US_CENTER,
@@ -140,13 +147,14 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
             fullscreenControl: false,
             styles: MAP_STYLE,
             backgroundColor: MAP_BG,
+            mapId: "dabble-explore",
           });
         }
 
         const map = mapRef.current;
 
         for (const m of markersRef.current) {
-          m.setMap(null);
+          m.map = null;
         }
         markersRef.current = [];
 
@@ -164,11 +172,11 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         for (const p of withCoords) {
           const enriched = enrichDiscoverableProfile(p);
           const fill = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
-          const marker = new google.maps.Marker({
+          const marker = new AdvancedMarkerElement({
             map,
             position: { lat: p.lat, lng: p.lng },
             title: p.display_name || p.username,
-            icon: markerIconFor(fill),
+            content: createMarkerElement(fill),
           });
           marker.addListener("click", () => {
             openInfo(map, marker, p);

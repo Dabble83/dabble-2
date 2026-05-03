@@ -50,3 +50,4 @@ docs/cursor-queue/.cursor-queue.log
 !/content-export/edits-inbox/.gitkeep
 next.config.tmp.mjs
 ~$*.docx
+.env*.local

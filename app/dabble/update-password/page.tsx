@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -90,6 +91,14 @@ export default function UpdatePasswordPage() {
   return (
     <AuthShell>
       <div className="w-full max-w-md">
+        <div className="relative mb-5 h-28 w-full overflow-hidden rounded-2xl">
+          <Image
+            src="/images/try.png"
+            alt="Two people sharing skills outdoors"
+            fill
+            className="object-cover object-top"
+          />
+        </div>
         <p className="mb-6 text-center font-serif text-lg italic text-[var(--text-secondary)]">
           Almost there — pick a new password you haven&rsquo;t used elsewhere.
         </p>
