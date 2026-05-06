@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { ReactNode } from "react";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Community Guidelines",
@@ -37,14 +36,6 @@ const creditsBullets = [
   "Keep exchanges honest, fun and mutually beneficial.",
 ];
 
-const reportingHow =
-  "Email safety@dabble.it.com with who was involved, when it happened, and what occurred — stick to facts you are comfortable sharing. In-product reporting will arrive later; email is the path for now.";
-
-const reportingNext =
-  "We triage, may pause or mute accounts while we review, and follow up with the Dabblers involved when it helps.";
-
-const reportingPromise =
-  "During the seed phase we acknowledge substantive reports within 72 hours on business days. Some matters take longer to untangle; if so, we still send a first note inside that window so you are not left guessing.";
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
@@ -116,13 +107,6 @@ export default function GuidelinesPage() {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <p>
-            For the broader safety model&mdash;including tiers and out-of-scope lists&mdash;visit{" "}
-            <Link href="/safety" className="font-semibold text-[var(--brand-text)] underline-offset-4 hover:underline">
-              /safety
-            </Link>
-            .
-          </p>
         </Section>
 
         <Section id="credits" title="Credits integrity">
@@ -133,20 +117,6 @@ export default function GuidelinesPage() {
           </ul>
         </Section>
 
-        <Section id="reporting" title="Reporting">
-          <p>
-            <span className="font-semibold text-[var(--text-primary)]">How. </span>
-            {reportingHow}
-          </p>
-          <p>
-            <span className="font-semibold text-[var(--text-primary)]">What happens next. </span>
-            {reportingNext}
-          </p>
-          <p>
-            <span className="font-semibold text-[var(--text-primary)]">72-hour response promise. </span>
-            {reportingPromise}
-          </p>
-        </Section>
       </div>
     </div>
   );

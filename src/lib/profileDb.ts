@@ -34,7 +34,12 @@ export const DISCOVERABLE_SELECT_MINIMAL =
 
 export function isMissingColumnError(message: string): boolean {
   const normalized = message.toLowerCase();
-  return normalized.includes("column") && normalized.includes("does not exist");
+  // Covers PostgreSQL "column X does not exist" (via pg driver)
+  if (normalized.includes("column") && normalized.includes("does not exist")) return true;
+  // Covers PostgREST PGRST204 "Could not find the 'X' column of 'profiles' in the schema cache"
+  if (normalized.includes("could not find") && normalized.includes("column")) return true;
+  if (normalized.includes("pgrst204")) return true;
+  return false;
 }
 
 export function clampTagArray(tags: unknown, max = PROFILE_TAG_ARRAY_MAX): string[] {

@@ -37,18 +37,20 @@ export default function UpdatePasswordPage() {
       setGate("open");
     };
 
-    void supabase.auth.getSession().then(({ data }) => {
-      if (data.session) markOpen();
-    });
-
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) markOpen();
+    // Only open the gate on PASSWORD_RECOVERY — not on a regular session.
+    // getSession() alone is not enough: the recovery token in the URL hash
+    // is exchanged asynchronously by the Supabase client, so we rely on
+    // onAuthStateChange to fire PASSWORD_RECOVERY once the exchange completes.
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" && session) {
+        markOpen();
+      }
     });
 
     const tid = window.setTimeout(() => {
       if (!alive || openedRef.current) return;
       setGate("closed");
-    }, 4000);
+    }, 6000);
 
     return () => {
       alive = false;

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const values: { name: string; blurb: string }[] = [
   { name: "Curiosity", blurb: "Questions worth asking out loud." },
   { name: "Real connections", blurb: "No hustle, room to be a beginner and to take your time." },
-  { name: "Care", blurb: "Safety, honesty, and respect for boundaries set the pace." },
+  { name: "Care", blurb: "Honesty, good faith, and respect for boundaries set the pace." },
   {
     name: "Swaps and Credits, not cash",
     blurb: "Small units of Dabbler time so you can teach, learn, and tip.",

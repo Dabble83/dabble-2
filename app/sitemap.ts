@@ -9,7 +9,6 @@ const STATIC_PATHS = [
   "/explore",
   "/about",
   "/how-it-works",
-  "/safety",
   "/guidelines",
   "/credits",
   "/profile/setup",

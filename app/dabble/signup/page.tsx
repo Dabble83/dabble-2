@@ -103,7 +103,7 @@ export default function SignUpPage() {
           lat: approxLat,
           lng: approxLng,
           showExactLocation: false,
-          isDiscoverable: false,
+          isDiscoverable: true,
         }),
       });
       const body = await res.json();

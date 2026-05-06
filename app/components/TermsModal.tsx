@@ -112,7 +112,7 @@ export function TermsModal({ termsAccepted, onAccept }: TermsModalProps) {
               Not use Dabble for commercial transactions, solicitation, or any illegal purpose.
             </li>
             <li>
-              Report users who violate community guidelines using the in-app reporting tools.
+              Follow the Community Guidelines at all times.
             </li>
           </ul>
 
