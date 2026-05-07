@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { fail } from "@/src/lib/apiResponses";
 
-function getBearerToken(request: NextRequest): string | null {
+export function getBearerToken(request: NextRequest): string | null {
   const authHeader = request.headers.get("authorization");
   if (!authHeader) return null;
 
