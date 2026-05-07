@@ -1,6 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { NextRequest } from "next/server";
 import { fail, ok } from "@/src/lib/apiResponses";
+
+export const dynamic = "force-dynamic";
 import { filterDiscoverableProfiles } from "@/src/lib/exploreCategories";
 import type { ExploreCategoryId } from "@/src/lib/exploreTypes";
 import {

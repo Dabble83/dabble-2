@@ -11,6 +11,8 @@ import { maybeGrantSeedSignupCredits } from "@/src/lib/credits";
 import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
+export const dynamic = "force-dynamic";
+
 function toUsernameSeed(input: string) {
   return input
     .trim()

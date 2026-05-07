@@ -3,6 +3,8 @@ import { fail, ok } from "@/src/lib/apiResponses";
 import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
+export const dynamic = "force-dynamic";
+
 const DEFAULT_LIMIT = 20;
 const MAX_LIMIT = 100;
 const MAX_OFFSET = 10_000;

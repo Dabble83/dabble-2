@@ -5,6 +5,8 @@ import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 import { isUuid } from "@/src/lib/isUuid";
 import { acceptSession } from "@/src/lib/sessions";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
   const supabase = getSupabaseServerClient();
   if (!supabase) {

@@ -3,6 +3,8 @@ import { fail, ok } from "@/src/lib/apiResponses";
 import { requireRouteUser } from "@/src/lib/routeAuth";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   const supabase = getSupabaseServerClient();
   if (!supabase) {

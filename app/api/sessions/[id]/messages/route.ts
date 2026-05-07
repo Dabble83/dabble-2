@@ -5,6 +5,8 @@ import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 import { isUuid } from "@/src/lib/isUuid";
 import { getSession, insertSessionMessage, isParticipant, listSessionMessages } from "@/src/lib/sessions";
 
+export const dynamic = "force-dynamic";
+
 type RouteCtx = { params: Promise<{ id: string }> };
 
 export async function GET(request: NextRequest, ctx: RouteCtx) {

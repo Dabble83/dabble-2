@@ -4,6 +4,8 @@ import { fetchProfileRowByUsername, toPublicProfile } from "@/src/lib/profileDb"
 import type { ProfileRecord } from "@/src/lib/profileTypes";
 import { getSupabaseServerClient } from "@/src/lib/supabaseServer";
 
+export const dynamic = "force-dynamic";
+
 /** Stable demo row for marketing / Lighthouse when DB has no matching user (avoids 404 console noise). */
 const DEMO_PUBLIC_PROFILE: ProfileRecord = {
   id: "00000000-0000-4000-8000-000000000001",
