@@ -39,8 +39,11 @@ function parseCategoriesFromParams(sp: URLSearchParams): ExploreCategoryId[] {
 }
 
 function parseOriginFromParams(sp: URLSearchParams): { lat: number; lng: number } | null {
-  const olat = Number(sp.get("olat"));
-  const olng = Number(sp.get("olng"));
+  const olatRaw = sp.get("olat");
+  const olngRaw = sp.get("olng");
+  if (olatRaw == null || olngRaw == null) return null;
+  const olat = Number(olatRaw);
+  const olng = Number(olngRaw);
   if (Number.isFinite(olat) && Number.isFinite(olng)) return { lat: olat, lng: olng };
   return null;
 }

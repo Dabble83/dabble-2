@@ -46,8 +46,10 @@ function parseExploreFilters(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const rawCats = searchParams.get("cat")?.split(",").filter(Boolean) ?? [];
   const categories = rawCats.filter((c): c is ExploreCategoryId => VALID_CATS.includes(c as ExploreCategoryId));
-  const olat = Number(searchParams.get("olat"));
-  const olng = Number(searchParams.get("olng"));
+  const olatRaw = searchParams.get("olat");
+  const olngRaw = searchParams.get("olng");
+  const olat = olatRaw != null ? Number(olatRaw) : NaN;
+  const olng = olngRaw != null ? Number(olngRaw) : NaN;
   const origin =
     Number.isFinite(olat) && Number.isFinite(olng) ? { lat: olat, lng: olng } : null;
   const kmParsed = Number(searchParams.get("km"));
