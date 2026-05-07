@@ -65,6 +65,34 @@ function nameInitials(name: string): string {
     .toUpperCase() || "N";
 }
 
+function ExploreAvatarBadge({
+  avatarUrl,
+  displayName,
+}: {
+  avatarUrl: string | null | undefined;
+  displayName: string;
+}) {
+  const [broken, setBroken] = useState(false);
+  const trimmed = typeof avatarUrl === "string" ? avatarUrl.trim() : "";
+
+  return (
+    <div className="absolute -bottom-5 left-5 relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-[var(--surface)] bg-[var(--brand)] shadow-sm">
+      {trimmed !== "" && !broken ? (
+        <Image
+          src={trimmed}
+          alt={`Profile photo of ${displayName}`}
+          fill
+          className="object-cover"
+          sizes="44px"
+          onError={() => setBroken(true)}
+        />
+      ) : (
+        <span className="font-sans text-sm font-bold leading-none text-white">{nameInitials(displayName)}</span>
+      )}
+    </div>
+  );
+}
+
 function categoryLanePhrase(ids: ExploreCategoryId[]): string {
   const labels = EXPLORE_CATEGORIES.filter((c) => ids.includes(c.id)).map((c) => c.label);
   if (labels.length === 0) return "";
@@ -173,6 +201,7 @@ function ExploreProfileCard({
   const place = dabbler.location_label || "Neighborhood not set";
   const enriched = enrichDiscoverableProfile(dabbler);
   const color = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
+  const avatarUrl = dabbler.avatar_url?.trim();
 
   return (
     <article
@@ -184,9 +213,11 @@ function ExploreProfileCard({
       } ${featured ? "lg:row-span-2 lg:justify-between" : ""}`}
     >
       <div className="relative h-[72px] shrink-0" style={{ backgroundColor: color }}>
-        <div className="absolute -bottom-5 left-5 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--surface)] bg-[var(--brand)] shadow-sm">
-          <span className="font-sans text-sm font-bold leading-none text-white">{nameInitials(name)}</span>
-        </div>
+        <ExploreAvatarBadge
+          key={`${dabbler.id}-${avatarUrl ?? ""}`}
+          avatarUrl={avatarUrl}
+          displayName={name}
+        />
       </div>
 
       <div className={`flex flex-1 flex-col px-6 pb-6 pt-9 ${featured ? "lg:pt-11" : ""}`}>
@@ -701,6 +732,7 @@ function ExplorePageInner() {
           enabled={mapsEnabled}
           points={profiles}
           mobileShowMap={mapSplitLayout ? mobileShowMap : false}
+          focusNeighborhood={neighborhood !== "all" ? neighborhood : null}
           onSelectProfile={(p) => {
             setHighlightId(p.id);
             setMobileShowMap(false);

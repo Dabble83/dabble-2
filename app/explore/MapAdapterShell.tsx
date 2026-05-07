@@ -12,6 +12,8 @@ type MapAdapterShellProps = {
   onSelectProfile?: (profile: DiscoverableProfile) => void;
   /** On small screens: when false (default), list is shown; when true, map is shown. Desktop always shows both. */
   mobileShowMap?: boolean;
+  /** When set, the map pans + zooms to this neighborhood label */
+  focusNeighborhood?: string | null;
 };
 
 /**
@@ -25,6 +27,7 @@ export function MapAdapterShell({
   children,
   onSelectProfile,
   mobileShowMap = false,
+  focusNeighborhood,
 }: MapAdapterShellProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const showMap = enabled && Boolean(apiKey);
@@ -70,7 +73,7 @@ export function MapAdapterShell({
           mobileShowMap ? "" : "max-lg:hidden"
         }`}
       >
-        <ExploreMap profiles={points} onSelectProfile={onSelectProfile} />
+        <ExploreMap profiles={points} onSelectProfile={onSelectProfile} focusNeighborhood={focusNeighborhood} />
       </div>
     </div>
   );

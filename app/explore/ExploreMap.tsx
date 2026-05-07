@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { enrichDiscoverableProfile, pinColorForCategory } from "@/src/lib/exploreCategories";
 import type { DiscoverableProfile, ExploreCategoryId } from "@/src/lib/exploreTypes";
 
-/** §2.3 — warm muted base, sage water, stone road lines */
+/** Map style tokens — warm muted base, sage water, stone road lines */
 const MAP_STYLE: google.maps.MapTypeStyle[] = [
   { elementType: "geometry", stylers: [{ color: "#f2ebe3" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#4a524a" }] },
@@ -24,76 +24,208 @@ const MAP_BG = "#f2ebe3";
 const US_CENTER = { lat: 39.5, lng: -98.35 };
 const DEFAULT_ZOOM = 4;
 
-function buildInfoContent(p: DiscoverableProfile): HTMLElement {
+function nameInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  return (
+    parts
+      .slice(0, 2)
+      .map((w) => w[0] ?? "")
+      .join("")
+      .toUpperCase() || "N"
+  );
+}
+
+function buildPopupContent(p: DiscoverableProfile): HTMLElement {
   const wrap = document.createElement("div");
-  wrap.style.maxWidth = "260px";
-  wrap.style.padding = "6px 4px";
-  wrap.style.color = "#1c2424";
-  wrap.style.fontFamily = "system-ui, sans-serif";
+  wrap.style.cssText = `
+    max-width: 240px;
+    padding: 12px;
+    color: #1c2424;
+    font-family: system-ui, sans-serif;
+    border-radius: 12px;
+  `;
 
-  const title = document.createElement("div");
-  title.textContent = p.display_name || "Dabbler";
-  title.style.fontFamily = "Georgia, serif";
-  title.style.fontSize = "1.05rem";
-  title.style.fontWeight = "600";
-  title.style.marginBottom = "4px";
+  const displayName = p.display_name || "Dabbler";
+  const enriched = enrichDiscoverableProfile(p);
+  const initialsFill = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
 
-  const place = document.createElement("div");
-  place.textContent = p.location_label || "Neighborhood not set";
-  place.style.fontSize = "12px";
-  place.style.color = "#6b736b";
-  place.style.marginBottom = "8px";
+  // Avatar
+  const avatarRow = document.createElement("div");
+  avatarRow.style.cssText = "display:flex;align-items:center;gap:10px;margin-bottom:10px;";
 
-  const skillsLine = document.createElement("div");
-  const topSkills = (p.skills || []).slice(0, 2);
-  const label = document.createElement("span");
-  label.textContent = "Offers: ";
-  label.style.fontWeight = "600";
-  const value = document.createElement("span");
-  value.textContent = topSkills.length ? topSkills.join(", ") : "—";
-  skillsLine.appendChild(label);
-  skillsLine.appendChild(value);
-  skillsLine.style.fontSize = "12px";
-  skillsLine.style.color = "#4a524a";
-  skillsLine.style.marginBottom = "10px";
+  const avatarUrl = typeof p.avatar_url === "string" ? p.avatar_url.trim() : "";
+  const avatarEl = document.createElement("div");
+  avatarEl.style.cssText = `width:40px;height:40px;border-radius:50%;border:2px solid #fffcf7;box-shadow:0 1px 4px rgba(0,0,0,0.12);overflow:hidden;flex-shrink:0;`;
 
+  if (avatarUrl) {
+    const img = document.createElement("img");
+    img.src = avatarUrl;
+    img.alt = "";
+    img.style.cssText = "width:100%;height:100%;object-fit:cover;";
+    avatarEl.appendChild(img);
+  } else {
+    avatarEl.style.backgroundColor = initialsFill;
+    avatarEl.style.display = "flex";
+    avatarEl.style.alignItems = "center";
+    avatarEl.style.justifyContent = "center";
+    avatarEl.style.fontSize = "14px";
+    avatarEl.style.fontWeight = "700";
+    avatarEl.style.color = "#fff";
+    avatarEl.textContent = nameInitials(displayName);
+  }
+
+  const nameCol = document.createElement("div");
+  const nameEl = document.createElement("div");
+  nameEl.textContent = displayName;
+  nameEl.style.cssText = "font-family:Georgia,serif;font-size:15px;font-weight:600;color:#1c2424;line-height:1.2;";
+  const placeEl = document.createElement("div");
+  placeEl.textContent = p.location_label || "";
+  placeEl.style.cssText = "font-size:11px;color:#6b736b;margin-top:2px;";
+  nameCol.appendChild(nameEl);
+  nameCol.appendChild(placeEl);
+  avatarRow.appendChild(avatarEl);
+  avatarRow.appendChild(nameCol);
+  wrap.appendChild(avatarRow);
+
+  // Skills
+  const skills = (p.skills_offered ?? p.skills ?? []).slice(0, 3);
+  const interests = (p.skills_curious ?? p.interests ?? []).slice(0, 2);
+
+  if (skills.length) {
+    const row = document.createElement("div");
+    row.style.cssText = "margin-bottom:6px;";
+    const label = document.createElement("div");
+    label.textContent = "Offers";
+    label.style.cssText = "font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#4a524a;margin-bottom:4px;";
+    const pills = document.createElement("div");
+    pills.style.cssText = "display:flex;flex-wrap:wrap;gap:4px;";
+    skills.forEach(s => {
+      const pill = document.createElement("span");
+      pill.textContent = s;
+      pill.style.cssText = "background:#e8f0e9;color:#2a3d2c;font-size:11px;padding:2px 8px;border-radius:999px;font-weight:500;";
+      pills.appendChild(pill);
+    });
+    row.appendChild(label);
+    row.appendChild(pills);
+    wrap.appendChild(row);
+  }
+
+  if (interests.length) {
+    const row = document.createElement("div");
+    row.style.cssText = "margin-bottom:10px;";
+    const label = document.createElement("div");
+    label.textContent = "Curious about";
+    label.style.cssText = "font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#4a524a;margin-bottom:4px;";
+    const pills = document.createElement("div");
+    pills.style.cssText = "display:flex;flex-wrap:wrap;gap:4px;";
+    interests.forEach(s => {
+      const pill = document.createElement("span");
+      pill.textContent = s;
+      pill.style.cssText = "background:#f0ede8;color:#4a3a2a;font-size:11px;padding:2px 8px;border-radius:999px;font-weight:500;";
+      pills.appendChild(pill);
+    });
+    row.appendChild(label);
+    row.appendChild(pills);
+    wrap.appendChild(row);
+  }
+
+  // Link
   const link = document.createElement("a");
   link.href = `/profile/${encodeURIComponent(p.username)}`;
   link.textContent = "View profile →";
-  link.style.fontSize = "13px";
-  link.style.fontWeight = "600";
-  link.style.color = "#2a3d2c";
-
-  wrap.appendChild(title);
-  wrap.appendChild(place);
-  wrap.appendChild(skillsLine);
+  link.style.cssText = "font-size:12px;font-weight:600;color:#2a3d2c;text-decoration:none;display:inline-block;margin-top:2px;";
   wrap.appendChild(link);
+
   return wrap;
 }
 
-function createMarkerElement(fill: string): HTMLElement {
+function createMarkerElement(fill: string, hovered = false): HTMLElement {
   const el = document.createElement("div");
-  el.style.width = "18px";
-  el.style.height = "18px";
-  el.style.borderRadius = "50%";
-  el.style.backgroundColor = fill;
-  el.style.border = "2px solid #fffcf7";
-  el.style.boxShadow = "0 2px 8px rgba(0,0,0,0.28)";
-  el.style.cursor = "pointer";
+  el.style.cssText = `
+    width: ${hovered ? "24px" : "18px"};
+    height: ${hovered ? "24px" : "18px"};
+    border-radius: 50%;
+    background-color: ${fill};
+    border: 2px solid #fffcf7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+    cursor: pointer;
+    transition: width 0.12s, height 0.12s, transform 0.12s;
+    transform: ${hovered ? "scale(1.3)" : "scale(1)"};
+  `;
   return el;
+}
+
+/** Floating location search box mounted inside the map container */
+function buildSearchBox(
+  map: google.maps.Map,
+  onPlaceSelected: (location: google.maps.LatLng, name: string) => void,
+): () => void {
+  const wrapper = document.createElement("div");
+  wrapper.style.cssText = `
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: min(340px, calc(100% - 32px));
+  `;
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Search a location…";
+  input.style.cssText = `
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #dcd4c8;
+    background: #fffcf7;
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    color: #1c2424;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+    outline: none;
+    box-sizing: border-box;
+  `;
+  input.addEventListener("focus", () => { input.style.borderColor = "#6d8570"; });
+  input.addEventListener("blur", () => { input.style.borderColor = "#dcd4c8"; });
+
+  wrapper.appendChild(input);
+
+  const container = map.getDiv();
+  container.style.position = "relative";
+  container.appendChild(wrapper);
+
+  // Autocomplete
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ["geocode", "establishment"],
+    fields: ["geometry", "name", "formatted_address"],
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry?.location) return;
+    onPlaceSelected(place.geometry.location, place.name ?? place.formatted_address ?? "");
+  });
+
+  return () => {
+    if (container.contains(wrapper)) container.removeChild(wrapper);
+  };
 }
 
 type ExploreMapProps = {
   profiles: DiscoverableProfile[];
   onSelectProfile?: (profile: DiscoverableProfile) => void;
+  /** When set, pan+zoom to this neighborhood on the map */
+  focusNeighborhood?: string | null;
 };
 
-export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
+export function ExploreMap({ profiles, onSelectProfile, focusNeighborhood }: ExploreMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const markersRef = useRef<any[]>([]);
+  const markersRef = useRef<{ marker: any; profile: DiscoverableProfile; fill: string }[]>([]);
   const infoRef = useRef<google.maps.InfoWindow | null>(null);
+  const searchCleanupRef = useRef<(() => void) | null>(null);
   const [loadError, setLoadError] = useState<"load_failed" | null>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
@@ -104,7 +236,7 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     return new Loader({
       apiKey,
       version: "weekly",
-      libraries: ["maps", "marker"],
+      libraries: ["maps", "marker", "places"],
     });
   }, [apiKey]);
 
@@ -113,13 +245,25 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     (map: google.maps.Map, marker: any, p: DiscoverableProfile) => {
       onSelectProfile?.(p);
       if (!infoRef.current) {
-        infoRef.current = new google.maps.InfoWindow();
+        infoRef.current = new google.maps.InfoWindow({ disableAutoPan: false });
       }
-      infoRef.current.setContent(buildInfoContent(p));
+      infoRef.current.setContent(buildPopupContent(p));
       infoRef.current.open({ map, anchor: marker });
     },
     [onSelectProfile],
   );
+
+  // Focus on neighborhood when requested (geocode the label)
+  useEffect(() => {
+    if (!focusNeighborhood || !mapRef.current || !apiKey) return;
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: focusNeighborhood + ", New York, NY" }, (results, status) => {
+      if (status === "OK" && results?.[0]?.geometry?.location && mapRef.current) {
+        mapRef.current.panTo(results[0].geometry.location);
+        mapRef.current.setZoom(14);
+      }
+    });
+  }, [focusNeighborhood, apiKey]);
 
   useEffect(() => {
     if (!apiKey || !loader) return;
@@ -150,12 +294,23 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
             backgroundColor: MAP_BG,
             ...(resolvedMapId ? { mapId: resolvedMapId } : {}),
           });
+
+          // Mount location search box
+          if (searchCleanupRef.current) searchCleanupRef.current();
+          searchCleanupRef.current = buildSearchBox(
+            mapRef.current,
+            (location, _name) => {
+              mapRef.current?.panTo(location);
+              mapRef.current?.setZoom(13);
+            },
+          );
         }
 
         const map = mapRef.current;
 
+        // Clear old markers
         for (const m of markersRef.current) {
-          m.map = null;
+          m.marker.map = null;
         }
         markersRef.current = [];
 
@@ -170,20 +325,39 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
         }
 
         const bounds = new google.maps.LatLngBounds();
+
         for (const p of withCoords) {
           const enriched = enrichDiscoverableProfile(p);
           const fill = pinColorForCategory(enriched.primary_category as ExploreCategoryId);
           try {
+            const markerEl = createMarkerElement(fill);
             const marker = new AdvancedMarkerElement({
               map,
               position: { lat: p.lat, lng: p.lng },
               title: p.display_name || p.username,
-              content: createMarkerElement(fill),
+              content: markerEl,
             });
-            marker.addListener("click", () => {
+
+            const entry = { marker, profile: p, fill };
+            markersRef.current.push(entry);
+
+            // Hover: open popup
+            markerEl.addEventListener("mouseenter", () => {
+              markerEl.style.width = "24px";
+              markerEl.style.height = "24px";
+              markerEl.style.transform = "scale(1.3)";
               openInfo(map, marker, p);
             });
-            markersRef.current.push(marker);
+
+            // Click: navigate to profile
+            marker.addListener("click", () => {
+              onSelectProfile?.(p);
+              if (!infoRef.current) {
+                infoRef.current = new google.maps.InfoWindow({ disableAutoPan: false });
+              }
+              infoRef.current.setContent(buildPopupContent(p));
+              infoRef.current.open({ map, anchor: marker });
+            });
           } catch (markerErr) {
             console.error("[ExploreMap] marker failed:", markerErr);
           }
@@ -202,7 +376,18 @@ export function ExploreMap({ profiles, onSelectProfile }: ExploreMapProps) {
     return () => {
       cancelled = true;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey, mapId, loader, openInfo, profiles]);
+
+  // Cleanup search box on unmount
+  useEffect(() => {
+    return () => {
+      if (searchCleanupRef.current) {
+        searchCleanupRef.current();
+        searchCleanupRef.current = null;
+      }
+    };
+  }, []);
 
   if (!apiKey) {
     return (

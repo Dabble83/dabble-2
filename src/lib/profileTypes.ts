@@ -25,4 +25,6 @@ export interface ProfileRecord {
   lat?: number | null;
   lng?: number | null;
   avatar_url?: string | null;
+  /** Travel plans, first-time experiences, and skill goals for upcoming trips. */
+  travel_plans?: string | null;
 }

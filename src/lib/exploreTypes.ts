@@ -18,4 +18,5 @@ export interface DiscoverableProfile {
   primary_category?: ExploreCategoryId | string | null;
   teaching_now?: boolean | null;
   availability_note?: string | null;
+  avatar_url?: string | null;
 }

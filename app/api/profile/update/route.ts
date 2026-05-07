@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
     safetyTierConsent?: number;
     lat?: number | null;
     lng?: number | null;
+    travelPlans?: string | null;
   };
 
   if (body.userId && body.userId !== authResult.user.id) {
@@ -120,6 +121,7 @@ export async function POST(request: NextRequest) {
     safety_tier_consent: clampSafetyTierConsent(body.safetyTierConsent ?? 2),
     lat: coords.lat,
     lng: coords.lng,
+    travel_plans: body.travelPlans?.trim() ? body.travelPlans.trim() : null,
   };
 
   const extendedPayloadNoCoords = {
@@ -140,6 +142,7 @@ export async function POST(request: NextRequest) {
     travel_radius_km: parseTravelRadiusKm(body.travelRadiusKm),
     availability_note: body.availabilityNote?.trim() ? body.availabilityNote.trim() : null,
     safety_tier_consent: clampSafetyTierConsent(body.safetyTierConsent ?? 2),
+    travel_plans: body.travelPlans?.trim() ? body.travelPlans.trim() : null,
   };
 
   const legacyPayload = {
