@@ -95,7 +95,7 @@ export function FilterBar({
             checked={teachingNow}
             onChange={(e) => onTeachingNowChange(e.target.checked)}
           />
-          <span>Teaching now — show Dabblers whose availability sounds open soon (now, today, tonight, this week).</span>
+          <span>Teaching now — show Dabblers whose availability is open soon (now, today, tonight, or this week).</span>
         </label>
 
         <div className="flex flex-wrap gap-3">

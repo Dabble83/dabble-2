@@ -71,8 +71,8 @@ export default function HowItWorksPage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>
               <strong className="font-semibold text-[var(--text-primary)]">Teach a session</strong>{" "}
-              that both Dabblers mark complete; learner confirmation and (when complete) simple
-              ratings keep the ledger honest.
+              that both Dabblers mark complete; learner confirmation and simple ratings keep the
+              ledger honest.
             </li>
             <li>
               <strong className="font-semibold text-[var(--text-primary)]">Get rated</strong> after
@@ -122,7 +122,7 @@ export default function HowItWorksPage() {
             </li>
             <li>
               <strong className="font-semibold text-[var(--text-primary)]">Community first:</strong>{" "}
-              an exchange of talent, skills, ideas, and knowledge and a way to deepen the experience
+              an exchange of talent, skills, ideas, and knowledge — a way to deepen the experience
               of a place.
             </li>
             <li>

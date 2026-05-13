@@ -249,7 +249,7 @@ export default function PublicProfilePage() {
 
         <Card title="Testimonials" titleLevel={2}>
           <p className="mb-6 font-sans text-sm leading-relaxed text-[var(--text-secondary)]">
-            After you swap a session leave some kind words and advice for others.
+            After you swap a session, leave some kind words and advice for others.
           </p>
           <ul className="grid gap-4 md:grid-cols-2">
             {placeholderTestimonials.map((t, i) => (

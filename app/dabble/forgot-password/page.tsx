@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
           <div className="mb-6 border-b border-[var(--border)] pb-6">
             <h1 className="ui-heading text-3xl">Forgot password</h1>
             <p className="mt-2 font-sans text-sm text-[var(--text-tertiary)]">
-              Enter the email for your account. If it matches an account, you will get a reset link shortly.
+              Enter the email address for your account. If it matches, you'll receive a reset link shortly.
             </p>
           </div>
           {loading ? (
@@ -75,7 +75,7 @@ export default function ForgotPasswordPage() {
           {sent ? (
             <div className="space-y-4">
               <p className="font-sans text-sm text-[var(--text-secondary)]">
-                Check your inbox (and spam) for an email from us. The link expires after a while for security.
+                Check your inbox (and spam) for an email from us. The link expires after a short time for security.
               </p>
               <Button type="button" className="w-full py-3 text-base" onClick={() => router.push("/dabble/signin")}>
                 Back to sign in

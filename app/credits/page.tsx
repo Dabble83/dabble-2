@@ -357,7 +357,7 @@ function CreditsPageInner() {
         <h2 className="ui-heading text-lg text-[var(--text-primary)]">How credits work</h2>
         <p className="mt-3 font-sans text-sm leading-relaxed text-[var(--text-secondary)]">
           One credit is about twenty minutes of Dabbler time. Tips, short sessions, and walk-withs each cost a
-          small number of credits so expectations stay clear. The full trail map lives on How it works.
+          small number of credits so expectations stay clear. The full trail map is on How it works.
         </p>
         <Link
           href="/how-it-works"
