@@ -236,8 +236,8 @@ function ExploreProfileCard({
           <div>
             <p className="ui-label mb-2">Offers</p>
             <div className="flex flex-wrap gap-2">
-              {(dabbler.skills || []).length ? (
-                (dabbler.skills || []).map((offer) => <Tag key={offer}>{offer}</Tag>)
+              {(dabbler.skills_offered || dabbler.skills || []).length ? (
+                (dabbler.skills_offered || dabbler.skills || []).map((offer) => <Tag key={offer}>{offer}</Tag>)
               ) : (
                 <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
               )}
@@ -246,8 +246,8 @@ function ExploreProfileCard({
           <div>
             <p className="ui-label mb-2">Wants to learn</p>
             <div className="flex flex-wrap gap-2">
-              {(dabbler.interests || []).length ? (
-                (dabbler.interests || []).map((want) => <Tag key={want}>{want}</Tag>)
+              {(dabbler.skills_curious || dabbler.interests || []).length ? (
+                (dabbler.skills_curious || dabbler.interests || []).map((want) => <Tag key={want}>{want}</Tag>)
               ) : (
                 <span className="font-sans text-sm text-[var(--text-tertiary)]">—</span>
               )}
