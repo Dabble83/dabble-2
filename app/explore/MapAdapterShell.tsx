@@ -18,7 +18,6 @@ export function MapAdapterShell({
   points,
   children,
   onSelectProfile,
-  mobileShowMap = false,
   focusNeighborhood,
 }: MapAdapterShellProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
